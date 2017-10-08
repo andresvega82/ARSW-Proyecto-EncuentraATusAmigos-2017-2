@@ -4,9 +4,9 @@
 ##### Nombre del Proyecto: Arquitectura de Software (ARSW)
 ##### Descripcion: Proyecto del semestre 2017-2 de Arquitectura de Software.
 ##### Autores: 
--Danilo Alejandro Villarraga Guerrero
--Jairo Gonzalez Boada
--Miguel Angel Rojas Martinez
+1. Danilo Alejandro Villarraga Guerrero
+2. Jairo Gonzalez Boada
+3. Miguel Angel Rojas Martinez
 ##### Creado: 08/10/2017
 ##### Versión: 1.01
 ***
