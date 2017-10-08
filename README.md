@@ -1,14 +1,14 @@
 # ENCUENTRA A TUS AMIGOS
 ***
 
-### Nombre del Proyecto: Arquitectura de Software (ARSW)
-*Descripcion:* Proyecto del semestre 2017-2 de Arquitectura de Software.
-*Autores:* 
-Danilo Alejandro Villarraga Guerrero
-Jairo Gonzalez Boada
-Miguel Angel Rojas Martinez
-*Creado:* 08/10/2017
-*Versión:* 1.01
+##### Nombre del Proyecto: Arquitectura de Software (ARSW)
+##### Descripcion: Proyecto del semestre 2017-2 de Arquitectura de Software.
+##### Autores: 
+-Danilo Alejandro Villarraga Guerrero
+-Jairo Gonzalez Boada
+-Miguel Angel Rojas Martinez
+##### Creado: 08/10/2017
+##### Versión: 1.01
 ***
 
 ## Enlace Heroku: https://arsw-proyecto-2017-2.herokuapp.com/
