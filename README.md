@@ -1,7 +1,7 @@
 # ENCUENTRA A TUS AMIGOS
 ***
 
-*Nombre del Proyecto:* Arquitectura de Software (ARSW)
+### Nombre del Proyecto: Arquitectura de Software (ARSW)
 *Descripcion:* Proyecto del semestre 2017-2 de Arquitectura de Software.
 *Autores:* 
 Danilo Alejandro Villarraga Guerrero
