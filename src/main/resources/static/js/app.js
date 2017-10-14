@@ -18,7 +18,7 @@ var module = (function () {
        },
        //coordinates
        showPosition: function(position){
-            console.log(postion.latitude);
+            console.log(position.latitude);
             var latlon = position.latitude + "," + position.coords.longitude;
             var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+ latlon + "&zoom=14&size=400x300&key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU";
             document.getElementById("mapholder").innerHTML = "<img src='" + img_url + "'>";
