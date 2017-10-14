@@ -11,7 +11,9 @@ var module = (function () {
     return{
        getLocation: function(){
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
+                pos = showPosition(position);
+                err = showError(error);
+                navigator.geolocation.getCurrentPosition(pos, err);
             } else {
                 x.innerHTML = "Geolocation is not supported by this browser.";
             }
