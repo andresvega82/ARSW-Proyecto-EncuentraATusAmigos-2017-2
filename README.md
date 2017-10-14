@@ -11,7 +11,7 @@
 #### Versión: 1.01
 ***
 
-### Enlace Heroku: https://arsw-proyecto-2017-2.herokuapp.com/
+### Enlace Heroku: https://arsw-proyecto-2017-2.herokuapp.com/index.html
 ***
 ### Uso del App:
 1.
