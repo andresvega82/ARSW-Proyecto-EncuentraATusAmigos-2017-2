@@ -16,9 +16,10 @@ var module = (function () {
                 x.innerHTML = "Geolocation is not supported by this browser.";
             }
        },
-       
+       //coordinates
        showPosition: function(position){
-            var latlon = position.coords.latitude + "," + position.coords.longitude;
+            console.log(postion.latitude);
+            var latlon = position.latitude + "," + position.coords.longitude;
             var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+ latlon + "&zoom=14&size=400x300&key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU";
             document.getElementById("mapholder").innerHTML = "<img src='" + img_url + "'>";
        },
