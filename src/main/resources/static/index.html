@@ -9,13 +9,19 @@ and open the template in the editor.
         <title>Encuentra a tus Amigos</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="/webjars/jquery/jquery.min.js"></script>
+        <script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet"
+              href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <script src="js/apimock.js"></script>
+        <script src="js/app.js"></script>
     </head>
     <body>
         <p>Proyecto ARSW</p>
         
         <p id="demo">Click the button to get your position.</p>
 
-        <button onclick="module.getLocation()">Try It</button>
+        <button type = "button" onclick="module.getLocation()">Try It</button>
 
         <div id="mapholder"></div>
     </body>

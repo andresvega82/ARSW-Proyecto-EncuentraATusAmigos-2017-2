@@ -8,7 +8,6 @@ var module = (function () {
     
     var x = document.getElementById("demo");
     
-    
     return{
        getLocation: function(){
             if (navigator.geolocation) {
