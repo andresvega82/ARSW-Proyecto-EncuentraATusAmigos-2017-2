@@ -50,15 +50,42 @@ public class LocalEataPersistence implements EataPersistence{
         //Se crean horas libres
         FreeTime hl1 = new FreeTime("lunes", 8, 10);
         FreeTime hl2 = new FreeTime("martes", 7, 12);
-        FreeTime hl3 = new FreeTime("martes", 10, 11);
-        FreeTime hl4 = new FreeTime("miercoles", 10, 11);
+        FreeTime hl3 = new FreeTime("martes", 10, 15);
+        FreeTime hl4 = new FreeTime("jueves", 10, 11);
         FreeTime hl5 = new FreeTime("miercoles", 10, 11);
-        FreeTime hl6 = new FreeTime("martes", 10, 11);
+        FreeTime hl6 = new FreeTime("viernes", 13, 19);
+        FreeTime hl7 = new FreeTime("lunes", 8, 16);
+        FreeTime hl8 = new FreeTime("sabado", 7, 8);
+        FreeTime hl9 = new FreeTime("martes", 9, 15);
+        FreeTime hl10 = new FreeTime("miercoles", 7, 14);
+        FreeTime hl11 = new FreeTime("viernes", 10, 12);
+        FreeTime hl12 = new FreeTime("jueves", 12, 16);
+        FreeTime hl13 = new FreeTime("lunes",13, 18);
+        FreeTime hl14 = new FreeTime("sabado", 14, 16);
+        FreeTime hl15 = new FreeTime("viernes", 8, 15);
+        FreeTime hl16 = new FreeTime("jueves", 9, 11);
+        FreeTime hl17 = new FreeTime("viernes", 10, 11);
+        FreeTime hl18 = new FreeTime("jueves", 10, 11);
         
         //Se agregan horas libre
         u1.addFreeTime(hl1);
         u1.addFreeTime(hl2);
         u3.addFreeTime(hl3);
+        u3.addFreeTime(hl4);
+        u4.addFreeTime(hl5);
+        u4.addFreeTime(hl6);
+        u2.addFreeTime(hl7);
+        u2.addFreeTime(hl8);
+        u2.addFreeTime(hl9);
+        u2.addFreeTime(hl10);
+        u3.addFreeTime(hl11);
+        u3.addFreeTime(hl12);
+        u1.addFreeTime(hl13);
+        u1.addFreeTime(hl14);
+        u1.addFreeTime(hl15);
+        u3.addFreeTime(hl16);
+        u4.addFreeTime(hl17);
+        u4.addFreeTime(hl18);
         
         //se agregan los usuarios al conjunto
         users.put(2101751, u1);
@@ -75,9 +102,11 @@ public class LocalEataPersistence implements EataPersistence{
         members2.add(2101751);
         members2.add(2090540);
         members2.add(2099444);
+        members2.add(2098165);
         
         ArrayList<Integer> members3 = new ArrayList<Integer>();
         members3.add(2098165);
+        members3.add(2099444);
         
         
         Group g1 = new Group(members1, 1, "arsw trabajo", "Este grupo es para hacer lab de arsw");
@@ -204,51 +233,59 @@ public class LocalEataPersistence implements EataPersistence{
     public ArrayList<FreeTime> getFreeTimebyUser(int document) throws EataNotFoundException {
         return users.get(document).getFreeTime();
     }
-
+    
+    //Este metodo calcula el tiepo libre comun de los estudiantes
     @Override
     public ArrayList<FreeTime> getCommonFreeTimebyGroup(int idGroup) throws EataNotFoundException {
         ArrayList<FreeTime> commonFreeTime = new ArrayList<FreeTime>();
- 
         
-        for (Map.Entry<Integer, User> entry : users.entrySet()) {
-            Integer key = entry.getKey();
-            User value = entry.getValue();
+        Set<User> usersByGroup = this.getUsersByGroup(idGroup);
+        Iterator<User> itus = usersByGroup.iterator();
+        
+        for (Iterator<User> iterator = usersByGroup.iterator(); iterator.hasNext();) {
+            User next = iterator.next();
             
-            ArrayList<FreeTime> ft = value.getFreeTime();
+            ArrayList<FreeTime> ft = next.getFreeTime();
             for (int e = 0; e < ft.size(); e++) {
                 FreeTime ftini = ft.get(e);
                 
-                for (Map.Entry<Integer, User> i : users.entrySet()) {
+                for (Iterator<User> iterator1 = usersByGroup.iterator(); iterator1.hasNext();) {
+                    User next1 = iterator1.next();
                     
-                    if (value.getDocument() != i.getValue().getDocument()) {
-                        ArrayList<FreeTime> ftother = i.getValue().getFreeTime();
+                    if (next.getDocument() != next1.getDocument()) {
+                        ArrayList<FreeTime> ftother = next1.getFreeTime();
                         
                         for (int j = 0; j < ftother.size(); j++) {
                             FreeTime ftcurrent = ftother.get(j);
                             if (ftcurrent.getDay() == ftini.getDay()) {
                                 //Primer caso
                                 if(ftini.getStart()==ftcurrent.getStart() && ftini.getEnd()==ftcurrent.getEnd()){
-                                    FreeTime temp = new FreeTime(ftini.getDay(),ftini.getStart(),ftini.getEnd());
+                                    FreeTime temp = new FreeTime(ftini.getDay(), ftini.getStart(), ftini.getEnd());
+                                    
                                     commonFreeTime.add(temp);
                                 }
                                 //segundo caso
-                                if(ftini.getStart()>ftcurrent.getStart() && ftini.getEnd()>ftcurrent.getEnd()){
+                                if(ftini.getStart()>ftcurrent.getStart() && ftini.getEnd()>ftcurrent.getEnd()&& ftini.getStart()<ftcurrent.getEnd()){
                                     FreeTime temp = new FreeTime(ftini.getDay(),ftini.getStart(),ftcurrent.getEnd());
+                                    
                                     commonFreeTime.add(temp);
                                 }
                                 //tercer caso
-                                if(ftini.getStart()<ftcurrent.getStart() && ftini.getEnd()<ftcurrent.getEnd()){
+                                if(ftini.getStart()<ftcurrent.getStart() && ftini.getEnd()<ftcurrent.getEnd() && ftini.getEnd()>ftcurrent.getStart()){
                                     FreeTime temp = new FreeTime(ftini.getDay(),ftcurrent.getStart(),ftini.getEnd());
+                                    
                                     commonFreeTime.add(temp);
                                 }
                                 //cuarto caso
                                 if(ftini.getStart()>ftcurrent.getStart() && ftini.getEnd()<ftcurrent.getEnd()){
                                     FreeTime temp = new FreeTime(ftini.getDay(),ftini.getStart(),ftini.getEnd());
+                                    
                                     commonFreeTime.add(temp);
                                 }
                                 //quinto caso
                                 if(ftini.getStart()<ftcurrent.getStart() && ftini.getEnd()>ftcurrent.getEnd()){
                                     FreeTime temp = new FreeTime(ftini.getDay(),ftcurrent.getStart(),ftcurrent.getEnd());
+                                    
                                     commonFreeTime.add(temp);
                                 }
                             }
@@ -261,9 +298,26 @@ public class LocalEataPersistence implements EataPersistence{
             
             
         }
+        //Esta parte es para eliminar los horarios que aparecen repetidos
+        /*
+        for (int i = 0; i < commonFreeTime.size(); i++) {
+            System.out.println("Entro aqui");
+            for (int j = 0; j < commonFreeTime.size(); j++) {
+                if (commonFreeTime.get(i).getDay().equals(commonFreeTime.get(j).getDay())
+                        && commonFreeTime.get(i).getStart()==(commonFreeTime.get(j).getStart())
+                        && commonFreeTime.get(i).getEnd()==(commonFreeTime.get(j).getEnd())) {
+                    System.out.println("Elimine: "+commonFreeTime.get(j).getDay()+" "+ commonFreeTime.get(j).getStart()+" "+commonFreeTime.get(j).getEnd());
+                    commonFreeTime.remove(j);
+                } else {
+                    System.out.println("false");
+                }
+            }
+
+        }*/
         
         return commonFreeTime;
     }
 
+    
     
 }
