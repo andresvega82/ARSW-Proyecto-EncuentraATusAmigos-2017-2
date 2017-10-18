@@ -23,13 +23,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @author 2101751
  */
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "/eata")
 public class EataAPIController {
     
     @Autowired
     private EataServices eataservice;
     
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(path = "/users", method = RequestMethod.GET)
     public ResponseEntity<?> getAllUsers() {
         try {
             //obtener datos que se enviarán a través del API
@@ -45,6 +45,17 @@ public class EataAPIController {
         try {
             //obtener datos que se enviarán a través del API
             return new ResponseEntity<>(eataservice.getAllGroups(), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    @RequestMapping(path = "/groups/{idGroup}",method = RequestMethod.GET)
+    public ResponseEntity<?> getMembersByGroup(@PathVariable("idGroup") int idGroup) {
+        try {
+            //obtener datos que se enviarán a través del API
+            return new ResponseEntity<>(eataservice.getUsersByGroup(idGroup), HttpStatus.ACCEPTED);
         } catch (Exception ex) {
             Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);

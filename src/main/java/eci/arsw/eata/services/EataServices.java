@@ -28,6 +28,10 @@ public class EataServices {
         return eatap.getAllUsers();
     }
     
+    public Set<User> getUsersByGroup(int idGroup) throws EataNotFoundException{
+        return eatap.getUsersByGroup(idGroup);
+    }
+    
     public Set<Group> getAllGroups() throws EataNotFoundException{
         return eatap.getAllGroups();
     }
@@ -35,5 +39,7 @@ public class EataServices {
     public void addNewUser(User user) throws EataNotFoundException, EataPersistenceException{
         eatap.saveUser(user);
     }
+    
+    
     
 }

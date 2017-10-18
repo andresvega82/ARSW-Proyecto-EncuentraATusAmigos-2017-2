@@ -34,25 +34,25 @@ public class LocalEataPersistence implements EataPersistence{
         User u2 = new User("Jairo Gonzalez", 2090540, "1234" , "aaaa@mail.com", "macho");
         User u3 = new User("Miguel Rojas", 2099444, "1234" , "bbbbbb@mail.com", "macho");
         
-//        ArrayList<Integer> members1 = null;
-//        members1.add(2101751);
-//        members1.add(2099444);
-//        
-//        ArrayList<Integer> members2 = null;
-//        members2.add(2101751);
-//        members2.add(2090540);
-//        members2.add(2099444);
-//        
-//        
-//        Group g1 = new Group(members1, 1, "arsw trabajo", "Este grupo es para hacer lab de arsw");
-//        Group g2 = new Group(members2, 2, "segi trabajo", "seminariop de segi");
+        ArrayList<Integer> members1 = new ArrayList<Integer>();
+        members1.add(2101751);
+        members1.add(2099444);
+        
+        ArrayList<Integer> members2 = new ArrayList<Integer>();
+        members2.add(2101751);
+        members2.add(2090540);
+        members2.add(2099444);
+        
+        
+        Group g1 = new Group(members1, 1, "arsw trabajo", "Este grupo es para hacer lab de arsw");
+        Group g2 = new Group(members2, 2, "segi trabajo", "seminariop de segi");
         
         users.put(2101751, u1);
         users.put(2090540, u2);
         users.put(2099444, u3);
         
-//        groups.put(1, g1);
-//        groups.put(2, g2);
+        groups.put(1, g1);
+        groups.put(2, g2);
         
     }
 
@@ -120,13 +120,13 @@ public class LocalEataPersistence implements EataPersistence{
     @Override
     public Set<User> getUsersByGroup(int idGroup) throws EataNotFoundException {
         
-        Set<User> usersGroup = null;/*
-        Set<Integer> idUsersGroup = groups.get(idGroup).getMembers();
-        for (Iterator<Integer> e = idUsersGroup.iterator(); e.hasNext();) {
-            usersGroup.add(users.get(e));
-        }
-        */
+        Set<User> usersGroup = new HashSet<>();
+        ArrayList<Integer> idUsersGroup = groups.get(idGroup).getMembers();
         
+        for (int i=0; i<idUsersGroup.size(); i++) {
+            int idnew = idUsersGroup.get(i);
+            usersGroup.add(users.get(idnew));
+        }
         
         return usersGroup;
     }

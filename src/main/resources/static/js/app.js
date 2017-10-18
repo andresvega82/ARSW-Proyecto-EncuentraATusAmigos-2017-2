@@ -30,7 +30,7 @@ var module = (function () {
           // "{\"author\":"+"\""+nombre+"\","+"\"points\":"+JSON.stringify(puntosActuales)+",\""+"name\":"+"\""+nombrePlano+"\""+"}";
            var newUSer = "{\"document\":"+"\""+document+"\","+"\"friends\":"+"\""+[]+"\",\""+"mail\":"+"\""+mail+"\",\""+"gender\":"+"\""+gender+"\",\""+"freeHours\":"+"\""+null+"\",\""+"name\":"+"\""+name+"\""+"}";
            var crear=$.ajax({
-                url: "/users",
+                url: "/eata/users",
                 type: 'PUT',
                 data: nuevo,
                 contentType: "application/json"
