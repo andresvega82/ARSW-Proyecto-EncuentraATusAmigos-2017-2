@@ -67,6 +67,18 @@ public class LocalEataPersistence implements EataPersistence{
     }
     
     @Override
+    public Set<Group> getAllGroups() throws EataNotFoundException {
+        Set<Group> allGroups = new HashSet<>();
+        
+        for (Map.Entry<Integer, Group> entry : groups.entrySet()) {
+            Integer key = entry.getKey();
+            Group value = entry.getValue();
+            allGroups.add(value);
+        }
+        return allGroups;
+    }
+    
+    @Override
     public void saveUser(User user) throws EataPersistenceException {
         
         if (users.containsKey(user.getDocument())){
@@ -107,11 +119,12 @@ public class LocalEataPersistence implements EataPersistence{
     public Set<User> getUsersByGroup(int idGroup) throws EataNotFoundException {
         Set<Integer> idUsersGroup = groups.get(idGroup).getMembers();
         Set<User> usersGroup = null;
-        Iterator<Integer> a = idUsersGroup.iterator();
         
-        for(int i=0; i<idUsersGroup.size();i++){
-            
+        for (Iterator<Integer> e = idUsersGroup.iterator(); e.hasNext();) {
+            usersGroup.add(users.get(e));
         }
+        
+        
         
         return usersGroup;
     }
@@ -120,6 +133,8 @@ public class LocalEataPersistence implements EataPersistence{
     public void deleteGroup(int idGroup) throws EataNotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
 
     
 

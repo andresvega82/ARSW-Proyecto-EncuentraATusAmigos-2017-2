@@ -59,6 +59,11 @@ public class DataBaseEataPersistence implements EataPersistence{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Set<Group> getAllGroups() throws EataNotFoundException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
   
     
 }

@@ -29,6 +29,14 @@ public interface EataPersistence {
     
     /**
      *
+     * @param 
+     * @return 
+     * @throws EataPersistenceException
+     */
+    public Set<Group> getAllGroups() throws EataNotFoundException;
+    
+    /**
+     *
      * @param user
      * @throws EataPersistenceException
      */

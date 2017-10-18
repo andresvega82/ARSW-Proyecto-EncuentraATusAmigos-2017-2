@@ -5,6 +5,7 @@
  */
 package eci.arsw.eata.services;
 
+import eci.arsw.eata.model.Group;
 import eci.arsw.eata.model.User;
 import eci.arsw.eata.persistence.EataNotFoundException;
 import eci.arsw.eata.persistence.EataPersistence;
@@ -25,6 +26,10 @@ public class EataServices {
     
     public Set<User> getAllUsers() throws EataNotFoundException{
         return eatap.getAllUsers();
+    }
+    
+    public Set<Group> getAllGroups() throws EataNotFoundException{
+        return eatap.getAllGroups();
     }
     
     public void addNewUser(User user) throws EataNotFoundException, EataPersistenceException{
