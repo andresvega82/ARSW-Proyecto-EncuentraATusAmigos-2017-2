@@ -5,10 +5,18 @@
  */
 package eci.arsw.eata.model;
 
+import java.util.Set;
+
 /**
  *
  * @author 2101751
  */
 public class Group {
+    
+    Set<User> members;
+    int id;
+    String name;
+    String description;
+    
     
 }

@@ -5,6 +5,7 @@
  */
 package eci.arsw.eata.persistence;
 
+import eci.arsw.eata.model.Group;
 import eci.arsw.eata.model.User;
 import java.util.Set;
 
@@ -22,10 +23,12 @@ public interface EataPersistence {
      * @param usuario
      * @throws EataPersistenceException
      */
-    public void saveUser(User usuario) throws EataPersistenceException;
+    public void saveUser(User usr) throws EataPersistenceException;
+    
+    public void saveGroup(Group grp) throws EataPersistenceException;
     
     
-    public User getBlueprint(String idUser) throws EataNotFoundException;
+    public User getUser(String idUser) throws EataNotFoundException;
     
     
     public Set<User> getUserByGroup(String idGroup) throws EataNotFoundException;
