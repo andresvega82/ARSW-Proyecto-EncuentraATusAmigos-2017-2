@@ -18,8 +18,6 @@ public class Meeting {
     private Date date;
     private String subject;
     private String description;
-    private String prueba;
-    
 
     public Meeting(int id, Date date, String subject, String description) {
         this.id = id;

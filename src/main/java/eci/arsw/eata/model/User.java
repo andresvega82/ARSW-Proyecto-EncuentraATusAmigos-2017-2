@@ -19,6 +19,8 @@ public class User {
     private Set<User> friends;
     private String mail;
     private String gender;
+    private Set<FreeHours> freeHours;
+    
     
     public User(String name, int document, String password , String mail, String gender) {
         this.name = name;
@@ -80,6 +82,14 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public Set<FreeHours> getFreeHours() {
+        return freeHours;
+    }
+
+    public void setFreeHours(Set<FreeHours> freeHours) {
+        this.freeHours = freeHours;
     }
     
 

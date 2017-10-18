@@ -13,10 +13,59 @@ import java.util.Set;
  */
 public class Group {
     
-    Set<User> members;
-    int id;
-    String name;
-    String description;
+    private Set<User> members;
+    private Set<Meeting> meetings;
+    private int id;
+    private String name;
+    private String description;
+
+    public Group(Set<User> members, int id, String name, String description) {
+        this.members = members;
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
+    public Set<User> getMembers() {
+        return members;
+    }
+
+    public void setMembers(Set<User> members) {
+        this.members = members;
+    }
+
+    public Set<Meeting> getMeetings() {
+        return meetings;
+    }
+
+    public void setMeetings(Set<Meeting> meetings) {
+        this.meetings = meetings;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
     
     
 }
