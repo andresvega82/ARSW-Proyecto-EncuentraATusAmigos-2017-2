@@ -13,24 +13,28 @@ import java.util.Set;
  */
 public class Group {
     
-    private Set<User> members;
+    private Set<Integer> members;
     private Set<Meeting> meetings;
     private int id;
     private String name;
     private String description;
 
-    public Group(Set<User> members, int id, String name, String description) {
+    public Group(Set<Integer> members, int id, String name, String description) {
         this.members = members;
         this.id = id;
         this.name = name;
         this.description = description;
     }
-
-    public Set<User> getMembers() {
+    
+    public void addMeeting(Meeting meeting){
+        meetings.add(meeting);
+    }
+    
+    public Set<Integer> getMembers() {
         return members;
     }
 
-    public void setMembers(Set<User> members) {
+    public void setMembers(Set<Integer> members) {
         this.members = members;
     }
 

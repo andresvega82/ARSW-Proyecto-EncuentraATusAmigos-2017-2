@@ -5,6 +5,7 @@
  */
 package eci.arsw.eata.model;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -16,10 +17,11 @@ public class User {
     
     private int document;
     private String password;
-    private Set<User> friends;
+    private ArrayList<Integer> friends = new ArrayList<Integer>();
     private String mail;
     private String gender;
-    private Set<FreeHours> freeHours;
+    private Set<FreeHour> freeHours;
+    private String name;
     
     
     public User(String name, int document, String password , String mail, String gender) {
@@ -30,11 +32,10 @@ public class User {
         this.gender = gender;
     }
     
-    public void addFriend(User usr){
-        this.friends.add(usr);
+    public void addFriend(int document){
+        this.friends.add(document);
     }
     
-    private String name;
 
     public String getName() {
         return name;
@@ -60,11 +61,11 @@ public class User {
         this.password = password;
     }
 
-    public Set<User> getFriends() {
+    public ArrayList<Integer> getFriends() {
         return friends;
     }
 
-    public void setFriends(Set<User> friends) {
+    public void setFriends(ArrayList<Integer> friends) {
         this.friends = friends;
     }
 
@@ -84,11 +85,11 @@ public class User {
         this.gender = gender;
     }
 
-    public Set<FreeHours> getFreeHours() {
+    public Set<FreeHour> getFreeHours() {
         return freeHours;
     }
 
-    public void setFreeHours(Set<FreeHours> freeHours) {
+    public void setFreeHours(Set<FreeHour> freeHours) {
         this.freeHours = freeHours;
     }
     

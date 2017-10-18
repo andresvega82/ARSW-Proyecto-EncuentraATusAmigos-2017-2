@@ -6,6 +6,7 @@
 package eci.arsw.eata.persistence;
 
 import eci.arsw.eata.model.Group;
+import eci.arsw.eata.model.Meeting;
 import eci.arsw.eata.model.User;
 import java.util.Set;
 
@@ -17,23 +18,67 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface EataPersistence {
-   
+    
     /**
      *
-     * @param usuario
+     * @param 
+     * @return 
      * @throws EataPersistenceException
      */
-    public void saveUser(User usr) throws EataPersistenceException;
+    public Set<User> getAllUsers() throws EataNotFoundException;
     
-    public void saveGroup(Group grp) throws EataPersistenceException;
+    /**
+     *
+     * @param user
+     * @throws EataPersistenceException
+     */
+    public void saveUser(User user) throws EataPersistenceException;
+    
+    /**
+     *
+     * @param group 
+     * @throws EataPersistenceException
+     */
+    public void saveGroup(Group group) throws EataPersistenceException;
+    
+    /**
+     *
+     * @param metting es el objeto reunion que se va a agregar a un grupo
+     * @param idGroup es el id del grupo al cual se va a agregar la reunion
+     * @throws EataPersistenceException
+     */
+    public void addMeeting(Meeting metting, int idGroup) throws EataPersistenceException;
+    
+    /**
+     *
+     * @param friendDocument es el id del amigo al cual va a agregar
+     * @param document es el id del usuario actual
+     * @throws EataPersistenceException
+     */
+    public void addFriend(int friendDocument, int document) throws EataPersistenceException;
+    
+    /**
+     *
+     * @param document es el id del usuario, corresponde al carnet
+     * @return el usuario asociado al id
+     * @throws EataPersistenceException
+     */
+    public User getUser(int document) throws EataNotFoundException;
     
     
-    public User getUser(String idUser) throws EataNotFoundException;
+    /**
+     *
+     * @param idGroup es el id del grupo
+     * @return retorna el conjunto de usuarios asociados a ese grupo
+     * @throws EataPersistenceException
+     */
+    public Set<User> getUsersByGroup(int idGroup) throws EataNotFoundException;
     
-    
-    public Set<User> getUserByGroup(String idGroup) throws EataNotFoundException;
-    
-    
-    public void deleteBlueprint(String author, String nameBlueprint) throws EataNotFoundException;
+    /**
+     *
+     * @param idGroup es el id del grupo que se quiere eliminar
+     * @throws EataPersistenceException
+     */
+    public void deleteGroup(int idGroup) throws EataNotFoundException;
   
 }
