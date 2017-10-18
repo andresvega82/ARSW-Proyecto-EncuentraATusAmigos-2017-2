@@ -40,7 +40,7 @@ public class EataAPIController {
         }
     }
     
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(path = "/groups",method = RequestMethod.GET)
     public ResponseEntity<?> getAllGroups() {
         try {
             //obtener datos que se enviarán a través del API
@@ -50,7 +50,6 @@ public class EataAPIController {
             return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
         }
     }
-    
     
     
     @RequestMapping(method = RequestMethod.POST)

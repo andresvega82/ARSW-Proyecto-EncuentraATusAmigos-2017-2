@@ -5,6 +5,7 @@
  */
 package eci.arsw.eata.model;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 /**
@@ -13,13 +14,13 @@ import java.util.Set;
  */
 public class Group {
     
-    private Set<Integer> members;
+    private ArrayList<Integer> members = new ArrayList<Integer>();
     private Set<Meeting> meetings;
     private int id;
     private String name;
     private String description;
 
-    public Group(Set<Integer> members, int id, String name, String description) {
+    public Group(ArrayList<Integer> members, int id, String name, String description) {
         this.members = members;
         this.id = id;
         this.name = name;
@@ -30,11 +31,11 @@ public class Group {
         meetings.add(meeting);
     }
     
-    public Set<Integer> getMembers() {
+    public ArrayList<Integer> getMembers() {
         return members;
     }
 
-    public void setMembers(Set<Integer> members) {
+    public void setMembers(ArrayList<Integer> members) {
         this.members = members;
     }
 
