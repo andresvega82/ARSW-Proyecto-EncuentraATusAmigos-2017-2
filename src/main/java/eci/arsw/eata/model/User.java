@@ -20,7 +20,7 @@ public class User {
     private ArrayList<Integer> friends = new ArrayList<Integer>();
     private String mail;
     private String gender;
-    private Set<FreeHour> freeHours;
+    private ArrayList<FreeTime> freeTime = new ArrayList<FreeTime>();
     private String name;
     
     
@@ -34,6 +34,10 @@ public class User {
     
     public void addFriend(int document){
         this.friends.add(document);
+    }
+    
+    public void addFreeTime(FreeTime ft){
+        this.freeTime.add(ft);
     }
     
 
@@ -85,14 +89,12 @@ public class User {
         this.gender = gender;
     }
 
-    public Set<FreeHour> getFreeHours() {
-        return freeHours;
+    public ArrayList<FreeTime> getFreeTime() {
+        return freeTime;
     }
 
-    public void setFreeHours(Set<FreeHour> freeHours) {
-        this.freeHours = freeHours;
+    public void setFreeTime(ArrayList<FreeTime> freeTime) {
+        this.freeTime = freeTime;
     }
-    
 
-    
 }

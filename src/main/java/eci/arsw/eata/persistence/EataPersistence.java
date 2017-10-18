@@ -5,9 +5,11 @@
  */
 package eci.arsw.eata.persistence;
 
+import eci.arsw.eata.model.FreeTime;
 import eci.arsw.eata.model.Group;
 import eci.arsw.eata.model.Meeting;
 import eci.arsw.eata.model.User;
+import java.util.ArrayList;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -33,8 +35,42 @@ public interface EataPersistence {
      * @return 
      * @throws EataPersistenceException
      */
+    public Set<User> getMyFriends(int document) throws EataNotFoundException;
+    
+    /**
+     *
+     * @param 
+     * @return 
+     * @throws EataPersistenceException
+     */
     public Set<Group> getAllGroups() throws EataNotFoundException;
     
+    /**
+     *
+     * @param document es el id de la persona que solicita los grupos de si mismo
+     * @return 
+     * @throws EataPersistenceException
+     */
+    public Set<Group> getMyGroups(int document) throws EataNotFoundException;
+    
+    
+    /**
+     *
+     * @param document es el id de la persona que solicita los grupos de si mismo
+     * @return 
+     * @throws EataPersistenceException
+     */
+    public ArrayList<FreeTime> getFreeTimebyUser(int document) throws EataNotFoundException;
+    
+    
+    /**
+     *
+     * @param document es el id de la persona que solicita los grupos de si mismo
+     * @return 
+     * @throws EataPersistenceException
+     */
+    public ArrayList<FreeTime> getCommonFreeTimebyGroup(int idGroup) throws EataNotFoundException;
+            
     /**
      *
      * @param user
@@ -71,7 +107,7 @@ public interface EataPersistence {
      * @return el usuario asociado al id
      * @throws EataPersistenceException
      */
-    public User getUser(int document) throws EataNotFoundException;
+    public User getUserByDocument(int document) throws EataNotFoundException;
     
     
     /**

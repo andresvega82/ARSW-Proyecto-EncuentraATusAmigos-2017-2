@@ -9,13 +9,13 @@ package eci.arsw.eata.model;
  *
  * @author 2099444
  */
-public class FreeHour {
+public class FreeTime {
     
     private String day;
     private int start;
     private int end;
 
-    public FreeHour(String day, int start, int end) {
+    public FreeTime(String day, int start, int end) {
         this.day = day;
         this.start = start;
         this.end = end;

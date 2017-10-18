@@ -40,6 +40,17 @@ public class EataAPIController {
         }
     }
     
+    @RequestMapping(path = "/users/{document}", method = RequestMethod.GET)
+    public ResponseEntity<?> getUserByDocument(@PathVariable("document") int document) {
+        try {
+            //obtener datos que se enviarán a través del API
+            return new ResponseEntity<>(eataservice.getUserByDocument(document), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
+        }
+    }
+    
     @RequestMapping(path = "/groups",method = RequestMethod.GET)
     public ResponseEntity<?> getAllGroups() {
         try {
@@ -62,6 +73,49 @@ public class EataAPIController {
         }
     }
     
+    @RequestMapping(path = "/users/myfriends/{document}",method = RequestMethod.GET)
+    public ResponseEntity<?> getMyFriends(@PathVariable("document") int document) {
+        try {
+            //obtener datos que se enviarán a través del API
+            return new ResponseEntity<>(eataservice.getMyFriends(document), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    @RequestMapping(path = "/users/freetime/{document}",method = RequestMethod.GET)
+    public ResponseEntity<?> getFreeTimeByUser(@PathVariable("document") int document) {
+        try {
+            //obtener datos que se enviarán a través del API
+            return new ResponseEntity<>(eataservice.getFreeTimeByUser(document), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    @RequestMapping(path = "/groups/freetime/{idGroup}",method = RequestMethod.GET)
+    public ResponseEntity<?> getCommonFreeTimeByGroup(@PathVariable("idGroup") int idGroup) {
+        try {
+            //obtener datos que se enviarán a través del API
+            return new ResponseEntity<>(eataservice.getCommonFreeTime(idGroup), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    @RequestMapping(path = "/users/mygroups/{document}",method = RequestMethod.GET)
+    public ResponseEntity<?> getMyGroups(@PathVariable("document") int document) {
+        try {
+            //obtener datos que se enviarán a través del API
+            return new ResponseEntity<>(eataservice.getMyGroups(document), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
+        }
+    }
     
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addNewUser(@RequestBody User user) {
