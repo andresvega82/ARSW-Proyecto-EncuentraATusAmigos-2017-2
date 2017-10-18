@@ -27,7 +27,7 @@ public class EataServices {
         return eatap.getAllUsers();
     }
     
-    public void saveNewUser(User user) throws EataNotFoundException, EataPersistenceException{
+    public void addNewUser(User user) throws EataNotFoundException, EataPersistenceException{
         eatap.saveUser(user);
     }
     
