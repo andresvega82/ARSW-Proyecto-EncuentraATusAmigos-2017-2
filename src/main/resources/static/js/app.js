@@ -13,6 +13,7 @@ var module = (function () {
     var mail;
     var gender;
     var estaLogeado = false;
+    var url = "http://arsw-proyecto-2017-2.herokuapp.com";
     
     return{
       singUp : function(nam,passwor,mai,gende,idUs){
@@ -31,16 +32,16 @@ var module = (function () {
         },
         
         redireccionAsingup: function(){
-            window.location="http://localhost:8080/signUp.html";
+            window.location= url+"/signUp.html";
         },
         
         redireccionAlogin: function(){
-            window.location="http://localhost:8080/login.html";
+            window.location=url+"/login.html";
         },
         
         redireccionAinicio: function(){
             if(estaLogeado){
-                window.location="http://localhost:8080/inicio.html";
+                window.location=url+"/inicio.html";
             }
             
         },
