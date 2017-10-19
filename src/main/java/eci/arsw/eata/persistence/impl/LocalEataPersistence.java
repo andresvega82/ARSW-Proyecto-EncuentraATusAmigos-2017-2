@@ -162,7 +162,7 @@ public class LocalEataPersistence implements EataPersistence{
             Integer key = entry.getKey();
             Group value = entry.getValue();
             ArrayList<Integer> miembros = value.getMembers();
-            if(miembros.contains(document)){
+            if(miembros.contains(document)){https://github.com/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2.git
                 allGroups.add(value);
             }
             
@@ -241,6 +241,7 @@ public class LocalEataPersistence implements EataPersistence{
         
         Set<User> usersByGroup = this.getUsersByGroup(idGroup);
         Iterator<User> itus = usersByGroup.iterator();
+        ArrayList<Integer> revisados = new ArrayList<Integer>();
         
         for (Iterator<User> iterator = usersByGroup.iterator(); iterator.hasNext();) {
             User next = iterator.next();
@@ -258,63 +259,54 @@ public class LocalEataPersistence implements EataPersistence{
                         for (int j = 0; j < ftother.size(); j++) {
                             FreeTime ftcurrent = ftother.get(j);
                             if (ftcurrent.getDay() == ftini.getDay()) {
-                                //Primer caso
-                                if(ftini.getStart()==ftcurrent.getStart() && ftini.getEnd()==ftcurrent.getEnd()){
-                                    FreeTime temp = new FreeTime(ftini.getDay(), ftini.getStart(), ftini.getEnd());
+                                if (revisados.contains(next1.getDocument())) {
+                                    System.out.println("true");
                                     
-                                    commonFreeTime.add(temp);
+                                } else {
+                                    System.out.println("false");
+                                    //Primer caso
+                                    if (ftini.getStart() == ftcurrent.getStart() && ftini.getEnd() == ftcurrent.getEnd()) {
+                                        FreeTime temp = new FreeTime(ftini.getDay(), ftini.getStart(), ftini.getEnd());
+
+                                        commonFreeTime.add(temp);
+                                    }
+                                    //segundo caso
+                                    if (ftini.getStart() > ftcurrent.getStart() && ftini.getEnd() > ftcurrent.getEnd() && ftini.getStart() < ftcurrent.getEnd()) {
+                                        FreeTime temp = new FreeTime(ftini.getDay(), ftini.getStart(), ftcurrent.getEnd());
+
+                                        commonFreeTime.add(temp);
+                                    }
+                                    //tercer caso
+                                    if (ftini.getStart() < ftcurrent.getStart() && ftini.getEnd() < ftcurrent.getEnd() && ftini.getEnd() > ftcurrent.getStart()) {
+                                        FreeTime temp = new FreeTime(ftini.getDay(), ftcurrent.getStart(), ftini.getEnd());
+
+                                        commonFreeTime.add(temp);
+                                    }
+                                    //cuarto caso
+                                    if (ftini.getStart() > ftcurrent.getStart() && ftini.getEnd() < ftcurrent.getEnd()) {
+                                        FreeTime temp = new FreeTime(ftini.getDay(), ftini.getStart(), ftini.getEnd());
+
+                                        commonFreeTime.add(temp);
+                                    }
+                                    //quinto caso
+                                    if (ftini.getStart() < ftcurrent.getStart() && ftini.getEnd() > ftcurrent.getEnd()) {
+                                        FreeTime temp = new FreeTime(ftini.getDay(), ftcurrent.getStart(), ftcurrent.getEnd());
+
+                                        commonFreeTime.add(temp);
+                                    }
                                 }
-                                //segundo caso
-                                if(ftini.getStart()>ftcurrent.getStart() && ftini.getEnd()>ftcurrent.getEnd()&& ftini.getStart()<ftcurrent.getEnd()){
-                                    FreeTime temp = new FreeTime(ftini.getDay(),ftini.getStart(),ftcurrent.getEnd());
-                                    
-                                    commonFreeTime.add(temp);
-                                }
-                                //tercer caso
-                                if(ftini.getStart()<ftcurrent.getStart() && ftini.getEnd()<ftcurrent.getEnd() && ftini.getEnd()>ftcurrent.getStart()){
-                                    FreeTime temp = new FreeTime(ftini.getDay(),ftcurrent.getStart(),ftini.getEnd());
-                                    
-                                    commonFreeTime.add(temp);
-                                }
-                                //cuarto caso
-                                if(ftini.getStart()>ftcurrent.getStart() && ftini.getEnd()<ftcurrent.getEnd()){
-                                    FreeTime temp = new FreeTime(ftini.getDay(),ftini.getStart(),ftini.getEnd());
-                                    
-                                    commonFreeTime.add(temp);
-                                }
-                                //quinto caso
-                                if(ftini.getStart()<ftcurrent.getStart() && ftini.getEnd()>ftcurrent.getEnd()){
-                                    FreeTime temp = new FreeTime(ftini.getDay(),ftcurrent.getStart(),ftcurrent.getEnd());
-                                    
-                                    commonFreeTime.add(temp);
-                                }
+                                
+                                
                             }
                             
                         }
+                        revisados.add(next.getDocument());
                     }
-
             }
             }
-            
             
         }
-        //Esta parte es para eliminar los horarios que aparecen repetidos
-        /*
-        for (int i = 0; i < commonFreeTime.size(); i++) {
-            System.out.println("Entro aqui");
-            for (int j = 0; j < commonFreeTime.size(); j++) {
-                if (commonFreeTime.get(i).getDay().equals(commonFreeTime.get(j).getDay())
-                        && commonFreeTime.get(i).getStart()==(commonFreeTime.get(j).getStart())
-                        && commonFreeTime.get(i).getEnd()==(commonFreeTime.get(j).getEnd())) {
-                    System.out.println("Elimine: "+commonFreeTime.get(j).getDay()+" "+ commonFreeTime.get(j).getStart()+" "+commonFreeTime.get(j).getEnd());
-                    commonFreeTime.remove(j);
-                } else {
-                    System.out.println("false");
-                }
-            }
-
-        }*/
-        
+     
         return commonFreeTime;
     }
 
