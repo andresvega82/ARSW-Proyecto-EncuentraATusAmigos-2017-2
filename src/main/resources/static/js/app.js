@@ -12,6 +12,7 @@ var module = (function () {
     var password;
     var mail;
     var gender;
+    var estaLogeado = false;
     
     return{
       singUp : function(nam,passwor,mai,gende,idUs){
@@ -24,6 +25,11 @@ var module = (function () {
           module.createUser();
         },
         
+        cerrarSesion: function(){
+            estaLogeado = false;
+            module.redireccionAlogin()
+        },
+        
         redireccionAsingup: function(){
             window.location="http://localhost:8080/signUp.html";
         },
@@ -33,13 +39,16 @@ var module = (function () {
         },
         
         redireccionAinicio: function(){
-            window.location="http://localhost:8080/inicio.html";
+            if(estaLogeado){
+                window.location="http://localhost:8080/inicio.html";
+            }
+            
         },
         
         login:function(idUser,password){
           $.get("/eata/users/"+idUser, function(data){
               if(data.idUser == idUser && data.password == password){
-                  alert("ingreso Exitoso");
+                  estaLogeado=true;
                   module.redireccionAinicio();
                   
               }
@@ -61,7 +70,9 @@ var module = (function () {
             crear.then(
                function(){
                    alert("Usuario Creado");
+                   estaLogeado=true;
                    module.redireccionAinicio();
+                   
                }
                        
             );

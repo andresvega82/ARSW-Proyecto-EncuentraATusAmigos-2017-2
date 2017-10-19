@@ -20,9 +20,9 @@ and open the template in the editor.
     </head>
     
     <style>
-        #derecha { position: relative; width: 50%; top: 0; right: 0; background: 0; float: right; height: 350px; }
-        #izquierda { position: relative; width: 50%; top: 0; right: 0; background: 0; float: left; height: 500px; } 
-        #centro {position: relative;width: 50%; top: 0; right:  0; background: 0; float: center; height: 500px; }
+        #derecha { position: relative; width: 50%; top: 0; right: 0; background: 0; float: right; height: 50px; }
+        #izquierda { position: relative; width: 50%; top: 0; right: 0; background: 0; float: left; height: 50px; } 
+        #centro {position: relative;width: 50%; top: 0; right:  0; background: 0; float: center; height: 50px; }
         
         
         div.container {
@@ -36,7 +36,7 @@ and open the template in the editor.
             background-color: #941718;
             clear: left;
             text-align: left;
-            height: 200px;
+            height: 120px;
         }
         
         nav {
@@ -63,51 +63,31 @@ and open the template in the editor.
         }
     </style>
     <body>
-        
-        
         <header>
             <div >
                 <div id="header">
                     <div id="izquierda">
-                        <img src="amigos.png" aling="left" height="130">
+                        <img src="amigos.png" aling="left" height="100" >
                     </div>
-                    <div >
+                    <div id="derecha">
                         <h1>Encuentra a tus amigos &#174; 
-                            <button class="btn btn-primary" type = "button" onclick="">Personas conectadas por grupo</button>
-                            <button class="btn btn-primary" type = "button" onclick="">Crear grupo</button> 
+                            <button class="btn btn-danger" type = "button" onclick="module.cerrarSesion()">Cerrar sesion</button>
+                            
                         </h1>
                     </div>
                 </div>       
             </div>      
         </header>
         
-        <nav>
-            <ul>
-                <img src =""
-                <li> Escuela Colombiana de ingeniería </li>
-            </ul>
-        </nav>
-            
-        <map>
-            
-            <div id="derecha">
-                
-                <h1 style="font-family:verdana;"> Escuela Colombiana de Ingeniería</h1>
-                
-                <div style="width:400px;height:400px;background:black">
-                </div>
-                <br>
-                <div id="izquierda">
-                    <p><strong>Amigos Conectados</strong></p>
-                </div>
-                <div id ="derecha">
-                    <button class="btn btn-primary" type = "button" onclick="">Personas conectadas por grupo</button> <br><br>
-                    <button class="btn btn-primary" type = "button" onclick="">Crear grupo</button> <br><br>
-                    <button class="btn btn-primary" type = "button" onclick="">Notificar grupo</button> <br><br>
-                    <button class="btn btn-danger" type = "button" onclick="">Cerrar sesion</button> <br><br>
-                </div>
-                
-            </div>
-        </map>
+        <div id="izquierda" >
+            <table id="tablaGrupos">
+                    <tr>
+                        <th id="Bpname">Blue Prints Name</th>
+                        <th id="NumPoint">Number of Points</th>
+                        <th id="ButtonOpen">Open</th>
+                    </tr>
+                </table>
+        </div>
+    
     </body>
 </html>
