@@ -8,39 +8,60 @@ var module = (function () {
     
     var x = document.getElementById("demo");
     var name;
-    var document;
+    var idUser;
     var password;
     var mail;
     var gender;
     
     return{
-       singUp : function(name,password,mail,gender){
-           $("#singUp").empty();
-           $("#singUp").append("<label>Name:</label><input id='nameNewUser' type='text' size='50' maxlength='30' value='' name='name'>");
-           $("#singUp").append("<label>Document:</label><input id='documentUser' type='text' size='50' maxlength='30' value='' document='document'>");
-           $("#singUp").append("<label>Password:</label><input id='passworUser' type='text' size='50' maxlength='30' value='' password='password'>");
-           $("#singUp").append("<label>Mail:</label><input id='mailUser' type='text' size='50' maxlength='30' value='' mail='mail'>");
-           $("#singUp").append("<label>Gender:</label><input id='genderUser' type='text' size='50' maxlength='30' value='' gender='gender'>");
-           $("#singUp").append("<button id='botsingUp' style='background-color:crimson' class='btn btn-primary' type = 'button' onclick='module.createUser()'>Sing Up</button>");
-            
+      singUp : function(nam,passwor,mai,gende,idUs){
+          
+          name=nam;
+          password= passwor;
+          mail=mai;
+          gender=gende;
+          idUser=idUs;
+          module.createUser();
+        },
+        
+        redireccionAsingup: function(){
+            window.location="http://localhost:8080/signUp.html";
+        },
+        
+        redireccionAlogin: function(){
+            window.location="http://localhost:8080/login.html";
+        },
+        
+        redireccionAinicio: function(){
+            window.location="http://localhost:8080/inicio.html";
+        },
+        
+        login:function(idUser,password){
+          $.get("/eata/users/"+idUser, function(data){
+              if(data.idUser == idUser && data.password == password){
+                  alert("ingreso Exitoso");
+                  module.redireccionAinicio();
+                  
+              }
+          });
         },
        createUser:function(){
-           document.getElementById("nameNewUSer").innerHTML= "The user "+name+" has been successfully created";
+           
+          // document.getElementById("nameNewUSer").innerHTML= "The user "+name+" has been successfully created";
            //[{"document":2090540,"password":"1234","friends":[],"mail":"aaaa@mail.com","gender":"macho","freeHours":null,"name":"Jairo Gonzalez"}
           // "{\"author\":"+"\""+nombre+"\","+"\"points\":"+JSON.stringify(puntosActuales)+",\""+"name\":"+"\""+nombrePlano+"\""+"}";
-           var newUSer = "{\"document\":"+"\""+document+"\","+"\"friends\":"+"\""+[]+"\",\""+"mail\":"+"\""+mail+"\",\""+"gender\":"+"\""+gender+"\",\""+"freeHours\":"+"\""+null+"\",\""+"name\":"+"\""+name+"\""+"}";
+           var newUser = "{\"idUser\":"+idUser+","+"\"password\":"+"\""+password+"\","+"\"friends\":[],\""+"mail\":"+"\""+mail+"\",\""+"gender\":"+"\""+gender+"\",\""+"freeTime\":[],\""+"name\":"+"\""+name+"\""+"}";
+           console.log(newUser);
            var crear=$.ajax({
-                url: "/eata/users",
-                type: 'PUT',
-                data: nuevo,
+                url: "/eata",
+                type: 'POST',
+                data: newUser,
                 contentType: "application/json"
             });
             crear.then(
                function(){
-                   getBlueprintsByAuthor();
-               },
-               function(){
-                   alert("No se pudo Actualizar");
+                   alert("Usuario Creado");
+                   module.redireccionAinicio();
                }
                        
             );

@@ -15,25 +15,35 @@ import java.util.Set;
 
 public class User {
     
-    private int document;
+    private int idUser;
     private String password;
     private ArrayList<Integer> friends = new ArrayList<Integer>();
     private String mail;
     private String gender;
     private ArrayList<FreeTime> freeTime = new ArrayList<FreeTime>();
     private String name;
-    
-    
-    public User(String name, int document, String password , String mail, String gender) {
+
+    public User(int idUser, String password,ArrayList<Integer> friends, String mail, String gender,ArrayList<FreeTime> freetime, String name) {
+        this.idUser = idUser;
+        this.password = password;
+        this.mail = mail;
+        this.gender = gender;
         this.name = name;
-        this.document = document;
+    }
+    
+    public User() {
+    }  
+    
+    public User(String name, int idUser, String password , String mail, String gender) {
+        this.name = name;
+        this.idUser = idUser;
         this.password = password;
         this.mail = mail;
         this.gender = gender;
     }
     
-    public void addFriend(int document){
-        this.friends.add(document);
+    public void addFriend(int idUser){
+        this.friends.add(idUser);
     }
     
     public void addFreeTime(FreeTime ft){
@@ -49,12 +59,12 @@ public class User {
         this.name = name;
     }
 
-    public int getDocument() {
-        return document;
+    public int getIdUser() {
+        return idUser;
     }
 
-    public void setDocument(int document) {
-        this.document = document;
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public String getPassword() {

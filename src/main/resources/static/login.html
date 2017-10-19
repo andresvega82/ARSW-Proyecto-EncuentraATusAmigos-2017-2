@@ -1,12 +1,7 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
-        <title>Encuentra a tus Amigos</title>
+        <title>LOGIN</title>
         <link rel="shortcut icon" type="image/png" href="/imagenes/icono.png" />
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,69 +11,99 @@ and open the template in the editor.
               href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
         <script src="js/apimock.js"></script>
         <script src="js/app.js"></script>
+        
     </head>
     <style>
-        #derecha { position: relative; width: 50%; top: 0; right: 0; background: 0; float: right; height: 350px; }
-        #izquierda { position: relative; width: 50%; top: 0; right: 0; background: 0; float: left; height: 500px; } 
-        #centro {position: relative;width: 50%; top: 0; right:  0; background: 0; float: center; height: 500px; }
-        
-        
-        div.container {
+        form {
+            border: 3px solid #f1f1f1;
+        }
+
+        input[type=text], input[type=password] {
             width: 100%;
-            border: 1px solid gray;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
         }
 
-        header, footer {
-            padding: 1em;
+        button {
+            background-color: #4CAF50;
             color: white;
-            background-color: #941718;
-            clear: left;
-            text-align: left;
-            height: 200px;
-        }
-        
-        nav {
-            float: left;
-            max-width: 160px;
-            margin: 0;
-            padding: 1em;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
         }
 
-        nav ul {
-            list-style-type: none;
-            padding: 0;
+        button:hover {
+            opacity: 0.8;
         }
 
-        nav ul a {
-            text-decoration: none;
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
         }
-        
-        map{
-            text-align: left;
-            border-left: 1px solid gray;
-            padding: 1em;
-            overflow: hidden;
+
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+        }
+
+        img.avatar {
+            width: 40%;
+            border-radius: 50%;
+        }
+
+        .container {
+            padding: 16px;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+            .cancelbtn {
+                width: 100%;
+            }
         }
     </style>
     <body>
-        
-        
-        <header>
-            <div >
-                <div id="header">
-                    <div id="izquierda">
-                        <img src="amigos.png" aling="left" height="130">
-                    </div>
-                    <div >
-                        <h1>Encuentra a tus amigos    &#174; 
-                            <button class="btn btn-primary" type = "button" onclick="">Registrarse</button>
-                            <button class="btn btn-primary" type = "button" onclick="">Iniciar Sesion</button> 
-                        </h1>
-                    </div>
-                </div>       
-            </div>      
-        </header>
 
+        <h2>ENCUENTRA A TUS AMIGOS-LOGIN</h2>
+
+        <form action="/action_page.php">
+            <div class="imgcontainer">
+                <img src="amigos.png" alt="Avatar" class="avatar">
+            </div>
+
+            <div class="container">
+                <label><b>Username</b></label>
+                <input id="idUserLogin" type="text" placeholder="Enter Username" name="uname" required>
+
+                <label><b>Password</b></label>
+                <input id="passwordLogin" type="password" placeholder="Enter Password" name="psw" required>
+
+                <button type="button" onclick="module.login(document.getElementById('idUserLogin').value,document.getElementById('passwordLogin').value)">Login</button>
+                
+                <button type="button" onclick="module.redireccionAsingup()">Sing Up</button>
+                <input type="checkbox" checked="checked"> Remember me
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" class="cancelbtn">Cancel</button>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
+        </form>
 
     </body>
 </html>

@@ -74,8 +74,8 @@ public class LocalEataPersistence implements EataPersistence{
         u1.addFreeTime(hl2);
         u3.addFreeTime(hl3);
         u3.addFreeTime(hl4);
-        u4.addFreeTime(hl5);
-        u4.addFreeTime(hl6);
+        u3.addFreeTime(hl5);
+        u3.addFreeTime(hl6);
         u2.addFreeTime(hl7);
         u2.addFreeTime(hl8);
         u2.addFreeTime(hl9);
@@ -86,8 +86,8 @@ public class LocalEataPersistence implements EataPersistence{
         u1.addFreeTime(hl14);
         u1.addFreeTime(hl15);
         u3.addFreeTime(hl16);
-        u4.addFreeTime(hl17);
-        u4.addFreeTime(hl18);
+        u3.addFreeTime(hl17);
+        u3.addFreeTime(hl18);
         
         //se agregan los usuarios al conjunto
         users.put(2101751, u1);
@@ -168,23 +168,23 @@ public class LocalEataPersistence implements EataPersistence{
     @Override
     public void saveUser(User user) throws EataPersistenceException {
         
-        if (users.containsKey(user.getDocument())){
+        if (users.containsKey(user.getIdUser())){
             throw new EataPersistenceException("El usuario dado ya existe: "+user);
         }
         else{
-            users.put(user.getDocument(), user);
+            users.put(user.getIdUser(), user);
         } 
     }
     
     @Override
-    public Set<Group> getMyGroups(int document) throws EataNotFoundException {
+    public Set<Group> getMyGroups(int idUser) throws EataNotFoundException {
         Set<Group> allGroups = new HashSet<>();
         
         for (Map.Entry<Integer, Group> entry : groups.entrySet()) {
             Integer key = entry.getKey();
             Group value = entry.getValue();
             ArrayList<Integer> miembros = value.getMembers();
-            if(miembros.contains(document)){https://github.com/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2.git
+            if(miembros.contains(idUser)){https://github.com/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2.git
                 allGroups.add(value);
             }
             
@@ -203,9 +203,9 @@ public class LocalEataPersistence implements EataPersistence{
     }
     
     @Override
-    public Set<User> getMyFriends(int document) throws EataNotFoundException {
+    public Set<User> getMyFriends(int idUser) throws EataNotFoundException {
         Set<User> myFriends = new HashSet<>();
-        User currentUser = users.get(document);
+        User currentUser = users.get(idUser);
         ArrayList<Integer> idFriends = currentUser.getFriends();
         
         for (int i=0; i<idFriends.size(); i++) {
@@ -223,13 +223,13 @@ public class LocalEataPersistence implements EataPersistence{
     }
 
     @Override
-    public void addFriend(int friendDocument, int document) throws EataPersistenceException {
-        users.get(document).addFriend(friendDocument);
+    public void addFriend(int friendDocument, int idUser) throws EataPersistenceException {
+        users.get(idUser).addFriend(friendDocument);
     }
 
     @Override
-    public User getUserByDocument(int document) throws EataNotFoundException {
-        return users.get(document);
+    public User getUserByDocument(int idUser) throws EataNotFoundException {
+        return users.get(idUser);
     }
 
     @Override
@@ -252,8 +252,8 @@ public class LocalEataPersistence implements EataPersistence{
     }
 
     @Override
-    public ArrayList<FreeTime> getFreeTimebyUser(int document) throws EataNotFoundException {
-        return users.get(document).getFreeTime();
+    public ArrayList<FreeTime> getFreeTimebyUser(int idUser) throws EataNotFoundException {
+        return users.get(idUser).getFreeTime();
     }
     
     //Este metodo calcula el tiepo libre comun de los estudiantes
@@ -275,13 +275,13 @@ public class LocalEataPersistence implements EataPersistence{
                 for (Iterator<User> iterator1 = usersByGroup.iterator(); iterator1.hasNext();) {
                     User next1 = iterator1.next();
                     
-                    if (next.getDocument() != next1.getDocument()) {
+                    if (next.getIdUser() != next1.getIdUser()) {
                         ArrayList<FreeTime> ftother = next1.getFreeTime();
                         
                         for (int j = 0; j < ftother.size(); j++) {
                             FreeTime ftcurrent = ftother.get(j);
                             if (ftcurrent.getDay() == ftini.getDay()) {
-                                if (revisados.contains(next1.getDocument())) {
+                                if (revisados.contains(next1.getIdUser())) {
                                     System.out.println("true");
                                     
                                 } else {
@@ -322,7 +322,7 @@ public class LocalEataPersistence implements EataPersistence{
                             }
                             
                         }
-                        revisados.add(next.getDocument());
+                        revisados.add(next.getIdUser());
                     }
             }
             }

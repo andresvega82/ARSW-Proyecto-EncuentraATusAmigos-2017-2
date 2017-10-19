@@ -40,11 +40,11 @@ public class EataAPIController {
         }
     }
     
-    @RequestMapping(path = "/users/{document}", method = RequestMethod.GET)
-    public ResponseEntity<?> getUserByDocument(@PathVariable("document") int document) {
+    @RequestMapping(path = "/users/{idUser}", method = RequestMethod.GET)
+    public ResponseEntity<?> getUserByDocument(@PathVariable("idUser") int idUser) {
         try {
             //obtener datos que se enviarán a través del API
-            return new ResponseEntity<>(eataservice.getUserByDocument(document), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(eataservice.getUserByDocument(idUser), HttpStatus.ACCEPTED);
         } catch (Exception ex) {
             Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
@@ -73,22 +73,22 @@ public class EataAPIController {
         }
     }
     
-    @RequestMapping(path = "/users/myfriends/{document}",method = RequestMethod.GET)
-    public ResponseEntity<?> getMyFriends(@PathVariable("document") int document) {
+    @RequestMapping(path = "/users/myfriends/{idUser}",method = RequestMethod.GET)
+    public ResponseEntity<?> getMyFriends(@PathVariable("idUser") int idUser) {
         try {
             //obtener datos que se enviarán a través del API
-            return new ResponseEntity<>(eataservice.getMyFriends(document), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(eataservice.getMyFriends(idUser), HttpStatus.ACCEPTED);
         } catch (Exception ex) {
             Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
         }
     }
     
-    @RequestMapping(path = "/users/freetime/{document}",method = RequestMethod.GET)
-    public ResponseEntity<?> getFreeTimeByUser(@PathVariable("document") int document) {
+    @RequestMapping(path = "/users/freetime/{idUser}",method = RequestMethod.GET)
+    public ResponseEntity<?> getFreeTimeByUser(@PathVariable("idUser") int idUser) {
         try {
             //obtener datos que se enviarán a través del API
-            return new ResponseEntity<>(eataservice.getFreeTimeByUser(document), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(eataservice.getFreeTimeByUser(idUser), HttpStatus.ACCEPTED);
         } catch (Exception ex) {
             Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
@@ -117,11 +117,11 @@ public class EataAPIController {
         }
     }
     
-    @RequestMapping(path = "/users/mygroups/{document}",method = RequestMethod.GET)
-    public ResponseEntity<?> getMyGroups(@PathVariable("document") int document) {
+    @RequestMapping(path = "/users/mygroups/{idUser}",method = RequestMethod.GET)
+    public ResponseEntity<?> getMyGroups(@PathVariable("idUser") int idUser) {
         try {
             //obtener datos que se enviarán a través del API
-            return new ResponseEntity<>(eataservice.getMyGroups(document), HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(eataservice.getMyGroups(idUser), HttpStatus.ACCEPTED);
         } catch (Exception ex) {
             Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
@@ -138,6 +138,18 @@ public class EataAPIController {
             return new ResponseEntity<>("Error bla bla bla", HttpStatus.FORBIDDEN);
         }
     }
+    
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<?> addNewUserLLL(@RequestBody User user) {
+        try {
+            eataservice.addNewUser(user);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception ex) {
+            Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.FORBIDDEN);
+        }
+    }
+    
     
     
 }

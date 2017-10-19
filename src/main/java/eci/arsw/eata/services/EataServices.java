@@ -31,16 +31,16 @@ public class EataServices {
         return eatap.getAllUsers();
     }
     
-    public User getUserByDocument(int document) throws EataNotFoundException{
-        return eatap.getUserByDocument(document);
+    public User getUserByDocument(int idUser) throws EataNotFoundException{
+        return eatap.getUserByDocument(idUser);
     }
     
     public Set<User> getUsersByGroup(int idGroup) throws EataNotFoundException{
         return eatap.getUsersByGroup(idGroup);
     }
     
-    public Set<User> getMyFriends(int document) throws EataNotFoundException{
-        return eatap.getMyFriends(document);
+    public Set<User> getMyFriends(int idUser) throws EataNotFoundException{
+        return eatap.getMyFriends(idUser);
     }
     
     public Set<Group> getAllGroups() throws EataNotFoundException{
@@ -51,16 +51,16 @@ public class EataServices {
         return eatap.getMeetingsByGroup(idGroups);
     }
     
-    public Set<Group> getMyGroups(int document) throws EataNotFoundException{
-        return eatap.getMyGroups(document);
+    public Set<Group> getMyGroups(int idUser) throws EataNotFoundException{
+        return eatap.getMyGroups(idUser);
     }
     
     public void addNewUser(User user) throws EataNotFoundException, EataPersistenceException{
         eatap.saveUser(user);
     }
     
-    public ArrayList<FreeTime> getFreeTimeByUser(int document) throws EataNotFoundException, EataPersistenceException{
-        return eatap.getFreeTimebyUser(document);
+    public ArrayList<FreeTime> getFreeTimeByUser(int idUser) throws EataNotFoundException, EataPersistenceException{
+        return eatap.getFreeTimebyUser(idUser);
         
     }
     

@@ -35,7 +35,7 @@ public interface EataPersistence {
      * @return 
      * @throws EataPersistenceException
      */
-    public Set<User> getMyFriends(int document) throws EataNotFoundException;
+    public Set<User> getMyFriends(int idUser) throws EataNotFoundException;
     
     /**
      *
@@ -47,25 +47,25 @@ public interface EataPersistence {
     
     /**
      *
-     * @param document es el id de la persona que solicita los grupos de si mismo
+     * @param idUser es el id de la persona que solicita los grupos de si mismo
      * @return 
      * @throws EataPersistenceException
      */
-    public Set<Group> getMyGroups(int document) throws EataNotFoundException;
+    public Set<Group> getMyGroups(int idUser) throws EataNotFoundException;
     
     
     /**
      *
-     * @param document es el id de la persona que solicita los grupos de si mismo
+     * @param idUser es el id de la persona que solicita los grupos de si mismo
      * @return 
      * @throws EataPersistenceException
      */
-    public ArrayList<FreeTime> getFreeTimebyUser(int document) throws EataNotFoundException;
+    public ArrayList<FreeTime> getFreeTimebyUser(int idUser) throws EataNotFoundException;
     
     
     /**
      *
-     * @param document es el id de la persona que solicita los grupos de si mismo
+     * @param idUser es el id de la persona que solicita los grupos de si mismo
      * @return 
      * @throws EataPersistenceException
      */
@@ -96,18 +96,18 @@ public interface EataPersistence {
     /**
      *
      * @param friendDocument es el id del amigo al cual va a agregar
-     * @param document es el id del usuario actual
+     * @param idUser es el id del usuario actual
      * @throws EataPersistenceException
      */
-    public void addFriend(int friendDocument, int document) throws EataPersistenceException;
+    public void addFriend(int friendDocument, int idUser) throws EataPersistenceException;
     
     /**
      *
-     * @param document es el id del usuario, corresponde al carnet
+     * @param idUser es el id del usuario, corresponde al carnet
      * @return el usuario asociado al id
      * @throws EataPersistenceException
      */
-    public User getUserByDocument(int document) throws EataNotFoundException;
+    public User getUserByDocument(int idUser) throws EataNotFoundException;
     
     
     /**
