@@ -15,7 +15,7 @@ import java.util.Set;
 public class Group {
     
     private ArrayList<Integer> members = new ArrayList<Integer>();
-    private Set<Meeting> meetings;
+    private ArrayList<Integer> meetings = new ArrayList<Integer>();
     private int id;
     private String name;
     private String description;
@@ -27,8 +27,8 @@ public class Group {
         this.description = description;
     }
     
-    public void addMeeting(Meeting meeting){
-        meetings.add(meeting);
+    public void addMeeting(Integer idMeeting){
+        meetings.add(idMeeting);
     }
     
     public ArrayList<Integer> getMembers() {
@@ -39,13 +39,15 @@ public class Group {
         this.members = members;
     }
 
-    public Set<Meeting> getMeetings() {
+    public ArrayList<Integer> getMeetings() {
         return meetings;
     }
 
-    public void setMeetings(Set<Meeting> meetings) {
+    public void setMeetings(ArrayList<Integer> meetings) {
         this.meetings = meetings;
     }
+
+    
 
     public int getId() {
         return id;

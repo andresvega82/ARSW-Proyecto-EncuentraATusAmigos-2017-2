@@ -95,6 +95,17 @@ public class EataAPIController {
         }
     }
     
+    @RequestMapping(path = "/groups/meeting/{idGroup}",method = RequestMethod.GET)
+    public ResponseEntity<?> getMeetingsByGroup(@PathVariable("idGroup") int idGroup) {
+        try {
+            //obtener datos que se enviarán a través del API
+            return new ResponseEntity<>(eataservice.getMettingsByGroup(idGroup), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
+        }
+    }
+    
     @RequestMapping(path = "/groups/freetime/{idGroup}",method = RequestMethod.GET)
     public ResponseEntity<?> getCommonFreeTimeByGroup(@PathVariable("idGroup") int idGroup) {
         try {

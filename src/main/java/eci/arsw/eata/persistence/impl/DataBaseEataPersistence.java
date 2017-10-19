@@ -32,7 +32,7 @@ public class DataBaseEataPersistence implements EataPersistence{
     }
 
     @Override
-    public void addMeeting(Meeting metting, int idGroup) throws EataPersistenceException {
+    public void addMeeting(int idMetting, int idGroup) throws EataPersistenceException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -83,6 +83,11 @@ public class DataBaseEataPersistence implements EataPersistence{
 
     @Override
     public ArrayList<FreeTime> getCommonFreeTimebyGroup(int idGroup) throws EataNotFoundException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Set<Meeting> getMeetingsByGroup(int idGroup) throws EataNotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

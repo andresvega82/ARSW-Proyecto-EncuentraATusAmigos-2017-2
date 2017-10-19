@@ -91,7 +91,7 @@ public interface EataPersistence {
      * @param idGroup es el id del grupo al cual se va a agregar la reunion
      * @throws EataPersistenceException
      */
-    public void addMeeting(Meeting metting, int idGroup) throws EataPersistenceException;
+    public void addMeeting(int idMetting, int idGroup) throws EataPersistenceException;
     
     /**
      *
@@ -117,6 +117,14 @@ public interface EataPersistence {
      * @throws EataPersistenceException
      */
     public Set<User> getUsersByGroup(int idGroup) throws EataNotFoundException;
+    
+    /**
+     *
+     * @param idGroup es el id del grupo
+     * @return retorna el conjunto de usuarios asociados a ese grupo
+     * @throws EataPersistenceException
+     */
+    public Set<Meeting> getMeetingsByGroup(int idGroup) throws EataNotFoundException;
     
     /**
      *

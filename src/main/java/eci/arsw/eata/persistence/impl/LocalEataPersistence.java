@@ -12,6 +12,7 @@ import eci.arsw.eata.model.User;
 import eci.arsw.eata.persistence.EataNotFoundException;
 import eci.arsw.eata.persistence.EataPersistence;
 import eci.arsw.eata.persistence.EataPersistenceException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,6 +30,7 @@ public class LocalEataPersistence implements EataPersistence{
     
     private final Map<Integer,User> users=new HashMap<>();
     private final Map<Integer,Group> groups=new HashMap<>();
+    private final Map<Integer,Meeting> meetings=new HashMap<>();
     
     public LocalEataPersistence() {
         
@@ -109,6 +111,9 @@ public class LocalEataPersistence implements EataPersistence{
         members3.add(2099444);
         
         
+        
+        //creacion de grupos
+        
         Group g1 = new Group(members1, 1, "arsw trabajo", "Este grupo es para hacer lab de arsw");
         Group g2 = new Group(members2, 2, "segi trabajo", "seminariop de segi");
         Group g3 = new Group(members3, 3, "PGR1", "pgr1 no me funciona nada");
@@ -116,6 +121,23 @@ public class LocalEataPersistence implements EataPersistence{
         groups.put(1, g1);
         groups.put(2, g2);
         groups.put(3, g3);
+        
+        //Creacion de reuniones
+        Date fecha = new Date(2017,10,22);
+        
+        java.sql.Date fechaSQL = new java.sql.Date(fecha.getTime());
+        Meeting m1 = new Meeting(1, fechaSQL, "estudio", "estudiaremos para examenes");
+        Meeting m2 = new Meeting(2, fechaSQL, "reunion pgr", "adelanto de pgr");
+        Meeting m3 = new Meeting(3, fechaSQL, "almuerzo", "reunamonos para almorzar");
+        
+        meetings.put(1, m1);
+        meetings.put(2, m2);
+        meetings.put(3, m3);
+        
+        //Se agregan las reuniones a los grupos
+        g1.addMeeting(1);
+        g2.addMeeting(2);
+        g2.addMeeting(3);
         
     }
 
@@ -195,8 +217,8 @@ public class LocalEataPersistence implements EataPersistence{
     }
     
     @Override
-    public void addMeeting(Meeting metting, int idGroup) throws EataPersistenceException {
-        groups.get(idGroup).addMeeting(metting);
+    public void addMeeting(int idMetting, int idGroup) throws EataPersistenceException {
+        groups.get(idGroup).addMeeting(idMetting);
         
     }
 
@@ -308,6 +330,20 @@ public class LocalEataPersistence implements EataPersistence{
         }
      
         return commonFreeTime;
+    }
+
+    @Override
+    public Set<Meeting> getMeetingsByGroup(int idGroup) throws EataNotFoundException {
+        Set<Meeting> meetingsByGroup = new HashSet<>();
+        Group currentGroup = groups.get(idGroup);
+        ArrayList<Integer> idMeetings = currentGroup.getMeetings();
+        
+        for (int i=0; i<idMeetings.size(); i++) {
+            int idnew = idMeetings.get(i);
+            meetingsByGroup.add(meetings.get(idnew));
+        }
+        
+        return meetingsByGroup;
     }
 
     

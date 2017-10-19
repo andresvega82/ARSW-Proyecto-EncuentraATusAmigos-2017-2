@@ -7,6 +7,7 @@ package eci.arsw.eata.services;
 
 import eci.arsw.eata.model.FreeTime;
 import eci.arsw.eata.model.Group;
+import eci.arsw.eata.model.Meeting;
 import eci.arsw.eata.model.User;
 import eci.arsw.eata.persistence.EataNotFoundException;
 import eci.arsw.eata.persistence.EataPersistence;
@@ -44,6 +45,10 @@ public class EataServices {
     
     public Set<Group> getAllGroups() throws EataNotFoundException{
         return eatap.getAllGroups();
+    }
+    
+    public Set<Meeting> getMettingsByGroup(int idGroups) throws EataNotFoundException{
+        return eatap.getMeetingsByGroup(idGroups);
     }
     
     public Set<Group> getMyGroups(int document) throws EataNotFoundException{
