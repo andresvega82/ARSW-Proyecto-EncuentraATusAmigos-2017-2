@@ -72,7 +72,9 @@ var module = (function () {
         redireccionAinicio: function(){
             if(estaLogeado){
                 window.location=url+"/inicio.html";
+                document.getElementById("nameUser").innerHTML = "Algo "+name;
             }
+            
             
         },
         
