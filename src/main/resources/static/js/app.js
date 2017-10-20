@@ -55,6 +55,10 @@ var module = (function () {
           module.createUser();
         },
         
+        nombreUser: function(){
+            console.log(name+" :nombre en APP");
+          return name;  
+        },
         cerrarSesion: function(){
             estaLogeado = false;
             module.redireccionAlogin()
@@ -77,10 +81,19 @@ var module = (function () {
         
         login:function(idUser,password){
           $.get("/eata/users/"+idUser, function(data){
+              
               if(data.idUser == idUser && data.password == password){
+                  console.log("entro a login"); 
+                    name=data.name;
+                    password= data.password;   
+                    mail= data.mail;
+                    gender= data.gender;
+                    idUser= data.idUser;
                   estaLogeado=true;
                   module.redireccionAinicio();
-                  
+              }
+              else{
+                  console.log("Clave incorrecta o usuario incorrecto"); 
               }
           });
         },

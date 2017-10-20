@@ -28,6 +28,7 @@ and open the template in the editor.
                     "<br>Longitude: " + position.coords.longitude);
                 }
                 function myMap(position) {
+                    console.log(module.nombreUser()+" :User");
                     var mapOptions = {
                         center: new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
                         zoom: 100,
@@ -36,6 +37,13 @@ and open the template in the editor.
                     console.log( "Latitude: " + position.coords.latitude + 
                     "<br>Longitude: " + position.coords.longitude);
                     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
+                        icon: 'amigos.png',
+                        title: "module.nombreUser",
+                        map: map
+                      });
                 }
 
                 
