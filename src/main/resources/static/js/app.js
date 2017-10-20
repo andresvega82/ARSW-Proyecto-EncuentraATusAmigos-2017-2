@@ -16,10 +16,11 @@ var module = (function () {
     var mail;
     var gender;
     var estaLogeado = false;
+
     //var url = "http://arsw-proyecto-2017-2.herokuapp.com";
     var url = "http://localhost:8080";
     
-    
+
     
     return{
 //        myMap : function() {
@@ -75,7 +76,9 @@ var module = (function () {
         redireccionAinicio: function(){
             if(estaLogeado){
                 window.location=url+"/inicio.html";
+                document.getElementById("nameUser").innerHTML = "Algo "+name;
             }
+            
             
         },
         
