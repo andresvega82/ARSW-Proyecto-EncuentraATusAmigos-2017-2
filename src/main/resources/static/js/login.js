@@ -36,7 +36,7 @@ var loginJs = (function () {
                     gender = data.gender;
                     estaLogeado = true;
                     
-                    //loginJs.redireccionAinicio();
+                    loginJs.redireccionAinicio();
               }
           });
         },
