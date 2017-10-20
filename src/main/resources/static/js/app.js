@@ -9,6 +9,7 @@
 var module = (function () {
     
     var x = document.getElementById("demo");
+    var y = document.getElementById("demo");
     var name;
     var idUser;
     var password;
@@ -29,6 +30,19 @@ var module = (function () {
 //                mapTypeId: google.maps.MapTypeId.HYBRID
 //            }
 //            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+//        },
+
+//        getLocation: function () {
+//            if (navigator.geolocation) {
+//                navigator.geolocation.getCurrentPosition(showPosition);
+//            } else { 
+//                y.innerHTML = "Geolocation is not supported by this browser.";
+//            }
+//        },
+//
+//        showPosition : function (position) {
+//            y.innerHTML = "Latitude: " + position.coords.latitude + 
+//            "<br>Longitude: " + position.coords.longitude;
 //        },
         
         
@@ -94,20 +108,7 @@ var module = (function () {
                        
             );
        },
-       getLocation: function(){
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(module.showPosition(), module.showError() );
-            } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
-            }
-       },
-       //coordinates
-       showPosition: function(position){
-            console.log(position.latitude);
-            var latlon = position.latitude + "," + position.coords.longitude;
-            var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+ latlon + "&zoom=14&size=400x300&key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU";
-            document.getElementById("mapholder").innerHTML = "<img src='" + img_url + "'>";
-       },
+       
        
        showError: function(error){
             switch (error.code) {

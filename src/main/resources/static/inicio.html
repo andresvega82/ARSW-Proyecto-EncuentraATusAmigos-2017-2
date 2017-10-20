@@ -16,15 +16,29 @@ and open the template in the editor.
               href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
         <script src="js/apimock.js"></script>
         <script src="js/app.js"></script>
+        
         <script>
-                function myMap() {
-                var mapOptions = {
-                    center: new google.maps.LatLng(51.5, -0.12),
-                    zoom: 10,
-                    mapTypeId: google.maps.MapTypeId.HYBRID
+                function getLocation() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(myMap);
+                    }
                 }
-                var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                function showPosition(position) {
+                    console.log( "Latitude: " + position.coords.latitude + 
+                    "<br>Longitude: " + position.coords.longitude);
                 }
+                function myMap(position) {
+                    var mapOptions = {
+                        center: new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
+                        zoom: 100,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    }
+                    console.log( "Latitude: " + position.coords.latitude + 
+                    "<br>Longitude: " + position.coords.longitude);
+                    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                }
+
+                
         </script>
             
         
@@ -106,7 +120,8 @@ and open the template in the editor.
             <h1> Escuela Colombiana de Ingeniería Julio Garavito</h1>
             <br>
             <div id="map" style="width:1050px;height:400px; background:black"></div>
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHu_EZwEveMMjbM7HHzHnNTG161osO73w&callback=myMap"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHu_EZwEveMMjbM7HHzHnNTG161osO73w&callback=getLocation"></script>
+            
             
             
             
