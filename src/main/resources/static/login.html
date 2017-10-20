@@ -11,7 +11,7 @@
               href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
         <script src="js/apimock.js"></script>
         <script src="js/app.js"></script>
-        
+        <script src="js/login.js"></script>
     </head>
     <style>
         
@@ -112,7 +112,7 @@
                 <label><b>Password</b></label>
                 <input id="passwordLogin" type="password" placeholder="Enter Password" name="psw" required>
 
-                <button type="button" onclick="module.login(document.getElementById('idUserLogin').value,document.getElementById('passwordLogin').value)">Login</button>
+                <button type="button" onclick="loginJs.login(document.getElementById('idUserLogin').value,document.getElementById('passwordLogin').value)">Login</button>
                 
                 <button type="button" onclick="module.redireccionAsingup()">Sing Up</button>
                 <input type="checkbox" checked="checked"> Remember me

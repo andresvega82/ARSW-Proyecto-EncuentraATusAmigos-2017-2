@@ -4,17 +4,10 @@
  * and open the template in the editor.
  */
 
-/* global google */
+/* global google, controllerInicio */
 
 var module = (function () {
-    
-    var x = document.getElementById("demo");
-    var y = document.getElementById("demo");
-    var name;
-    var idUser;
-    var password;
-    var mail;
-    var gender;
+
     var estaLogeado = false;
 
     //var url = "http://arsw-proyecto-2017-2.herokuapp.com";
@@ -46,15 +39,7 @@ var module = (function () {
 //        },
         
         
-      singUp : function(nam,passwor,mai,gende,idUs){
-          
-          name=nam;
-          password= passwor;   
-          mail=mai;
-          gender=gende;
-          idUser=idUs;
-          module.createUser();
-        },
+      
         
         nombreUser: function(){
             console.log(name+" :nombre en APP");
@@ -74,73 +59,15 @@ var module = (function () {
         },
         
         redireccionAinicio: function(){
+            
             if(estaLogeado){
                 window.location=url+"/inicio.html";
-                document.getElementById("nameUser").innerHTML = "Algo "+name;
+                
             }
             
             
         },
-        
-        login:function(idUser,password){
-          $.get("/eata/users/"+idUser, function(data){
-              
-              if(data.idUser == idUser && data.password == password){
-                  console.log("entro a login"); 
-                    name=data.name;
-                    password= data.password;   
-                    mail= data.mail;
-                    gender= data.gender;
-                    idUser= data.idUser;
-                  estaLogeado=true;
-                  module.redireccionAinicio();
-              }
-              else{
-                  console.log("Clave incorrecta o usuario incorrecto"); 
-              }
-          });
-        },
-       createUser:function(){
-           
-          // document.getElementById("nameNewUSer").innerHTML= "The user "+name+" has been successfully created";
-           //[{"document":2090540,"password":"1234","friends":[],"mail":"aaaa@mail.com","gender":"macho","freeHours":null,"name":"Jairo Gonzalez"}
-          // "{\"author\":"+"\""+nombre+"\","+"\"points\":"+JSON.stringify(puntosActuales)+",\""+"name\":"+"\""+nombrePlano+"\""+"}";
-           var newUser = "{\"idUser\":"+idUser+","+"\"password\":"+"\""+password+"\","+"\"friends\":[],\""+"mail\":"+"\""+mail+"\",\""+"gender\":"+"\""+gender+"\",\""+"freeTime\":[],\""+"name\":"+"\""+name+"\""+"}";
-           console.log(newUser);
-           var crear=$.ajax({
-                url: "/eata",
-                type: 'POST',
-                data: newUser,
-                contentType: "application/json"
-            });
-            crear.then(
-               function(){
-                   alert("Usuario Creado");
-                   estaLogeado=true;
-                   module.redireccionAinicio();
-                   
-               }
-                       
-            );
-       },
-       
-       
-       showError: function(error){
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    x.innerHTML = "User denied the request for Geolocation."
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    x.innerHTML = "Location information is unavailable."
-                    break;
-                case error.TIMEOUT:
-                    x.innerHTML = "The request to get user location timed out."
-                    break;
-                case error.UNKNOWN_ERROR:
-                    x.innerHTML = "An unknown error occurred."
-                    break;
-            }
-        }
+
     }
  
     

@@ -11,6 +11,7 @@
               href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
         <script src="js/apimock.js"></script>
         <script src="js/app.js"></script>
+        <script src="js/signUp.js"></script>
         
     </head>
     <style>
@@ -106,7 +107,7 @@
 
                 <div class="clearfix">
                     <button id="butCancel" type="button" class="cancelbtn" onclick="module.redireccionAlogin()">Cancel</button>
-                    <button id="signUp" type="button" class="signupbtn" onclick="module.singUp(document.getElementById('name').value,document.getElementById('password').value,document.getElementById('mail').value,document.getElementById('gender').value,document.getElementById('idUser').value)">Sign Up</button>
+                    <button id="signUp" type="button" class="signupbtn" onclick="signUpJs.signUp(document.getElementById('name').value,document.getElementById('password').value,document.getElementById('mail').value,document.getElementById('gender').value,document.getElementById('idUser').value)">Sign Up</button>
                 </div>
             </div>
         </form>
