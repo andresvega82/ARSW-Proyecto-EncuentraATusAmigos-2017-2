@@ -41,6 +41,10 @@ var module = (function () {
         
       
         
+        nombreUser: function(){
+            console.log(name+" :nombre en APP");
+          return name;  
+        },
         cerrarSesion: function(){
             estaLogeado = false;
             module.redireccionAlogin()
@@ -63,6 +67,7 @@ var module = (function () {
             
             
         },
+
     }
  
     
