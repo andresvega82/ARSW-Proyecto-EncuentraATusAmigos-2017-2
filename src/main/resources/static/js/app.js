@@ -13,7 +13,7 @@ var module = (function () {
     var mail;
     var gender;
     var estaLogeado = false;
-    var url = "http://arsw-proyecto-2017-2.herokuapp.com";
+    var url = "http://localhost:8080";
     
     return{
       singUp : function(nam,passwor,mai,gende,idUs){
