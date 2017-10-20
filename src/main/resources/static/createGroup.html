@@ -16,41 +16,7 @@ and open the template in the editor.
               href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
         <script src="js/apimock.js"></script>
         <script src="js/app.js"></script>
-        
-        <script>
-                function getLocation() {
-                    if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(myMap);
-                    }
-                }
-                function showPosition(position) {
-                    console.log( "Latitude: " + position.coords.latitude + 
-                    "<br>Longitude: " + position.coords.longitude);
-                }
-                function myMap(position) {
-                    console.log(module.nombreUser()+" :User");
-                    var mapOptions = {
-                        center: new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
-                        zoom: 100,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    }
-                    console.log( "Latitude: " + position.coords.latitude + 
-                    "<br>Longitude: " + position.coords.longitude);
-                    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-                    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-                    var marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
-                        
-                        map: map
-                      });
-                }
-
-                
-        </script>
-            
-        
     </head>
-    
     <style>
         #derecha { position: relative; width: 50%; top: 0; right: 0; background: #941718; float: right; height: 120px; }
         #izquierda { position: relative; width: 50%; top: 0; right: 0; background: #941718; float: left; height: 120px; } 
@@ -130,27 +96,39 @@ and open the template in the editor.
                 
         </div>
         <div id="derecha2">
-            <div id="derecha2">
-                <br>
-                <h1> Escuela Colombiana de Ingeniería Julio Garavito</h1>
-                <br>
-                <div id="map" style="width:1050px;height:400px; background:black"></div>
-                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHu_EZwEveMMjbM7HHzHnNTG161osO73w&callback=getLocation"></script>
-                <br>
-                <div id ="centro">
-                    <h4> Amigos Conectados</h4>
-                </div>
-                <div id = "botones" align-content: center>
-                    <button class="btn btn-primary" type ="button" onclick=""> Personas conectadas por grupo</button><br><br>
+           <div id="derecha2">
+               <br>
+               <h1>Crear grupo: </h1>
+               <br>
+               <h5>Nombre *</h5>
+               <input type="text" name="groupName" size="100">
+               <h5>Descripción:</h5>
+               <input type="text" name="groupDescription" size="100">
+               <br><br>
+               <h3>Integrantes</h3>
+               <br><br>
+               <table style="width:100%">
+                    <tr>
+                      <td>Jill</td>
+                      <td>Smith</td>
+                      <td>50</td>
+                    </tr>
+                    <tr>
+                      <td>Eve</td>
+                      <td>Jackson</td>
+                      <td>94</td>
+                    </tr>
+                    <tr>
+                      <td>John</td>
+                      <td>Doe</td>
+                      <td>80</td>
+                    </tr>
+                 </table>
+               <br><br><br>
+               <div id="derecha2">
                     <button class="btn btn-primary" type ="button" onclick=""> Crear grupo</button><br><br>
-                    <button class="btn btn-primary" type ="button" onclick=""> notificar grupo</button><br><br>
-                    <button class="btn btn-danger" type ="button" onclick="module.cerrarSesion()"> cerrar sesion</button><br><br>
-                </div>
-                <br>
-            </div>
-            
+               </div>
+           </div>
         </div>
-        
-    
     </body>
 </html>
