@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+/* global google */
+
 var module = (function () {
     
     var x = document.getElementById("demo");
@@ -13,13 +15,26 @@ var module = (function () {
     var mail;
     var gender;
     var estaLogeado = false;
-    var url = "http://arsw-proyecto-2017-2.herokuapp.com";
+    //var url = "http://arsw-proyecto-2017-2.herokuapp.com";
+    var url = "http://localhost:8080";
+    
+    
     
     return{
+//        myMap : function() {
+//            var mapOptions = {
+//                center: new google.maps.LatLng(51.5, -0.12),
+//                zoom: 10,
+//                mapTypeId: google.maps.MapTypeId.HYBRID
+//            }
+//            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+//        },
+        
+        
       singUp : function(nam,passwor,mai,gende,idUs){
           
           name=nam;
-          password= passwor;
+          password= passwor;   
           mail=mai;
           gender=gende;
           idUser=idUs;
