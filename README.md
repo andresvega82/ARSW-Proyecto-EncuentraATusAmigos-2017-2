@@ -4,7 +4,15 @@
 2. CircleCI: [![CircleCI](https://circleci.com/gh/Chuzz1996/ARSW-CamposDeGuerra.svg?style=svg)](https://circleci.com/gh/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2)
 3. Heroku: [![Heroku](https://wmpics.pics/di-D9YP.png)](https://arsw-proyecto-2017-2.herokuapp.com)
 
-#### Nombre del Proyecto: Encuentra a tus Amigos - Arquitectura de Software (ARSW)
+### Nombre del Proyecto: Encuentra a tus Amigos - Arquitectura de Software (ARSW)
+### Autores: 
+1. Danilo Alejandro Villarraga Guerrero
+Escuela Colombiana de Ingenieria Julio Garavito
+Estudiante Ingenieria de Sistemas - noveno semestre.
+
+2. Jairo Gonzalez Boada
+3. Miguel Angel Rojas Martinez
+
 #### Descripcion: 
 Search Friends es una plataforma en la cual podrás ver en tiempo real la ubicación de tus amigos  dentro de la Escuela Colombiana de Ingeniería Julio Garavito, podrás quedar con tus amigos para encontrarse en cualquier parte de la universidad.
 
@@ -18,17 +26,12 @@ Tendrá la función de crear reuniones de trabajo grupales, con la información 
 
 Es una aplicación basada en waze que busca ser orientada a un público específico los cuales son los estudiantes de la Escuela Colombiana de Ingeniería Julio Garavito en donde podrán interactuar entre sí viendo su ubicación en tiempo real dentro de la institución para facilitar las reuniones.
 
-#### Autores: 
-1. Danilo Alejandro Villarraga Guerrero
-2. Jairo Gonzalez Boada
-3. Miguel Angel Rojas Martinez
-
 #### Creado: 08/10/2017
 #### Versión: 1.01
 ***
 ### Funcionalidades:
 
-1. Se crea un perfil por cada persona.
+1. Se puede crear un perfil por cada persona.
 2. Se pueden agregar otras personas a una lista de amigos asociada a cada perfil.
 3. Se puede crear grupos, por medio de solicitudes.
 4. Se puede informar en tiempo real, la localizacion de los usuarios.
