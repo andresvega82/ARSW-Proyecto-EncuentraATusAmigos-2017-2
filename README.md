@@ -1,7 +1,7 @@
 # ENCUENTRA A TUS AMIGOS
 ***
 1. Codacy: [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c653d1358b154962946629e8dec4c483)](https://www.codacy.com/app/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2/dashboard)
-2. CircleCI: [![CircleCI](http://viajescajica.blogspot.com.co/2017/10/blog-post.html)](https://circleci.com/gh/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2)
+2. CircleCI: [![CircleCI](https://jibai31.files.wordpress.com/2015/07/circleci-logo.jpg)](https://circleci.com/gh/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2)
 3. Heroku: [![Heroku](https://wmpics.pics/di-D9YP.png)](https://arsw-proyecto-2017-2.herokuapp.com)
 
 ### Nombre del Proyecto: Encuentra a tus Amigos - Arquitectura de Software (ARSW)
