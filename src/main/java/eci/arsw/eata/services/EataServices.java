@@ -59,6 +59,10 @@ public class EataServices {
         eatap.saveUser(user);
     }
     
+    public void addNewGroup(Group group) throws EataNotFoundException, EataPersistenceException{
+        eatap.saveGroup(group);
+    }
+    
     public ArrayList<FreeTime> getFreeTimeByUser(int idUser) throws EataNotFoundException, EataPersistenceException{
         return eatap.getFreeTimebyUser(idUser);
         

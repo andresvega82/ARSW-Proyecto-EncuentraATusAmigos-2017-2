@@ -5,6 +5,7 @@
  */
 package eci.arsw.eata.controllers;
 
+import eci.arsw.eata.model.Group;
 import eci.arsw.eata.model.User;
 import eci.arsw.eata.services.EataServices;
 import java.util.logging.Level;
@@ -132,6 +133,17 @@ public class EataAPIController {
     public ResponseEntity<?> addNewUser(@RequestBody User user) {
         try {
             eataservice.addNewUser(user);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception ex) {
+            Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.FORBIDDEN);
+        }
+    }
+    
+    @RequestMapping(path = "/addgroup", method = RequestMethod.POST)
+    public ResponseEntity<?> addNewGroup(@RequestBody Group group) {
+        try {
+            eataservice.addNewGroup(group);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception ex) {
             Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);

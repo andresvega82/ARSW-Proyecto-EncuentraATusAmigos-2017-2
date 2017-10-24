@@ -27,6 +27,10 @@ public class Group {
         this.description = description;
     }
     
+    public Group(){
+        
+    }
+    
     public void addMeeting(Integer idMeeting){
         meetings.add(idMeeting);
     }

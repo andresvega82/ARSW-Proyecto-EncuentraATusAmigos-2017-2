@@ -198,7 +198,7 @@ public class LocalEataPersistence implements EataPersistence{
             throw new EataPersistenceException("El usuario dado ya existe: "+group);
         }
         else{
-            groups.put(group.getId(), group);
+            groups.put(groups.size()+1, group);
         }
     }
     
