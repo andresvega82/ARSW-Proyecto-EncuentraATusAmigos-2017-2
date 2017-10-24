@@ -7,9 +7,6 @@
 ### Nombre del Proyecto: Encuentra a tus Amigos - Arquitectura de Software (ARSW)
 ### Autores: 
 1. Danilo Alejandro Villarraga Guerrero
-Escuela Colombiana de Ingenieria Julio Garavito
-Estudiante Ingenieria de Sistemas - noveno semestre.
-
 2. Jairo Gonzalez Boada
 3. Miguel Angel Rojas Martinez
 
