@@ -41,6 +41,17 @@ public class EataAPIController {
         }
     }
     
+    @RequestMapping(path = "/usersconected", method = RequestMethod.GET)
+    public ResponseEntity<?> getUsersConected() {
+        try {
+            //obtener datos que se enviarán a través del API
+            return new ResponseEntity<>(eataservice.getAllUsersConected(), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
+        }
+    }
+    
     @RequestMapping(path = "/users/{idUser}", method = RequestMethod.GET)
     public ResponseEntity<?> getUserByDocument(@PathVariable("idUser") int idUser) {
         try {

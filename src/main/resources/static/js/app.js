@@ -7,7 +7,7 @@
 /* global google, controllerInicio */
 
 var module = (function () {
-    
+
     var name;
     var idUser;
     var password;
@@ -16,12 +16,13 @@ var module = (function () {
     var posicion;
     var estaLogeado = false;
     var stompClient = null;
+    var conectados = [];
+
     
-    
-    
-    
+
+
     return{
-        init: function(){
+        init: function () {
             module.connectAndSubscribe();
             module.limpiarTodo();
             $("#tituloContenido").append("<h1>Login</h1>");
@@ -34,9 +35,9 @@ var module = (function () {
                                           <button type='button' onclick=\"module.login(document.getElementById('name').value, document.getElementById('pass').value)\">Login</button>\n\
                                         </div>\n\
                                  </form>");
-        },                  //document.getElementById('name').value, document.getElementById('pass').value
-        
-        
+        }, //document.getElementById('name').value, document.getElementById('pass').value
+
+
         connectAndSubscribe: function () {
             console.info('Connecting to WS...');
             var socket = new SockJS('/stompendpoint');
@@ -44,48 +45,66 @@ var module = (function () {
             //subscribe to /topic/TOPICXX when connections succeed
             stompClient.connect({}, function (frame) {
                 console.log('Connected: ' + frame);
-                
+
                 stompClient.subscribe('/topic/newuserconected', function (eventbody) {
-                    console.log(eventbody+" : Algo en el topicooopooooo");
-                    $("#tablas").append("holaaaaaaaaaaaa");
-                    //implementar lo que hace aqui al susvribirse
+                    //conectados.push(eventbody);
+                    console.log("usuarios conectados: " + eventbody);
+                    module.crearTablaAmigosConectados();
+
                 });
-                
-                
-            });
+                ///topic/cerrarsesion
+                stompClient.subscribe('/topic/cerrarsesion', function (eventbody) {
+                    //conectados.push(eventbody);
+                    for (i = 0; i < conectados.length; i++) {
+                        console.log(conectados[i]);
+                        console.log(JSON.parse(eventbody.body));
+                        if(conectados[i]==JSON.parse(eventbody.body).toString()){
+                            console.log("tabla: "+conectados+" "+conectados[i]==JSON.parse(eventbody.body));
+                            conectados[i] == "";
+                        }
+
+                    }
+                    console.log("usuarios conectados: " + eventbody);
+                    module.crearTablaAmigosConectados();
+
+                });
+
+            });return true;
         },
         
-        publishNewUserConected: function(nombre){
-            
-            stompClient.send('/topic/newuserconected', {}, JSON.stringify(nombre)); 
-            
-            //publicar el evento
+        disconnect: function () {
+            if (stompClient !== null) {
+                stompClient.disconnect();
+            }
+            //setConnected(false);
+            console.log("Disconnected");
         },
         
-        login: function(carnet, pass){
+        publishNewUserConected: function (nombre) {
+            stompClient.send('/app/newuserconected', {}, nombre);
+        },
+        
+        login: function (carnet, pass) {
             
-            console.log(carnet);
-            console.log(pass);
             $.get("/eata/users/" + carnet, function (data) {
-                console.log(data.idUser);
-                if (data.idUser == carnet && data.password == pass) {
-                    name = data.name;
-                    console.log(name+" :name en login");
-                    idUser = data.idUser;
-                    password = data.password;
-                    mail = data.mail;
-                    gender = data.gender;
-                    estaLogeado = true;
-                    $("#tituloContenido").empty();
-                    $("#contenido").empty();
-                    module.pagInicio();
-                    module.publishNewUserConected(data.name);
-                }
-          });
-          
+                            console.log(data.idUser);
+                            if (data.idUser == carnet && data.password == pass) {
+                                name = data.name;
+                                console.log(name + " :name en login");
+                                idUser = data.idUser;
+                                password = data.password;
+                                mail = data.mail;
+                                gender = data.gender;
+                                estaLogeado = true;
+                                $("#tituloContenido").empty();
+                                $("#contenido").empty();
+                                module.pagInicio();
+                                module.publishNewUserConected(name);
+                            }
+                        });
         },
         
-        crearFormularioGrupo: function(){
+        crearFormularioGrupo: function () {
             module.limpiarTodoMenosPerfil();
             $("#tituloContenido").append("<h1>Crear Grupo</h1>");
             $("#contenido").append("<form action='/action_page.php'>\n\
@@ -98,72 +117,78 @@ var module = (function () {
                                  </form>");
             $("#botones").append("<button type='button' onclick=\"module.crearGrupo()\">Crear Grupo</button>\n\
                                   <button type='button' class='cancelbtn' onclick=\"module.pagInicio()\">Cancelar</button>");
-            
+
             $("#tablas").append("<table id='checkAmigosGrupos' class='miclase'>\n\
                                  <tr><th id='amigosParaGrupo'>Amigos</th><th id='checkgrupo'></th></tr>\n\
                                 </table>");
-            
+
             $.get("/eata/users/myfriends/" + idUser, function (data) {
-               for (i = 0; i < data.length; i++){
-                   $("#checkAmigosGrupos").append("<tr>\n\
-                                                    <td>"+data[i].name+"</td>\n\
-                                                    <td><input aling='center' id="+data[i].idUser+" type='checkbox' name='idFriend' value="+data[i].idUser+"><br></td>\n\
+                for (i = 0; i < data.length; i++) {
+                    $("#checkAmigosGrupos").append("<tr>\n\
+                                                    <td>" + data[i].name + "</td>\n\
+                                                    <td><input aling='center' id=" + data[i].idUser + " type='checkbox' name='idFriend' value=" + data[i].idUser + "><br></td>\n\
                                                    </tr>");
-                    
-                
-                    
-               }
-                
+
+
+
+                }
+
             });
         },
-        
-        crearGrupo: function(){
+        crearGrupo: function () {
             var members = [];
             var newId;
             $.get("/eata/groups", function (data) {
-               newId = (data.length)+1;
-               console.log((data.length+1)+" :data.lengyh");
+                newId = (data.length) + 1;
+                console.log((data.length + 1) + " :data.lengyh");
             });
-            
+
             console.log(document.getElementById("groupName").value);
             console.log(document.getElementById("groupDescription").value);
             $.get("/eata/users/myfriends/" + idUser, function (data) {
-               for (i = 0; i < data.length; i++){
-                   console.log(document.getElementById(data[i].idUser).checked+" : "+data[i].name);
-                   if(document.getElementById(data[i].idUser).checked){
-                       console.log("Entro a agregar un miembro"+data[i].idUser);
-                       members.push(data[i].idUser);
-                       console.log(members);
-                   }
-                   
+                for (i = 0; i < data.length; i++) {
+                    console.log(document.getElementById(data[i].idUser).checked + " : " + data[i].name);
+                    if (document.getElementById(data[i].idUser).checked) {
+                        console.log("Entro a agregar un miembro" + data[i].idUser);
+                        members.push(data[i].idUser);
+                        console.log(members);
+                    }
+
                 }
             });
             console.log(members);
-            
-            
-          
-          // "{"members":[2101751,2099444],"meetings":[1],"id":1,"name":"arsw trabajo","description":"Este grupo es para hacer lab de arsw"}";
-           var newGroup = "{\"members\":"+JSON.stringify(members)+","+"\meetings\":[],\""+"id\":"+newId+",\""+"name\":"+"\""+document.getElementById("groupName").value+"\",\""+"description\":"+"\""+document.getElementById("groupDescription").value+"\"}";
-           console.log(newGroup);
-           var crear=$.ajax({
+
+
+
+            // "{"members":[2101751,2099444],"meetings":[1],"id":1,"name":"arsw trabajo","description":"Este grupo es para hacer lab de arsw"}";
+            var newGroup = "{\"members\":" + JSON.stringify(members) + "," + "\meetings\":[],\"" + "id\":" + newId + ",\"" + "name\":" + "\"" + document.getElementById("groupName").value + "\",\"" + "description\":" + "\"" + document.getElementById("groupDescription").value + "\"}";
+            console.log(newGroup);
+            var crear = $.ajax({
                 url: "/addgroup",
                 type: 'POST',
                 data: newGroup,
                 contentType: "application/json"
             });
             crear.then(
-               function(){
-                   alert("Usuario Creado");
-                   estaLogeado=true;
-                    signUpJs.redireccionAinicio();
-                   
-               }
-                       
+                    function () {
+                        alert("Usuario Creado");
+                        estaLogeado = true;
+                        signUpJs.redireccionAinicio();
+
+                    }
+
             );
-       },
+        },
         
-        traerPerfil: function(){
-          $("#perfil").append("<h4 id='nameUser' style='text-align-last: center'  >"+name+"</h4>\n\
+        cerrarSesion: function(){
+            stompClient.send('/app/cerrarsesion', {}, JSON.stringify(name));
+            
+             module.disconnect();
+                module.init();
+        },
+        
+        traerPerfil: function () {
+            $("#perfil").append("<h4 id='nameUser' style='text-align-last: center'  >" + name + "</h4>\n\
                                         <p >\n\
                                         <img src='amigos.png' style='height:106px;width:106px;' alt='Avatar'>\n\
                                         </p>\n\
@@ -177,96 +202,102 @@ var module = (function () {
                                         <table id='tablaGrupos' class='miclase'>\n\
                                         <tr><th id='grupos'>Groups</th></tr>\n\
                                         </table>"
-                                            );  
+                    );
         },
-        
-        limpiarTodo: function(){
+        limpiarTodo: function () {
             $("#perfil").empty();
             $("#tituloContenido").empty();
             $("#contenido").empty();
             $("#tablas").empty();
             $("#botones").empty();
         },
-        
-        limpiarTodoMenosPerfil: function(){
+        limpiarTodoMenosPerfil: function () {
             $("#tituloContenido").empty();
             $("#contenido").empty();
             $("#tablas").empty();
             $("#botones").empty();
         },
-        
-        
-        pagInicio: function(){
+        pagInicio: function () {
             module.limpiarTodo();
             module.traerPerfil();
             module.traerMapa();
             module.traerMisAmigos();
             module.traerMisGrupos();
             module.botonesDiv();
+            module.crearTablaAmigosConectados();
         },
         
-        botonesDiv: function(){
+        crearTablaAmigosConectados: function () {
+            $("#tablas").empty();
+            $("#tablas").append("<h1>Amigos Conectados</h1>");
+            $("#tablas").append("<table id='amigosConectadosId' class='miclase'>\n\
+                                 <tr><th id='Nombre'>Amigos</th></tr>\n\
+                                </table>");
+            
+            $.get("/eata/usersconected", function (data) {
+                for (i = 0; i < data.length; i++) {
+                    console.log("GET lalalala: "+data);
+                    $("#tablas").append("<tr><td>" + data[i] + "</td></tr>");
+
+                }
+
+            });
+        },
+        botonesDiv: function () {
             $("#botones").empty();
             $("#botones").append("<button type='button' onclick=\"module.crearFormularioGrupo()\">Crear Grupo</button>");
-            $("#botones").append("<button class='cancelbtn' type='button' onclick=\"module.init()\">Cerrar Sesion</button>");
+            $("#botones").append("<button class='cancelbtn' type='button' onclick=\"module.cerrarSesion()\">Cerrar Sesion</button>");
         },
-      
-        traerMapa: function(){
+        traerMapa: function () {
             $("#tituloContenido").append("<h1>Amigos cercanos:</h1>");
             module.getLocation();
         },
-        
-        traerMisAmigos: function(){
+        traerMisAmigos: function () {
             $.get("/eata/users/myfriends/" + idUser, function (data) {
-               for (i = 0; i < data.length; i++){
-                   $("#tablaAmigos").append("<tr><td>"+data[i].name+"</td></tr>");
-                    
-               }
-                
-            });
-        },
-        
-        traerMisGrupos: function(){
-            $.get("/eata/users/mygroups/" + idUser, function (data) {
-               for (i = 0; i < data.length; i++){
-                   $("#tablaGrupos").append("<tr><td>"+data[i].name+"</td></tr>");
-                    
-               }
-                
-            });
-        },
-        
-        getLocation: function() {
-                    if (navigator.geolocation) {
-                        //module.myMap(navigator.geolocation.getCurrentPosition());
-                        navigator.geolocation.getCurrentPosition(module.myMap);
-                    }
-        },
-                
-        showPosition: function(position){
-                    console.log( "Latitude: " + position.coords.latitude + 
-                    "<br>Longitude: " + position.coords.longitude);
-                },
-                
-        myMap: function(position) {
-                    var mapOptions = {
-                        center: new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
-                        zoom: 16,
-                        mapTypeId: google.maps.MapTypeId.ROADMAP
-                    }
-                    console.log( "Latitude: " + position.coords.latitude + 
-                    "<br>Longitude: " + position.coords.longitude);
-                    var map = new google.maps.Map(document.getElementById("contenido"), mapOptions);
-                    var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-                    var marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
-                        
-                        map: map
-                      });
+                for (i = 0; i < data.length; i++) {
+                    $("#tablaAmigos").append("<tr><td>" + data[i].name + "</td></tr>");
+
                 }
 
+            });
+        },
+        traerMisGrupos: function () {
+            $.get("/eata/users/mygroups/" + idUser, function (data) {
+                for (i = 0; i < data.length; i++) {
+                    $("#tablaGrupos").append("<tr><td>" + data[i].name + "</td></tr>");
+
+                }
+
+            });
+        },
+        getLocation: function () {
+            if (navigator.geolocation) {
+                //module.myMap(navigator.geolocation.getCurrentPosition());
+                navigator.geolocation.getCurrentPosition(module.myMap);
+            }
+        },
+        showPosition: function (position) {
+            console.log("Latitude: " + position.coords.latitude +
+                    "<br>Longitude: " + position.coords.longitude);
+        },
+        myMap: function (position) {
+            var mapOptions = {
+                center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                zoom: 16,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            console.log("Latitude: " + position.coords.latitude +
+                    "<br>Longitude: " + position.coords.longitude);
+            var map = new google.maps.Map(document.getElementById("contenido"), mapOptions);
+            var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                map: map
+            });
+        }
+
     }
- 
-    
-    
+
+
+
 })();

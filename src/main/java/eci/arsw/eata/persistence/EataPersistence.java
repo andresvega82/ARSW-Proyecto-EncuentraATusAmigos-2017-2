@@ -54,6 +54,7 @@ public interface EataPersistence {
     public Set<Group> getMyGroups(int idUser) throws EataNotFoundException;
     
     
+    
     /**
      *
      * @param idUser es el id de la persona que solicita los grupos de si mismo
@@ -61,6 +62,32 @@ public interface EataPersistence {
      * @throws EataPersistenceException
      */
     public ArrayList<FreeTime> getFreeTimebyUser(int idUser) throws EataNotFoundException;
+    
+    
+            /**
+     *
+     * @param idUser es el id de la persona que solicita los grupos de si mismo
+     * @return 
+     * @throws EataPersistenceException
+     */
+    public void userDisconected(String name) throws EataNotFoundException;
+    
+    
+    /**
+     *
+     * @param idUser es el id de la persona que solicita los grupos de si mismo
+     * @return 
+     * @throws EataPersistenceException
+     */
+    public ArrayList<String> getAllUsersConected() throws EataNotFoundException;
+    
+    /**
+     *
+     * @param idUser es el id de la persona que solicita los grupos de si mismo
+     * @return 
+     * @throws EataPersistenceException
+     */
+    public boolean userConected(String name) throws EataNotFoundException;
     
     
     /**
@@ -77,6 +104,13 @@ public interface EataPersistence {
      * @throws EataPersistenceException
      */
     public void saveUser(User user) throws EataPersistenceException;
+    
+    /**
+     *
+     * @param user
+     * @throws EataPersistenceException
+     */
+    public void addNewUserConected(String name) throws EataPersistenceException;
     
     /**
      *

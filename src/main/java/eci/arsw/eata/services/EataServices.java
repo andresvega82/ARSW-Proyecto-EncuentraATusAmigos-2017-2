@@ -72,6 +72,21 @@ public class EataServices {
         return eatap.getCommonFreeTimebyGroup(idGroup);
     }
     
+    public void addNewUserConected(String nombreUser) throws EataPersistenceException{
+        eatap.addNewUserConected(nombreUser);
+    }
+    
+    public ArrayList<String> getAllUsersConected() throws EataNotFoundException{
+        return eatap.getAllUsersConected();
+    }
+    
+    public boolean isUserConected(String nombreUser) throws EataNotFoundException{
+        return eatap.userConected(nombreUser);
+    }
+    
+    public void userDisconected(String nombreUser) throws EataNotFoundException{
+        eatap.userDisconected(nombreUser);
+    }
     
     
 }

@@ -31,6 +31,7 @@ public class LocalEataPersistence implements EataPersistence{
     private final Map<Integer,User> users=new HashMap<>();
     private final Map<Integer,Group> groups=new HashMap<>();
     private final Map<Integer,Meeting> meetings=new HashMap<>();
+    private ArrayList<String> usersConected = new ArrayList<String>();
     
     public LocalEataPersistence() {
         
@@ -344,6 +345,35 @@ public class LocalEataPersistence implements EataPersistence{
         }
         
         return meetingsByGroup;
+    }
+
+    @Override
+    public void addNewUserConected(String name) throws EataPersistenceException {
+        usersConected.add(name);
+    }
+
+    @Override
+    public ArrayList<String> getAllUsersConected() throws EataNotFoundException {
+        return usersConected;
+    }
+
+    @Override
+    public boolean userConected(String name) throws EataNotFoundException {
+        return usersConected.contains(name);
+    }
+
+    @Override
+    public void userDisconected(String name) throws EataNotFoundException {
+        ArrayList<String> temp = new ArrayList<String>();
+        for(int i=0; i<usersConected.size();i++){
+            System.out.println(usersConected.get(i)==name);
+            System.out.println(usersConected.get(i));
+            System.out.println(name);
+            if(!(usersConected.get(i)==name)){
+               // temp.remove(usersConected.get(i));
+            }
+        }
+        usersConected = temp;
     }
 
     
