@@ -13,16 +13,30 @@ var module = (function () {
     var password;
     var mail;
     var gender;
-    var posicion;
+    var posicion
+    var lat;
+    var long;
+    //4.7809219<br>Longitude: -74.0475574
+    var marcadores = [
+            ['León', 4.7609219, -74.0475574],
+            ['Salamanca', 4.7509219, -74.0475574],
+            ['Zamora', 4.7409219, -74.0475574]
+        ];
+        
+    
+     
+    
+    var map;
     var estaLogeado = false;
     var stompClient = null;
     var conectados = [];
+    //Latitude: 4.7809219<br>Longitude: -74.0475574
 
     
 
-
     return{
         init: function () {
+            
             module.connectAndSubscribe();
             module.limpiarTodo();
             $("#tituloContenido").append("<h1>Login</h1>");
@@ -37,7 +51,18 @@ var module = (function () {
                                  </form>");
         }, //document.getElementById('name').value, document.getElementById('pass').value
 
-
+        newMarcador: function (markerName, lat, long) {
+            console.log("Esto agregando marcadores");
+            marcadores.push([markerName, lat, long]);
+            var marker, i;
+            for (i = 0; i < marcadores.length; i++) {
+                new google.maps.Marker({
+                    position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
+                    title: marcadores[i][0],
+                    map: map
+                });
+            }
+        },
         connectAndSubscribe: function () {
             console.info('Connecting to WS...');
             var socket = new SockJS('/stompendpoint');
@@ -50,8 +75,18 @@ var module = (function () {
                     //conectados.push(eventbody);
                     console.log("usuarios conectados: " + eventbody);
                     module.crearTablaAmigosConectados();
+                    
 
                 });
+                
+                stompClient.subscribe('/topic/newposition', function (eventbody) {
+                    //conectados.push(eventbody);
+                    module.newMarcador(JSON.parse(eventbody.body)[0],JSON.parse(eventbody.body)[1],JSON.parse(eventbody.body)[2]);
+                    
+
+                });
+                
+                
                 ///topic/cerrarsesion
                 stompClient.subscribe('/topic/cerrarsesion', function (eventbody) {
                     //conectados.push(eventbody);
@@ -190,17 +225,17 @@ var module = (function () {
         traerPerfil: function () {
             $("#perfil").append("<h4 id='nameUser' style='text-align-last: center'  >" + name + "</h4>\n\
                                         <p >\n\
-                                        <img src='amigos.png' style='height:106px;width:106px;' alt='Avatar'>\n\
+                                        <img src='usuario.png' style='height:106px;width:106px;' alt='Avatar'>\n\
                                         </p>\n\
                                         <p style='text-align-last: center'>Escuela Colombiana de Ingenieria</p>\n\
-                                        <p style='text-align-last: center'>London, UK</p><p style='text-align-last: center'> April 1, 1988</p>\n\
+                                        <p style='text-align-last: center'>Email: "+mail+"</p><p style='text-align-last: center'>Carnet: "+idUser+"</p>\n\
                                         <hr>\n\
                                         <table id='tablaAmigos' class='miclase'>\n\
-                                        <tr><th id='friends'>Friends</th></tr>\n\
+                                        <tr><th id='friends'>Mis Amigos</th></tr>\n\
                                         </table>\n\
                                         <hr>\n\
                                         <table id='tablaGrupos' class='miclase'>\n\
-                                        <tr><th id='grupos'>Groups</th></tr>\n\
+                                        <tr><th id='grupos'>Mis Grupos</th></tr>\n\
                                         </table>"
                     );
         },
@@ -238,9 +273,7 @@ var module = (function () {
                 for (i = 0; i < data.length; i++) {
                     console.log("GET lalalala: "+data);
                     $("#tablas").append("<tr><td>" + data[i] + "</td></tr>");
-
                 }
-
             });
         },
         botonesDiv: function () {
@@ -281,19 +314,21 @@ var module = (function () {
                     "<br>Longitude: " + position.coords.longitude);
         },
         myMap: function (position) {
+            
             var mapOptions = {
                 center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-                zoom: 16,
+                zoom: 12,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             }
             console.log("Latitude: " + position.coords.latitude +
-                    "<br>Longitude: " + position.coords.longitude);
-            var map = new google.maps.Map(document.getElementById("contenido"), mapOptions);
+                    " Longitude: " + position.coords.longitude);
+            map = new google.maps.Map(document.getElementById("contenido"), mapOptions);
             var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-            var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-                map: map
-            });
+            lat = position.coords.latitude;
+            long = position.coords.longitude;
+            console.log(JSON.stringify([name,position.coords.latitude,position.coords.longitude ]));
+            stompClient.send('/topic/newposition', {}, JSON.stringify([name,position.coords.latitude,position.coords.longitude]));
+            module.newMarcador(name,position.coords.latitude,position.coords.longitude );
         }
 
     }

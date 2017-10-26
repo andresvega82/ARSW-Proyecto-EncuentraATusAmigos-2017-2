@@ -40,6 +40,7 @@ public class LocalEataPersistence implements EataPersistence{
         User u2 = new User("Jairo Gonzalez", 2090540, "1234" , "aaaa@mail.com", "macho");
         User u3 = new User("Miguel Rojas", 2099444, "1234" , "bbbbbb@mail.com", "macho");
         User u4 = new User("Juan Carlos", 2098165, "1234" , "pollo@mail.com", "macho");
+        User u5 = new User("User Prueba",1 , "1234" , "prueba@mail.com", "macho");
         
         //Se agregan amigos a u1
         u1.addFriend(2090540);
@@ -95,6 +96,7 @@ public class LocalEataPersistence implements EataPersistence{
         users.put(2090540, u2);
         users.put(2099444, u3);
         users.put(2098165, u4);
+        users.put(1, u5);
         
         // Creacion de grupos QUEMADOS 
         ArrayList<Integer> members1 = new ArrayList<Integer>();
