@@ -15,9 +15,14 @@ var module = (function () {
     var gender;
     var posicion;
     var estaLogeado = false;
-
+    var stompClient = null;
+    
+    
+    
+    
     return{
         init: function(){
+            module.connectAndSubscribe();
             module.limpiarTodo();
             $("#tituloContenido").append("<h1>Login</h1>");
             $("#contenido").append("<form action='/action_page.php'>\n\
@@ -32,8 +37,33 @@ var module = (function () {
         },                  //document.getElementById('name').value, document.getElementById('pass').value
         
         
+        connectAndSubscribe: function () {
+            console.info('Connecting to WS...');
+            var socket = new SockJS('/stompendpoint');
+            stompClient = Stomp.over(socket);
+            //subscribe to /topic/TOPICXX when connections succeed
+            stompClient.connect({}, function (frame) {
+                console.log('Connected: ' + frame);
+                
+                stompClient.subscribe('/topic/newuserconected', function (eventbody) {
+                    console.log(eventbody+" : Algo en el topicooopooooo");
+                    $("#tablas").append("holaaaaaaaaaaaa");
+                    //implementar lo que hace aqui al susvribirse
+                });
+                
+                
+            });
+        },
+        
+        publishNewUserConected: function(nombre){
+            
+            stompClient.send('/topic/newuserconected', {}, JSON.stringify(nombre)); 
+            
+            //publicar el evento
+        },
         
         login: function(carnet, pass){
+            
             console.log(carnet);
             console.log(pass);
             $.get("/eata/users/" + carnet, function (data) {
@@ -49,10 +79,10 @@ var module = (function () {
                     $("#tituloContenido").empty();
                     $("#contenido").empty();
                     module.pagInicio();
-
-                    
+                    module.publishNewUserConected(data.name);
                 }
           });
+          
         },
         
         crearFormularioGrupo: function(){
