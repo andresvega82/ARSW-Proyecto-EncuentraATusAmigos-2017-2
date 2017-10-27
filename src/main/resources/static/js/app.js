@@ -17,11 +17,7 @@ var module = (function () {
     var lat;
     var long;
     //4.7809219<br>Longitude: -74.0475574
-    var marcadores = [
-            ['León', 4.7609219, -74.0475574],
-            ['Salamanca', 4.7509219, -74.0475574],
-            ['Zamora', 4.7409219, -74.0475574]
-        ];
+    var marcadores = [];
         
     
      
