@@ -1,6 +1,6 @@
 # ENCUENTRA A TUS AMIGOS
 ***
-### Viculos:
+### Vinculos:
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c653d1358b154962946629e8dec4c483)](https://www.codacy.com/app/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2/dashboard)
 [![CircleCI](https://1.bp.blogspot.com/-s3Nu1S7bq3A/We_SrRLaZxI/AAAAAAAADzk/TX4zBO7CbRkVH-Lq2M3Wrr22aWOlhCsngCLcBGAs/s1600/imagen%2Bcircleci.png)](https://circleci.com/gh/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2)
 [![Heroku](https://wmpics.pics/di-D9YP.png)](https://arsw-proyecto-2017-2.herokuapp.com)
