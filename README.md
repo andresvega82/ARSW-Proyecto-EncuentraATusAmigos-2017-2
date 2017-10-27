@@ -38,8 +38,11 @@ Es una aplicación basada en waze que busca ser orientada a un público específ
 
 ***
 ### Usuarios por defecto:
-1. Usuario: 2101751 Password: 1234
-2. Usuario: 1 Password: 1234
+1. "Alejandro Villarraga" Usuario: 2101751 Password: 1234
+2. "User prueba" Usuario: 1 Password: 1234
+3. "Jairo Gonzalez" Usuario: 2090540 Password: 1234
+4. "Miguel Rojas" Usuario: 2099444 Password: 1234
+5. "Juan Carlos" Usuario: 2098165 Password: 1234
 
 ***
 
