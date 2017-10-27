@@ -39,10 +39,17 @@ Es una aplicación basada en waze que busca ser orientada a un público específ
 ***
 ### Usuarios por defecto:
 1. Usuario: 2101751 Password: 1234
+2. Usuario: 1 Password: 1234
 
 ***
 
 ### Instrucciones de manejo:
+
+1. Se debe ingresar a la aplicacion a travez de este vinculo: [![Heroku](https://wmpics.pics/di-D9YP.png)](https://arsw-proyecto-2017-2.herokuapp.com)
+2. Se hara el proceso de registro con alguno de los usuarios por defecto definidos anteriormente.
+3. Al darle click en el boton "login" se redireccionara al inicio de la aplicacion donde se podra ver el mapa, perfil, amigos conectados y algunos botones con funcionalidades.
+4. Para probar el mapa colaborativo se debe realizar el ingreso desde dos dispositivos que esten en diferentes redes, ej. pc y celular, ya que al ingresar por dos computadores de la misma red, enviara la misma ubicacion para ambos equipos.
+5. Para crear un grupo se debe ir a boton de "Crear grupo" y llenar el formulario.
 
 ***
 
