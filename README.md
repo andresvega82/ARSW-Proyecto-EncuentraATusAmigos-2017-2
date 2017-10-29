@@ -1,8 +1,8 @@
 # ENCUENTRA A TUS AMIGOS
 ***
 ### Vinculos:
-- [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c653d1358b154962946629e8dec4c483)](https://www.codacy.com/app/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2/dashboard)
-- [![CircleCI](https://1.bp.blogspot.com/-s3Nu1S7bq3A/We_SrRLaZxI/AAAAAAAADzk/TX4zBO7CbRkVH-Lq2M3Wrr22aWOlhCsngCLcBGAs/s1600/imagen%2Bcircleci.png)](https://circleci.com/gh/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2)
+- [![Codacy Badge](https://2.bp.blogspot.com/-_uq7ERTX26A/WfUgXxuIY0I/AAAAAAAAD0g/eQxgmOGLrTghlr-vft9pdGDYsa_btylAwCLcBGAs/s1600/iconocodacy.png)](https://www.codacy.com/app/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2/dashboard)
+- [![CircleCI](https://4.bp.blogspot.com/-jN7KDDIPNgI/WfUhI_l2RMI/AAAAAAAAD0s/Gi-lsPn-btsHOWjO95p5Q-lgPqS5DIsMwCLcBGAs/s1600/imagen%2Bcircleci.png)](https://circleci.com/gh/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2)
 - [![Heroku](https://wmpics.pics/di-D9YP.png)](https://arsw-proyecto-2017-2.herokuapp.com)
 - [![trello](https://1.bp.blogspot.com/-VnIVUyud-2I/WfMm-l9K5fI/AAAAAAAAD0E/lo0xB4GQLt0Q9W3uwFZ3GW7bacj6CXQXQCLcBGAs/s1600/iconotrello.png)](https://trello.com/b/2KWuQi7A/arsw-2017-2-encuentra-a-tus-amigos)
 - [![drive](https://4.bp.blogspot.com/-iMaOlu-aY1s/WfMnnYkodrI/AAAAAAAAD0Q/ne9eiKFk_LoS6rSPa0_ijv5R_1-a89sRgCLcBGAs/s1600/iconodrive.png)](https://drive.google.com/open?id=0B7LApJOHv8_YekpycXc3bzhHVms)
