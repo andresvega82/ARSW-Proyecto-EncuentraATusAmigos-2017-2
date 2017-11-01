@@ -20,8 +20,9 @@ public class Group {
     private String name;
     private String description;
 
-    public Group(ArrayList<Integer> members, int id, String name, String description) {
+    public Group(ArrayList<Integer> members, ArrayList<Integer> meetings, int id, String name, String description) {
         this.members = members;
+        this.meetings = meetings;
         this.id = id;
         this.name = name;
         this.description = description;
@@ -29,6 +30,12 @@ public class Group {
     
     public Group(){
         
+    }
+    public Group(ArrayList<Integer> members, int id, String name, String description) {
+        this.members = members;
+        this.id = id;
+        this.name = name;
+        this.description = description;
     }
     
     public void addMeeting(Integer idMeeting){

@@ -29,6 +29,7 @@ public class User {
         this.mail = mail;
         this.gender = gender;
         this.name = name;
+        this.friends = friends;
     }
     
     public User() {

@@ -140,7 +140,7 @@ public class EataAPIController {
         }
     }
     
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(path = "/addUser", method = RequestMethod.POST)
     public ResponseEntity<?> addNewUser(@RequestBody User user) {
         try {
             eataservice.addNewUser(user);
@@ -151,9 +151,11 @@ public class EataAPIController {
         }
     }
     
-    @RequestMapping(path = "/addgroup", method = RequestMethod.POST)
+    @RequestMapping(path = "/addgroup/", method = RequestMethod.POST)
     public ResponseEntity<?> addNewGroup(@RequestBody Group group) {
+            System.out.println("llego al new group");
         try {
+            System.out.println("llego al add");
             eataservice.addNewGroup(group);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception ex) {

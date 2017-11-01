@@ -197,6 +197,7 @@ public class LocalEataPersistence implements EataPersistence{
     
     @Override
     public void saveGroup(Group group) throws EataPersistenceException {
+        System.out.println("esta en el save");
         if (groups.containsKey(group.getId())){
             throw new EataPersistenceException("El usuario dado ya existe: "+group);
         }

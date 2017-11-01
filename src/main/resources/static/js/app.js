@@ -176,7 +176,7 @@ var module = (function () {
 
             console.log(document.getElementById("groupName").value);
             console.log(document.getElementById("groupDescription").value);
-            $.get("/eata/users/myfriends/" + idUser, function (data) {
+            var grupo=$.get("/eata/users/myfriends/" + idUser, function (data) {
                 for (i = 0; i < data.length; i++) {
                     console.log(document.getElementById(data[i].idUser).checked + " : " + data[i].name);
                     if (document.getElementById(data[i].idUser).checked) {
@@ -191,24 +191,27 @@ var module = (function () {
 
 
 
-            // "{"members":[2101751,2099444],"meetings":[1],"id":1,"name":"arsw trabajo","description":"Este grupo es para hacer lab de arsw"}";
-            var newGroup = "{\"members\":" + JSON.stringify(members) + "," + "\meetings\":[],\"" + "id\":" + newId + ",\"" + "name\":" + "\"" + document.getElementById("groupName").value + "\",\"" + "description\":" + "\"" + document.getElementById("groupDescription").value + "\"}";
-            console.log(newGroup);
-            var crear = $.ajax({
-                url: "/addgroup",
-                type: 'POST',
-                data: newGroup,
-                contentType: "application/json"
-            });
-            crear.then(
+            grupo.then(function(){// "{"members":[2101751,2099444],"meetings":[1],"id":1,"name":"arsw trabajo","description":"Este grupo es para hacer lab de arsw"}";
+                var newGroup = "{\"members\":" + JSON.stringify(members) + ",\"" + "\meetings\":[],\"" + "id\":" + newId + ",\"" + "name\":" + "\"" + document.getElementById("groupName").value + "\",\"" + "description\":" + "\"" + document.getElementById("groupDescription").value + "\"}";
+                console.log(newGroup);
+                var crear = $.ajax({
+                    url: "/addgroup/",
+                    type: 'POST',
+                    data: newGroup,
+                    contentType: "application/json"
+                });
+                crear.then(
                     function () {
-                        alert("Usuario Creado");
+                        alert("Grupo Creado");
                         estaLogeado = true;
                         signUpJs.redireccionAinicio();
 
                     }
 
-            );
+                );
+                }
+                );
+            
         },
         
         cerrarSesion: function(){
