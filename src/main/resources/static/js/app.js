@@ -33,7 +33,7 @@ var module = (function () {
     return{
         init: function () {
             
-            module.connectAndSubscribe();
+            
             module.limpiarTodo();
             $("#tituloContenido").append("<h1>Login</h1>");
             $("#contenido").append("<form action='/action_page.php'>\n\
@@ -116,10 +116,11 @@ var module = (function () {
         },
         
         login: function (carnet, pass) {
-            
+            //var conectar = module.connectAndSubscribe();
             $.get("/eata/users/" + carnet, function (data) {
                             console.log(data.idUser);
-                            if (data.idUser == carnet && data.password == pass) {
+                            if (data.idUser == carnet && data.password == pass) {                                
+                                
                                 name = data.name;
                                 console.log(name + " :name en login");
                                 idUser = data.idUser;
@@ -131,7 +132,7 @@ var module = (function () {
                                 $("#contenido").empty();
                                 module.pagInicio();
                                 module.publishNewUserConected(name);
-                            }
+                                }
                         });
         },
         
@@ -169,14 +170,15 @@ var module = (function () {
         crearGrupo: function () {
             var members = [];
             var newId;
-            $.get("/eata/groups", function (data) {
+            var idGroup=$.get("/eata/groups", function (data) {
                 newId = (data.length) + 1;
                 console.log((data.length + 1) + " :data.lengyh");
             });
 
             console.log(document.getElementById("groupName").value);
             console.log(document.getElementById("groupDescription").value);
-            var grupo=$.get("/eata/users/myfriends/" + idUser, function (data) {
+            idGroup.then(function(){
+                var grupo=$.get("/eata/users/myfriends/" + idUser, function (data) {
                 for (i = 0; i < data.length; i++) {
                     console.log(document.getElementById(data[i].idUser).checked + " : " + data[i].name);
                     if (document.getElementById(data[i].idUser).checked) {
@@ -186,16 +188,15 @@ var module = (function () {
                     }
 
                 }
-            });
+                
+            })
             console.log(members);
-
-
-
+            
             grupo.then(function(){// "{"members":[2101751,2099444],"meetings":[1],"id":1,"name":"arsw trabajo","description":"Este grupo es para hacer lab de arsw"}";
                 var newGroup = "{\"members\":" + JSON.stringify(members) + ",\"" + "\meetings\":[],\"" + "id\":" + newId + ",\"" + "name\":" + "\"" + document.getElementById("groupName").value + "\",\"" + "description\":" + "\"" + document.getElementById("groupDescription").value + "\"}";
                 console.log(newGroup);
                 var crear = $.ajax({
-                    url: "/addgroup/",
+                    url: "/eata/addgroup",
                     type: 'POST',
                     data: newGroup,
                     contentType: "application/json"
@@ -211,6 +212,14 @@ var module = (function () {
                 );
                 }
                 );
+        
+            
+            });
+            
+
+
+
+            
             
         },
         

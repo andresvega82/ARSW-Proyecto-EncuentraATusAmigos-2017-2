@@ -151,7 +151,7 @@ public class EataAPIController {
         }
     }
     
-    @RequestMapping(path = "/addgroup/", method = RequestMethod.POST)
+    @RequestMapping(path = "/addgroup", method = RequestMethod.POST)
     public ResponseEntity<?> addNewGroup(@RequestBody Group group) {
             System.out.println("llego al new group");
         try {
