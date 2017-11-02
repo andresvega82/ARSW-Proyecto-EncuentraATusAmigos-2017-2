@@ -33,7 +33,7 @@ var module = (function () {
     return{
         init: function () {
             
-            
+            module.connectAndSubscribe()
             module.limpiarTodo();
             $("#tituloContenido").append("<h1>Login</h1>");
             $("#contenido").append("<form action='/action_page.php'>\n\
@@ -59,6 +59,7 @@ var module = (function () {
                 });
             }
         },
+        
         connectAndSubscribe: function () {
             console.info('Connecting to WS...');
             var socket = new SockJS('/stompendpoint');
@@ -67,60 +68,59 @@ var module = (function () {
             stompClient.connect({}, function (frame) {
                 console.log('Connected: ' + frame);
 
-                stompClient.subscribe('/topic/newuserconected', function (eventbody) {
+                ///topic/showMyFriendsConected
+                stompClient.subscribe('/topic/showMyFriendsConected', function (eventbody) {
                     //conectados.push(eventbody);
-                    console.log("usuarios conectados: " + eventbody);
-                    module.crearTablaAmigosConectados();
-                    
-
+                    console.log("Agregar los amigos conectados de: " + eventbody);
+                    module.crearTablaMisAmigosConectados(eventbody);
                 });
                 
-                stompClient.subscribe('/topic/newposition', function (eventbody) {
+                stompClient.subscribe('/topic/showOnlineFriendsPosition', function (eventbody) {
                     //conectados.push(eventbody);
-                    module.newMarcador(JSON.parse(eventbody.body)[0],JSON.parse(eventbody.body)[1],JSON.parse(eventbody.body)[2]);
-                    
-
+                    //module.newMarcador(JSON.parse(eventbody.body)[0],JSON.parse(eventbody.body)[1],JSON.parse(eventbody.body)[2]);
+                    console.log(eventbody);
+                    module.pintarPosiciones();
                 });
                 
                 
                 ///topic/cerrarsesion
                 stompClient.subscribe('/topic/cerrarsesion', function (eventbody) {
-                    //conectados.push(eventbody);
-                    for (i = 0; i < conectados.length; i++) {
-                        console.log(conectados[i]);
-                        console.log(JSON.parse(eventbody.body));
-                        if(conectados[i]==JSON.parse(eventbody.body).toString()){
-                            console.log("tabla: "+conectados+" "+conectados[i]==JSON.parse(eventbody.body));
-                            conectados[i] == "";
-                        }
-
-                    }
-                    console.log("usuarios conectados: " + eventbody);
-                    module.crearTablaAmigosConectados();
+//                    //conectados.push(eventbody);
+//                    for (i = 0; i < conectados.length; i++) {
+//                        console.log(conectados[i]);
+//                        console.log(JSON.parse(eventbody.body));
+//                        if(conectados[i]==JSON.parse(eventbody.body).toString()){
+//                            console.log("tabla: "+conectados+" "+conectados[i]==JSON.parse(eventbody.body));
+//                            conectados[i] == "";
+//                        }
+//
+//                    }
+//                    console.log("usuarios conectados: " + eventbody);
+//                    module.crearTablaMisAmigosConectados();
 
                 });
 
-            });return true;
+            });
         },
         
         disconnect: function () {
             if (stompClient !== null) {
                 stompClient.disconnect();
             }
-            //setConnected(false);
+            //setConnected(false);http://localhost:8080/
             console.log("Disconnected");
         },
         
-        publishNewUserConected: function (nombre) {
-            stompClient.send('/app/newuserconected', {}, nombre);
+        publishNewUserConected: function (carnet) {
+            stompClient.send('/app/newuserconected', {}, carnet);
+            
         },
         
         login: function (carnet, pass) {
             //var conectar = module.connectAndSubscribe();
             $.get("/eata/users/" + carnet, function (data) {
                             console.log(data.idUser);
-                            if (data.idUser == carnet && data.password == pass) {                                
-                                
+                            if (data.idUser == carnet && data.password == pass) {          
                                 name = data.name;
                                 console.log(name + " :name en login");
                                 idUser = data.idUser;
@@ -131,7 +131,7 @@ var module = (function () {
                                 $("#tituloContenido").empty();
                                 $("#contenido").empty();
                                 module.pagInicio();
-                                module.publishNewUserConected(name);
+                                module.publishNewUserConected(data.idUser);
                                 }
                         });
         },
@@ -267,23 +267,34 @@ var module = (function () {
             module.traerMisAmigos();
             module.traerMisGrupos();
             module.botonesDiv();
-            module.crearTablaAmigosConectados();
+            module.crearTablaMisAmigosConectados();
         },
         
-        crearTablaAmigosConectados: function () {
+        crearTablaMisAmigosConectados: function () {
             $("#tablas").empty();
             $("#tablas").append("<h1>Amigos Conectados</h1>");
             $("#tablas").append("<table id='amigosConectadosId' class='miclase'>\n\
                                  <tr><th id='Nombre'>Amigos</th></tr>\n\
                                 </table>");
             
-            $.get("/eata/usersconected", function (data) {
+            $.get("/eata/usersconected/"+idUser, function (data) {
                 for (i = 0; i < data.length; i++) {
                     console.log("GET lalalala: "+data);
-                    $("#tablas").append("<tr><td>" + data[i] + "</td></tr>");
+                    $("#tablas").append("<tr><td>" + data[i].name + "</td></tr>");
                 }
             });
         },
+        
+        pintarPosiciones: function () {
+            marcadores = [];
+            $.get("/eata/usersconected/"+idUser, function (data) {
+                for (i = 0; i < data.length; i++) {
+                    console.log("GET lalalala: "+data);
+                    module.newMarcador(data[i].name,data[i].location.latitude,data[i].location.longitude);
+                }
+            });
+        },
+        
         botonesDiv: function () {
             $("#botones").empty();
             $("#botones").append("<button type='button' onclick=\"module.crearFormularioGrupo()\">Crear Grupo</button>");
@@ -335,8 +346,8 @@ var module = (function () {
             lat = position.coords.latitude;
             long = position.coords.longitude;
             console.log(JSON.stringify([name,position.coords.latitude,position.coords.longitude ]));
-            stompClient.send('/topic/newposition', {}, JSON.stringify([name,position.coords.latitude,position.coords.longitude]));
-            module.newMarcador(name,position.coords.latitude,position.coords.longitude );
+            stompClient.send('/app/newuserposition',{},JSON.stringify([idUser,position.coords.latitude,position.coords.longitude]));
+            //module.newMarcador(name,position.coords.latitude,position.coords.longitude );
         }
 
     }

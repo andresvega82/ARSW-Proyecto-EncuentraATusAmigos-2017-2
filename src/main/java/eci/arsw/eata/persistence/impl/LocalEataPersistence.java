@@ -7,6 +7,7 @@ package eci.arsw.eata.persistence.impl;
 
 import eci.arsw.eata.model.FreeTime;
 import eci.arsw.eata.model.Group;
+import eci.arsw.eata.model.Location;
 import eci.arsw.eata.model.Meeting;
 import eci.arsw.eata.model.User;
 import eci.arsw.eata.persistence.EataNotFoundException;
@@ -19,6 +20,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,7 +34,6 @@ public class LocalEataPersistence implements EataPersistence{
     private final Map<Integer,User> users=new HashMap<>();
     private final Map<Integer,Group> groups=new HashMap<>();
     private final Map<Integer,Meeting> meetings=new HashMap<>();
-    private ArrayList<String> usersConected = new ArrayList<String>();
     
     public LocalEataPersistence() {
         
@@ -42,14 +44,13 @@ public class LocalEataPersistence implements EataPersistence{
         User u4 = new User("Juan Carlos", 2098165, "1234" , "pollo@mail.com", "macho");
         User u5 = new User("User Prueba",1 , "1234" , "prueba@mail.com", "macho");
         
-        //Se agregan amigos a u1
-        u1.addFriend(2090540);
-        u1.addFriend(2099444);
-        u1.addFriend(2098165);
-        
-        //se agregan amigos a u4
-        u4.addFriend(2099444);
-        u4.addFriend(2101751);
+        //Se agregan amigos a todos
+        u1.addFriend(2090540);u1.addFriend(2099444);u1.addFriend(1);
+        u2.addFriend(2101751);u2.addFriend(2099444);u2.addFriend(2098165);u2.addFriend(1);
+        u3.addFriend(2101751);u3.addFriend(2090540);u3.addFriend(2098165);u3.addFriend(1);
+        u4.addFriend(2090540);u4.addFriend(2099444);u4.addFriend(1);
+        u5.addFriend(2101751);u5.addFriend(2090540);u5.addFriend(2099444);u5.addFriend(2098165);
+   
         
         //Se crean horas libres
         FreeTime hl1 = new FreeTime("lunes", 8, 10);
@@ -351,33 +352,38 @@ public class LocalEataPersistence implements EataPersistence{
     }
 
     @Override
-    public void addNewUserConected(String name) throws EataPersistenceException {
-        usersConected.add(name);
+    public void addNewUserConected(int idUser) {
+        users.get(idUser).setOnline(true);
     }
 
     @Override
-    public ArrayList<String> getAllUsersConected() throws EataNotFoundException {
-        return usersConected;
-    }
-
-    @Override
-    public boolean userConected(String name) throws EataNotFoundException {
-        return usersConected.contains(name);
-    }
-
-    @Override
-    public void userDisconected(String name) throws EataNotFoundException {
-        ArrayList<String> temp = new ArrayList<String>();
-        for(int i=0; i<usersConected.size();i++){
-            System.out.println(usersConected.get(i)==name);
-            System.out.println(usersConected.get(i));
-            System.out.println(name);
-            if(!(usersConected.get(i)==name)){
-               // temp.remove(usersConected.get(i));
+    public ArrayList<User> getMyFriendsConected(int idUser) {
+        
+        Set<User> misAmigos = null;
+        try {
+            misAmigos = this.getMyFriends(idUser);
+        } catch (EataNotFoundException ex) {
+            Logger.getLogger(LocalEataPersistence.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ArrayList<User> myFriendsOnline = new ArrayList<User>();
+        
+        for (Iterator<User> iterator = misAmigos.iterator(); iterator.hasNext();) {
+            User next = iterator.next();
+            if(next.getOnline()){
+                myFriendsOnline.add(next);
             }
         }
-        usersConected = temp;
+        
+        return myFriendsOnline;
     }
+
+    @Override
+    public void addNewUserPosition(int idUser, double  lat, double  lon) {
+        Location pos = new Location(lat, lon);
+        users.get(idUser).setLocation(pos);
+    }
+
 
     
     

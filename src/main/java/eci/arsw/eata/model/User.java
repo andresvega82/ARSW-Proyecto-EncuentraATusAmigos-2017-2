@@ -22,6 +22,8 @@ public class User {
     private String gender;
     private ArrayList<FreeTime> freeTime = new ArrayList<FreeTime>();
     private String name;
+    private Location location;
+    private Boolean online = false;
 
     public User(int idUser, String password,ArrayList<Integer> friends, String mail, String gender,ArrayList<FreeTime> freetime, String name) {
         this.idUser = idUser;
@@ -30,6 +32,22 @@ public class User {
         this.gender = gender;
         this.name = name;
         this.friends = friends;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Boolean getOnline() {
+        return online;
+    }
+
+    public void setOnline(Boolean online) {
+        this.online = online;
     }
     
     public User() {

@@ -72,21 +72,26 @@ public class EataServices {
         return eatap.getCommonFreeTimebyGroup(idGroup);
     }
     
-    public void addNewUserConected(String nombreUser) throws EataPersistenceException{
-        eatap.addNewUserConected(nombreUser);
+    public void addNewUserConected(int idUser) throws EataPersistenceException{
+        eatap.addNewUserConected(idUser);
     }
     
-    public ArrayList<String> getAllUsersConected() throws EataNotFoundException{
-        return eatap.getAllUsersConected();
+    public ArrayList<User> getAllUsersConected(int idUser) throws EataNotFoundException{
+        return eatap.getMyFriendsConected(idUser);
     }
     
-    public boolean isUserConected(String nombreUser) throws EataNotFoundException{
-        return eatap.userConected(nombreUser);
+    public void addNewUserPosition(int idUser, double  lat, double  lon){
+        eatap.addNewUserPosition(idUser,lat,lon);
     }
+//    
+//    public boolean isUserConected(String nombreUser) throws EataNotFoundException{
+//        return eatap.userConected(nombreUser);
+//    }
+//    
+//    public void userDisconected(String nombreUser) throws EataNotFoundException{
+//        eatap.userDisconected(nombreUser);
+//    }
     
-    public void userDisconected(String nombreUser) throws EataNotFoundException{
-        eatap.userDisconected(nombreUser);
-    }
-    
+
     
 }

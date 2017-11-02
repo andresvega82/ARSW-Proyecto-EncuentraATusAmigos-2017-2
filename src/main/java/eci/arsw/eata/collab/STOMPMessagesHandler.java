@@ -22,27 +22,38 @@ public class STOMPMessagesHandler {
         
         @Autowired
         private EataServices eataservice;
+       
         
-        ArrayList<String> conectados = new ArrayList<String>(); 
-        ConcurrentHashMap<String, String> repositorioUsuariosConectados = new ConcurrentHashMap<String, String>();
         
 	@MessageMapping("/newuserconected")    
-	public void handlePointEvent(String nombre) throws Exception {
-            System.out.println("Nombre a agregar: "+nombre);
-            if(!eataservice.isUserConected(nombre)){
-                eataservice.addNewUserConected(nombre);
-                msgt.convertAndSend("/topic/newuserconected", nombre);
-                
-            }
+	public void handlePointEvent(int idUser) throws Exception {
+            eataservice.addNewUserConected(idUser);
+            System.out.println("Usuario a agregar: "+idUser);
+            msgt.convertAndSend("/topic/showMyFriendsConected", idUser);
+            
+	}
+        
+        
+        @MessageMapping("/newuserposition")    
+	public void agregarPosicionAUsuario(ArrayList<Object> vector) throws Exception {         
+            System.out.println("Este es el vector: "+vector);
+            int carnet = (int)vector.get(0);
+            double lat = (double)vector.get(1);
+            double lon = (double)vector.get(2);
+            System.out.println("tipo de carnet: "+vector.get(0).getClass());
+            System.out.println("tipo de lat: "+vector.get(1).getClass());
+            System.out.println("tipo de long: "+vector.get(2).getClass());
+            eataservice.addNewUserPosition(carnet, lat, lon);
+            msgt.convertAndSend("/topic/showOnlineFriendsPosition", "pintar posiciones");
             
 	}
         
         @MessageMapping("/cerrarsesion")    
 	public void cerrarSesion(String nameUser) throws Exception {
-            System.out.println("Cerrar sesion: "+nameUser);
-            eataservice.userDisconected(nameUser);
-            msgt.convertAndSend("/topic/cerrarsesion", nameUser);
-            
+//            System.out.println("Cerrar sesion: "+nameUser);
+//            eataservice.userDisconected(nameUser);
+//            msgt.convertAndSend("/topic/cerrarsesion", nameUser);
+//            
             
 	}
 }

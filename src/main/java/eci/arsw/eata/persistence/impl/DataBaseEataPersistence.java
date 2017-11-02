@@ -92,24 +92,23 @@ public class DataBaseEataPersistence implements EataPersistence{
     }
 
     @Override
-    public void addNewUserConected(String name) throws EataPersistenceException {
+    public void addNewUserConected(int idUser) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ArrayList<String> getAllUsersConected() throws EataNotFoundException {
+    public ArrayList<User> getMyFriendsConected(int idUser) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean userConected(String name) throws EataNotFoundException {
+    public void addNewUserPosition(int idUser, double  lat, double  lon) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void userDisconected(String name) throws EataNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
+
+
 
     
 
