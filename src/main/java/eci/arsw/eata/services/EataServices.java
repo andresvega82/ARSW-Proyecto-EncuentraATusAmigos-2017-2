@@ -83,6 +83,11 @@ public class EataServices {
     public void addNewUserPosition(int idUser, double  lat, double  lon){
         eatap.addNewUserPosition(idUser,lat,lon);
     }
+    
+    public void disconectUser(int idUser){
+        eatap.disconectUser(idUser);
+    }
+    
 //    
 //    public boolean isUserConected(String nombreUser) throws EataNotFoundException{
 //        return eatap.userConected(nombreUser);

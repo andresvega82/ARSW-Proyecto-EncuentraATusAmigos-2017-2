@@ -16,17 +16,14 @@ var module = (function () {
     var posicion
     var lat;
     var long;
-    //4.7809219<br>Longitude: -74.0475574
     var marcadores = [];
-        
+    var estaLogueado = false;
+    var estaEnInicio = false;
     
      
     
     var map;
-    var estaLogeado = false;
     var stompClient = null;
-    var conectados = [];
-    //Latitude: 4.7809219<br>Longitude: -74.0475574
 
     
 
@@ -37,7 +34,7 @@ var module = (function () {
             module.limpiarTodo();
             $("#tituloContenido").append("<h1>Login</h1>");
             $("#contenido").append("<form action='/action_page.php'>\n\
-                                        <div class='container'>\n\
+                                        <div id='formularioLogin' class='container'>\n\
                                           <label><b>Username</b></label>\n\
                                           <input id='name' type='text' placeholder='Enter Username' name='uname' required>\n\
                                           <label><b>Password</b></label>\n\
@@ -48,7 +45,7 @@ var module = (function () {
         }, //document.getElementById('name').value, document.getElementById('pass').value
 
         newMarcador: function (markerName, lat, long) {
-            console.log("Esto agregando marcadores");
+            console.log("Estoy agregando marcadores");
             marcadores.push([markerName, lat, long]);
             var marker, i;
             for (i = 0; i < marcadores.length; i++) {
@@ -71,33 +68,37 @@ var module = (function () {
                 ///topic/showMyFriendsConected
                 stompClient.subscribe('/topic/showMyFriendsConected', function (eventbody) {
                     //conectados.push(eventbody);
-                    console.log("Agregar los amigos conectados de: " + eventbody);
-                    module.crearTablaMisAmigosConectados(eventbody);
+                    console.log("Esta logeado y en inicio:"+estaLogueado);
+                    console.log(estaEnInicio);
+                    if(estaLogueado){
+                        console.log("Agregar los amigos conectados de: " + eventbody);
+                        module.crearTablaMisAmigosConectados(eventbody);
+                        
+                    }
                 });
                 
                 stompClient.subscribe('/topic/showOnlineFriendsPosition', function (eventbody) {
                     //conectados.push(eventbody);
                     //module.newMarcador(JSON.parse(eventbody.body)[0],JSON.parse(eventbody.body)[1],JSON.parse(eventbody.body)[2]);
-                    console.log(eventbody);
-                    module.pintarPosiciones();
+                    if(estaLogueado){
+                        console.log(eventbody);
+                        module.pintarPosiciones();
+                    }
                 });
                 
+                stompClient.subscribe('/topic/newgroup', function (eventbody) {
+                    //conectados.push(eventbody);
+                    //module.newMarcador(JSON.parse(eventbody.body)[0],JSON.parse(eventbody.body)[1],JSON.parse(eventbody.body)[2]);
+                    if(estaLogueado){
+                        module.traerMisGrupos();
+                    }
+                });
                 
-                ///topic/cerrarsesion
                 stompClient.subscribe('/topic/cerrarsesion', function (eventbody) {
-//                    //conectados.push(eventbody);
-//                    for (i = 0; i < conectados.length; i++) {
-//                        console.log(conectados[i]);
-//                        console.log(JSON.parse(eventbody.body));
-//                        if(conectados[i]==JSON.parse(eventbody.body).toString()){
-//                            console.log("tabla: "+conectados+" "+conectados[i]==JSON.parse(eventbody.body));
-//                            conectados[i] == "";
-//                        }
-//
-//                    }
-//                    console.log("usuarios conectados: " + eventbody);
-//                    module.crearTablaMisAmigosConectados();
-
+                    if(estaLogueado){
+                        module.crearTablaMisAmigosConectados(eventbody);
+                        module.pintarPosiciones();
+                    }
                 });
 
             });
@@ -120,23 +121,37 @@ var module = (function () {
             //var conectar = module.connectAndSubscribe();
             $.get("/eata/users/" + carnet, function (data) {
                             console.log(data.idUser);
-                            if (data.idUser == carnet && data.password == pass) {          
+                            if (data.idUser == carnet && data.password == pass && data.online == false) {    
+                                estaLogueado=true;
                                 name = data.name;
                                 console.log(name + " :name en login");
                                 idUser = data.idUser;
                                 password = data.password;
                                 mail = data.mail;
                                 gender = data.gender;
-                                estaLogeado = true;
                                 $("#tituloContenido").empty();
                                 $("#contenido").empty();
                                 module.pagInicio();
                                 module.publishNewUserConected(data.idUser);
+                                module.traerMisGrupos();
                                 }
+                            else{
+                                $("#formularioLogin").append("<p style='color:#FF0000';>Usuario o contraseña incorrectos o ya inicio sesion</p>");
+                            }  
                         });
         },
         
+        funcionBotonInicio: function(){
+          estaEnInicio = true;
+          module.limpiarTodoMenosPerfil();
+          module.traerMapa();
+          module.botonesDiv();
+          module.crearTablaMisAmigosConectados();
+        },
+        
+        
         crearFormularioGrupo: function () {
+            estaEnInicio = false; 
             module.limpiarTodoMenosPerfil();
             $("#tituloContenido").append("<h1>Crear Grupo</h1>");
             $("#contenido").append("<form action='/action_page.php'>\n\
@@ -168,7 +183,8 @@ var module = (function () {
             });
         },
         crearGrupo: function () {
-            var members = [];
+            
+            var members = [idUser];
             var newId;
             var idGroup=$.get("/eata/groups", function (data) {
                 newId = (data.length) + 1;
@@ -203,16 +219,16 @@ var module = (function () {
                 });
                 crear.then(
                     function () {
-                        alert("Grupo Creado");
-                        estaLogeado = true;
-                        signUpJs.redireccionAinicio();
+                        stompClient.send('/topic/newgroup', {}, idUser);
+                        module.pagInicio();
 
                     }
 
                 );
                 }
+                        
                 );
-        
+                
             
             });
             
@@ -224,14 +240,15 @@ var module = (function () {
         },
         
         cerrarSesion: function(){
-            stompClient.send('/app/cerrarsesion', {}, JSON.stringify(name));
-            
-             module.disconnect();
-                module.init();
+            estaLogueado=false;
+            stompClient.send('/app/cerrarsesion', {}, idUser);
+            module.disconnect();
+            module.init();
         },
         
         traerPerfil: function () {
-            $("#perfil").append("<h4 id='nameUser' style='text-align-last: center'  >" + name + "</h4>\n\
+            $("#perfil").append("<Button type='Button' height='80' onclick='module.funcionBotonInicio()'>Ir a Inicio</Button>\n\
+                                        <h4 id='nameUser' style='text-align-last: center'  >" + name + "</h4>\n\
                                         <p >\n\
                                         <img src='usuario.png' style='height:106px;width:106px;' alt='Avatar'>\n\
                                         </p>\n\
@@ -243,7 +260,6 @@ var module = (function () {
                                         </table>\n\
                                         <hr>\n\
                                         <table id='tablaGrupos' class='miclase'>\n\
-                                        <tr><th id='grupos'>Mis Grupos</th></tr>\n\
                                         </table>"
                     );
         },
@@ -260,33 +276,38 @@ var module = (function () {
             $("#tablas").empty();
             $("#botones").empty();
         },
+        
+        
         pagInicio: function () {
+            estaEnInicio = true;
             module.limpiarTodo();
             module.traerPerfil();
             module.traerMapa();
             module.traerMisAmigos();
-            module.traerMisGrupos();
             module.botonesDiv();
             module.crearTablaMisAmigosConectados();
+            
+            
         },
         
         crearTablaMisAmigosConectados: function () {
-            $("#tablas").empty();
-            $("#tablas").append("<h1>Amigos Conectados</h1>");
-            $("#tablas").append("<table id='amigosConectadosId' class='miclase'>\n\
-                                 <tr><th id='Nombre'>Amigos</th></tr>\n\
-                                </table>");
-            
-            $.get("/eata/usersconected/"+idUser, function (data) {
-                for (i = 0; i < data.length; i++) {
-                    console.log("GET lalalala: "+data);
-                    $("#tablas").append("<tr><td>" + data[i].name + "</td></tr>");
-                }
-            });
+            if(estaEnInicio){
+                $("#tablas").empty();
+                $("#tablas").append("<h1>Amigos Conectados</h1>");
+                $("#tablas").append("<table id='amigosConectadosId' class='miclase'>\n\
+                                     <tr><th id='Nombre'>Amigos</th></tr>\n\
+                                    </table>");
+
+                $.get("/eata/usersconected/"+idUser, function (data) {
+                    for (i = 0; i < data.length; i++) {
+                        $("#amigosConectadosId").append("<tr><td>" + data[i].name + "</td></tr>");
+                    }
+                });
+            }
         },
         
         pintarPosiciones: function () {
-            marcadores = [];
+            
             $.get("/eata/usersconected/"+idUser, function (data) {
                 for (i = 0; i < data.length; i++) {
                     console.log("GET lalalala: "+data);
@@ -300,6 +321,7 @@ var module = (function () {
             $("#botones").append("<button type='button' onclick=\"module.crearFormularioGrupo()\">Crear Grupo</button>");
             $("#botones").append("<button class='cancelbtn' type='button' onclick=\"module.cerrarSesion()\">Cerrar Sesion</button>");
         },
+        
         traerMapa: function () {
             $("#tituloContenido").append("<h1>Amigos cercanos:</h1>");
             module.getLocation();
@@ -314,7 +336,9 @@ var module = (function () {
             });
         },
         traerMisGrupos: function () {
+            $("#tablaGrupos").empty();
             $.get("/eata/users/mygroups/" + idUser, function (data) {
+                $("#tablaGrupos").append("<tr><th id='grupos'>Mis Grupos</th></tr>");
                 for (i = 0; i < data.length; i++) {
                     $("#tablaGrupos").append("<tr><td>" + data[i].name + "</td></tr>");
 
@@ -323,6 +347,7 @@ var module = (function () {
             });
         },
         getLocation: function () {
+            
             if (navigator.geolocation) {
                 //module.myMap(navigator.geolocation.getCurrentPosition());
                 navigator.geolocation.getCurrentPosition(module.myMap);
@@ -333,7 +358,7 @@ var module = (function () {
                     "<br>Longitude: " + position.coords.longitude);
         },
         myMap: function (position) {
-            
+            marcadores = [];
             var mapOptions = {
                 center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
                 zoom: 12,
@@ -347,7 +372,7 @@ var module = (function () {
             long = position.coords.longitude;
             console.log(JSON.stringify([name,position.coords.latitude,position.coords.longitude ]));
             stompClient.send('/app/newuserposition',{},JSON.stringify([idUser,position.coords.latitude,position.coords.longitude]));
-            //module.newMarcador(name,position.coords.latitude,position.coords.longitude );
+            module.newMarcador(name,position.coords.latitude,position.coords.longitude );
         }
 
     }

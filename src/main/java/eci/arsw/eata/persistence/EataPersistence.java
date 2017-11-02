@@ -143,5 +143,7 @@ public interface EataPersistence {
     public ArrayList<User> getMyFriendsConected(int idUser);
 
     public void addNewUserPosition(int idUser, double  lat, double  lon);
+
+    public void disconectUser(int idUser);
   
 }

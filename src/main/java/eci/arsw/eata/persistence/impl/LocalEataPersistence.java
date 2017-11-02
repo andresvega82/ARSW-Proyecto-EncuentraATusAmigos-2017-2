@@ -384,6 +384,11 @@ public class LocalEataPersistence implements EataPersistence{
         users.get(idUser).setLocation(pos);
     }
 
+    @Override
+    public void disconectUser(int idUser) {
+        users.get(idUser).setOnline(false);
+    }
+
 
     
     

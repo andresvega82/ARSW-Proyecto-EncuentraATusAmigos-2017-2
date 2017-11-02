@@ -49,11 +49,8 @@ public class STOMPMessagesHandler {
 	}
         
         @MessageMapping("/cerrarsesion")    
-	public void cerrarSesion(String nameUser) throws Exception {
-//            System.out.println("Cerrar sesion: "+nameUser);
-//            eataservice.userDisconected(nameUser);
-//            msgt.convertAndSend("/topic/cerrarsesion", nameUser);
-//            
-            
+	public void cerrarSesion(int idUser) throws Exception {
+            eataservice.disconectUser(idUser);
+            msgt.convertAndSend("/topic/cerrarsesion", idUser);
 	}
 }
