@@ -65,6 +65,7 @@ Es una aplicación basada en waze que busca ser orientada a un público específ
 1. Al iniciar sesion: actualiza amigos conectados y posiciones de amigos conectados.
 2. Al crear un grupo: actualzia los grupos de los miembros agregados.
 3. Al cerrar sesion: actualiza amigos conectados y posiciones de amigos conectados.
+4. Al estar en linea el 60% de los miembros de un grupo: envia una alerta para una posible cracion de reunion.
 
 ***
 
