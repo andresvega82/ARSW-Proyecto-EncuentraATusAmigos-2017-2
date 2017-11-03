@@ -59,12 +59,12 @@ var module = (function () {
                                       <label><b>Password</b></label>\n\
                                       <input type='password' placeholder='Enter Password' name='pswSignUp' required>\n\
                                       <div class='clearfix'>\n\
-                                        <button type='button' class='cancelbtn'>Cancel</button>\n\
-                                        <button type='button' class='signupbtn'>Sign Up</button>\n\
+                                        <button type='button' class='cancelbtn' onclick='module.init()' >Cancel</button>\n\
+                                        <button type='button' class='signupbtn' onclick='module.addNewUser()' >Sign Up</button>\n\
                                       </div>\n\
                                     </div>\n\
                                   </form>");
-            module.addNewUser();
+            
         },
         
         addNewUser: function () {
