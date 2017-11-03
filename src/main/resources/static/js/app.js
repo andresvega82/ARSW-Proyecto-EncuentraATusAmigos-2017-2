@@ -95,10 +95,10 @@ var module = (function () {
                 });
                 
                 stompClient.subscribe('/topic/cerrarsesion', function (eventbody) {
-                    if(estaLogueado){
+                        console.log("entro a cerrar sesion");
                         module.crearTablaMisAmigosConectados(eventbody);
                         module.pintarPosiciones();
-                    }
+                    
                 });
 
             });
