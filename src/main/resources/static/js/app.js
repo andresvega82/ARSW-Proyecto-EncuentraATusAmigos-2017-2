@@ -121,7 +121,7 @@ var module = (function () {
             //var conectar = module.connectAndSubscribe();
             $.get("/eata/users/" + carnet, function (data) {
                             console.log(data.idUser);
-                            if (data.idUser == carnet && data.password == pass && data.online == false) {    
+                            if (data.idUser == carnet && data.password == pass) {    
                                 estaLogueado=true;
                                 name = data.name;
                                 console.log(name + " :name en login");
