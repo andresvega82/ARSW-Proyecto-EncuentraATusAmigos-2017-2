@@ -7,6 +7,7 @@ package eci.arsw.eata.collab;
 
 import eci.arsw.eata.services.EataServices;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -30,6 +31,15 @@ public class STOMPMessagesHandler {
             eataservice.addNewUserConected(idUser);
             System.out.println("Usuario a agregar: "+idUser);
             msgt.convertAndSend("/topic/showMyFriendsConected", idUser);
+            
+            Map<Integer, Integer> conectados = eataservice.personasConectadasPorGrupo();
+            for (Map.Entry<Integer, Integer> entry : conectados.entrySet()) {
+                Integer key = entry.getKey();
+                Integer porc = entry.getValue();
+                if(porc >= 60){
+                    msgt.convertAndSend("/topic/posibilidadDeReunion", key);
+                }
+            }
             
 	}
         

@@ -102,7 +102,8 @@ public class LocalEataPersistence implements EataPersistence{
         // Creacion de grupos QUEMADOS 
         ArrayList<Integer> members1 = new ArrayList<Integer>();
         members1.add(2101751);
-        members1.add(2099444);
+        members1.add(2090540);
+        members1.add(1);
         
         ArrayList<Integer> members2 = new ArrayList<Integer>();
         members2.add(2101751);
@@ -387,6 +388,31 @@ public class LocalEataPersistence implements EataPersistence{
     @Override
     public void disconectUser(int idUser) {
         users.get(idUser).setOnline(false);
+    }
+
+    @Override
+    public Map<Integer, Integer> porcentajeDePersonasConectadasPorGrupo() {
+        Map<Integer, Integer> resp =new HashMap<>();
+        
+        for (Map.Entry<Integer, Group> entry : groups.entrySet()) {
+            int cantOnline = 0;
+            Integer key = entry.getKey();
+            Group gr = entry.getValue();
+            ArrayList<Integer> miembros = gr.getMembers();
+            for(int i=0; i<miembros.size(); i++){
+                System.out.println("Prueba booleaana: "+users.get(miembros.get(i)).getOnline());
+                if(users.get(miembros.get(i)).getOnline()){
+                    cantOnline = cantOnline+1;
+                }
+            }
+            
+            int porcentaje = (cantOnline*100)/miembros.size();
+            System.out.println("cantOnline: "+cantOnline+" numero de miembros: "+miembros.size());
+            System.out.println("Porcentaje: "+porcentaje+" del grupo: "+key);
+            resp.put(key, porcentaje);
+        }
+        
+        return resp;
     }
 
 

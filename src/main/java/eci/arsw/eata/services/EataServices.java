@@ -13,6 +13,7 @@ import eci.arsw.eata.persistence.EataNotFoundException;
 import eci.arsw.eata.persistence.EataPersistence;
 import eci.arsw.eata.persistence.EataPersistenceException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,6 +87,10 @@ public class EataServices {
     
     public void disconectUser(int idUser){
         eatap.disconectUser(idUser);
+    }
+    
+    public Map<Integer, Integer> personasConectadasPorGrupo(){
+        return eatap.porcentajeDePersonasConectadasPorGrupo();
     }
     
 //    

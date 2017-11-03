@@ -13,6 +13,7 @@ import eci.arsw.eata.persistence.EataNotFoundException;
 import eci.arsw.eata.persistence.EataPersistence;
 import eci.arsw.eata.persistence.EataPersistenceException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -108,6 +109,11 @@ public class DataBaseEataPersistence implements EataPersistence{
 
     @Override
     public void disconectUser(int idUser) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Map<Integer, Integer> porcentajeDePersonasConectadasPorGrupo() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

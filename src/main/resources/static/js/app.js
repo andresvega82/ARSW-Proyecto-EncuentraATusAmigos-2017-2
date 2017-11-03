@@ -131,6 +131,20 @@ var module = (function () {
                         module.pintarPosiciones();
                     }
                 });
+               
+                stompClient.subscribe('/topic/posibilidadDeReunion', function (eventbody) {
+                    var nombregr;
+                    if(estaLogueado){
+                        
+                        $.get("/eata/groups", function (data) {
+                            
+                            nombregr = data[JSON.parse(eventbody.body)].name;
+                            console.log("nombre GR: "+ nombregr+" con id: "+JSON.parse(eventbody.body));
+                            alert("Mas del 60% del grupo: "+nombregr+" esta en linea, puede crear una reunion");
+                        });
+                        
+                    }
+                });
                 
                 stompClient.subscribe('/topic/newgroup', function (eventbody) {
                     //conectados.push(eventbody);

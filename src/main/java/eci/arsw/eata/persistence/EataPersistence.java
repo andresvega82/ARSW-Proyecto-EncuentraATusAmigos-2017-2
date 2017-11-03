@@ -10,6 +10,7 @@ import eci.arsw.eata.model.Group;
 import eci.arsw.eata.model.Meeting;
 import eci.arsw.eata.model.User;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
@@ -145,5 +146,7 @@ public interface EataPersistence {
     public void addNewUserPosition(int idUser, double  lat, double  lon);
 
     public void disconectUser(int idUser);
+    
+    public Map<Integer,Integer> porcentajeDePersonasConectadasPorGrupo();
   
 }
