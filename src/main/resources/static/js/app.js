@@ -51,25 +51,25 @@ var module = (function () {
             $("#contenido").append("<form action='/action_page.php'' style='border:1px solid #ccc'>\n\
                                     <div class='container'>\n\
                                       <label><b>Name</b></label>\n\
-                                      <input type='text' placeholder='Enter name' name='nameSignUp' required>\n\
+                                      <input id='nameSignUp' type='text' placeholder='Enter name' name='nameSignUp' required>\n\
                                       <label><b>Email</b></label>\n\
-                                      <input type='text' placeholder='Enter Email' name='emailSignUp' required>\n\
+                                      <input id='emailSignUp' type='text' placeholder='Enter Email' name='emailSignUp' required>\n\
                                       <label><b>Carnet</b></label>\n\
-                                      <input type='text' placeholder='Enter Carnet' name='carnetSignUp' required>\n\
+                                      <input id='carnetSignUp' type='text' placeholder='Enter Carnet' name='carnetSignUp' required>\n\
                                       <label><b>Password</b></label>\n\
-                                      <input type='password' placeholder='Enter Password' name='pswSignUp' required>\n\
-                                      <div class='clearfix'>\n\
-                                        <button type='button' class='cancelbtn' onclick='module.init()' >Cancel</button>\n\
-                                        <button type='button' class='signupbtn' onclick='module.addNewUser()' >Sign Up</button>\n\
-                                      </div>\n\
+                                      <input id='pswSignUp' type='password' placeholder='Enter Password' name='pswSignUp' required>\n\
                                     </div>\n\
                                   </form>");
+            $("#botones").append("<div class='clearfix'>\n\
+                                        <button type='button' class='signupbtn' onclick='module.addNewUser()' >Sign Up</button>\n\
+                                        <button type='button' class='cancelbtn' onclick='module.init()' >Cancel</button>\n\
+                                      </div>");
             
         },
         
-        addNewUser: function () {
+        addNewUser: function (){
             //{"idUser":2098165,"password":"1.0234","friends":[2090540,2099444,1],"mail":"pollo@mail.com","gender":"macho","freeTime":[],"name":"Juan Carlos","location":null,"online":false}
-            var newUser = "{\"idUser\":" + document.getElementById("nameSignUp").value + ",\""+ "password\":" + document.getElementById("pswSignUp").value + ",\"" + "friends\":[]"+"mail\":" + "\"" + document.getElementById("emailSignUp").value + "\"}";
+            var newUser = "{\"idUser\":" + document.getElementById("carnetSignUp").value + ",\""+ "password\":" + document.getElementById("pswSignUp").value + ",\"" + "friends\":[],\""+"mail\":" + "\"" + document.getElementById("emailSignUp").value +"\",\"gender\":" + "\"" + "genero"+"\",\"freetime\":[]"+",\"name\":" + "\"" +document.getElementById("nameSignUp").value+"\",\"location\":null"+",\"online\":false"+"}";
             console.log(newUser);
             var crear = $.ajax({
                 url: "/eata/addUser",
@@ -79,7 +79,7 @@ var module = (function () {
             });
             crear.then(
                     function () {
-                        module.login("METER AQUI CARNET", "METER AQUI PASSWORD");
+                        module.login(document.getElementById("carnetSignUp").value, document.getElementById("pswSignUp").value);
 
                     },
                     function(){
