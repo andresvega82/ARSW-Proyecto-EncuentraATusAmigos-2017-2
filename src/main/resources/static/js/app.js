@@ -40,10 +40,56 @@ var module = (function () {
                                           <label><b>Password</b></label>\n\
                                           <input id='pass' type='password' placeholder='Enter Password' name='psw' required>\n\
                                           <button type='button' onclick=\"module.login(document.getElementById('name').value, document.getElementById('pass').value)\">Login</button>\n\
+\n\                                       <button type='button' onclick=\"module.formatoSignUp()\">Sign Up</button>\n\
                                         </div>\n\
                                  </form>");
         }, //document.getElementById('name').value, document.getElementById('pass').value
+        
+        formatoSignUp: function(){
+            module.limpiarTodo();
+            $("#tituloContenido").append("<h1>Sign Up</h1>");
+            $("#contenido").append("<form action='/action_page.php'' style='border:1px solid #ccc'>\n\
+                                    <div class='container'>\n\
+                                      <label><b>Name</b></label>\n\
+                                      <input type='text' placeholder='Enter name' name='nameSignUp' required>\n\
+                                      <label><b>Email</b></label>\n\
+                                      <input type='text' placeholder='Enter Email' name='emailSignUp' required>\n\
+                                      <label><b>Carnet</b></label>\n\
+                                      <input type='text' placeholder='Enter Carnet' name='carnetSignUp' required>\n\
+                                      <label><b>Password</b></label>\n\
+                                      <input type='password' placeholder='Enter Password' name='pswSignUp' required>\n\
+                                      <div class='clearfix'>\n\
+                                        <button type='button' class='cancelbtn'>Cancel</button>\n\
+                                        <button type='button' class='signupbtn'>Sign Up</button>\n\
+                                      </div>\n\
+                                    </div>\n\
+                                  </form>");
+            module.addNewUser();
+        },
+        
+        addNewUser: function () {
+            //{"idUser":2098165,"password":"1.0234","friends":[2090540,2099444,1],"mail":"pollo@mail.com","gender":"macho","freeTime":[],"name":"Juan Carlos","location":null,"online":false}
+            var newUser = "{\"idUser\":" + document.getElementById("nameSignUp").value + ",\""+ "password\":" + document.getElementById("pswSignUp").value + ",\"" + "friends\":[]"+"mail\":" + "\"" + document.getElementById("emailSignUp").value + "\"}";
+            console.log(newUser);
+            var crear = $.ajax({
+                url: "/eata/addUser",
+                type: 'POST',
+                data: newUser,
+                contentType: "application/json"
+            });
+            crear.then(
+                    function () {
+                        module.login("METER AQUI CARNET", "METER AQUI PASSWORD");
 
+                    },
+                    function(){
+                        
+                    }
+
+            );
+            
+        },
+        
         newMarcador: function (markerName, lat, long) {
             console.log("Estoy agregando marcadores");
             marcadores.push([markerName, lat, long]);
