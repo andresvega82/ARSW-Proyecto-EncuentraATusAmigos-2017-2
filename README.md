@@ -60,3 +60,11 @@ Es una aplicación basada en waze que busca ser orientada a un público específ
 
 ***
 
+### Funciones Colaborativas:
+
+1. Al iniciar sesion: actualiza amigos conectados y posiciones de amigos conectados.
+2. Al crear un grupo: actualzia los grupos de los miembros agregados.
+3. Al cerrar sesion: actualiza amigos conectados y posiciones de amigos conectados.
+
+***
+
