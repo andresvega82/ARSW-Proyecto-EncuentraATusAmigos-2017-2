@@ -30,7 +30,7 @@ Es una aplicación basada en waze que busca ser orientada a un público específ
 #### Creado: 08/10/2017
 #### Versión: 1.01
 ***
-### Funcionalidades:
+### Funcionalidades esperadas:
 
 1. Se puede crear un perfil por cada persona.
 2. Se pueden agregar otras personas a una lista de amigos asociada a cada perfil.
@@ -66,6 +66,16 @@ Es una aplicación basada en waze que busca ser orientada a un público específ
 2. Al crear un grupo: actualzia los grupos de los miembros agregados.
 3. Al cerrar sesion: actualiza amigos conectados y posiciones de amigos conectados.
 4. Al estar en linea el 60% de los miembros de un grupo: envia una alerta para una posible cracion de reunion.
+
+***
+
+### Funciones a Implementar a futuro:
+
+1. Creacion de reuniones (Colaborativo).
+2. Agregar amigos (Colaborativo).
+3. Consultar mis reuniones.
+4. Consultar la informacion de cada grupo.
+5. Consultar la informacion del perfil de mis amigos.
 
 ***
 
