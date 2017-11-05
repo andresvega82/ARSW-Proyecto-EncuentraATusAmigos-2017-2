@@ -4,8 +4,14 @@
 1. 
 
 ***
+### Funciones implementadas:
 
-### Funciones Colaborativas:
+1. Registrar grupo nuevo.
+2. Registrar usuario nuevo.
+3. Consultar pagina de inicio (Perfil).
+
+***
+### Funciones implementadas (Colaborativas):
 
 1. Al iniciar sesion: actualiza amigos conectados y posiciones de amigos conectados.
 2. Al crear un grupo: actualzia los grupos de los miembros agregados.
