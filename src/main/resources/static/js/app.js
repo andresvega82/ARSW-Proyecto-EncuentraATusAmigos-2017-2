@@ -156,9 +156,10 @@ var module = (function () {
                 
                 stompClient.subscribe('/topic/cerrarsesion', function (eventbody) {
                         console.log("entro a cerrar sesion");
+                    if(estaEnInicio){
                         module.crearTablaMisAmigosConectados(eventbody);
                         module.pintarPosiciones();
-                    
+                    }
                 });
 
             });
@@ -301,6 +302,7 @@ var module = (function () {
         
         cerrarSesion: function(){
             estaLogueado=false;
+            estaEnInicio = false;
             stompClient.send('/app/cerrarsesion', {}, idUser);
             module.disconnect();
             module.init();
