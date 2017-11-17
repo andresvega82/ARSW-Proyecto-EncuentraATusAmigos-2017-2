@@ -117,11 +117,12 @@ public class DataBaseEataPersistence implements EataPersistence{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-   
+    @Override
+    public boolean sonAmigos(int idUser1, int idUser2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-
-
-    
+  
 
   
     

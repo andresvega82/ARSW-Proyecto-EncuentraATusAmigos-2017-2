@@ -415,6 +415,17 @@ public class LocalEataPersistence implements EataPersistence{
         return resp;
     }
 
+    @Override
+    public boolean sonAmigos(int idUser1, int idUser2) {
+        boolean sonAmigoslosDos = false;
+        ArrayList<Integer> a1 = users.get(idUser1).getFriends();
+        ArrayList<Integer> a2 = users.get(idUser2).getFriends();
+        if(a1.contains(idUser2)&& a2.contains(idUser1)){
+            sonAmigoslosDos=true;
+        }
+        return sonAmigoslosDos;
+    }
+
 
     
     

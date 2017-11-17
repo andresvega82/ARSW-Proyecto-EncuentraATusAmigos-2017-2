@@ -41,11 +41,24 @@ public class EataAPIController {
         }
     }
     
+    
+    
     @RequestMapping(path = "/onlinebygroup", method = RequestMethod.GET)
     public ResponseEntity<?> getPorcentajeConectadosPorGrupo() {
         try {
             //obtener datos que se enviarán a través del API
             return new ResponseEntity<>(eataservice.personasConectadasPorGrupo() , HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    @RequestMapping(path = "/users/sonamigos/{idUser1}/{idUser2}", method = RequestMethod.GET)
+    public ResponseEntity<?> sonAmigos(@PathVariable("idUser1") int idUser1, @PathVariable("idUser2") int idUser2) {
+        try {
+            //obtener datos que se enviarán a través del API
+            return new ResponseEntity<>(eataservice.sonAmigos(idUser1, idUser2), HttpStatus.ACCEPTED);
         } catch (Exception ex) {
             Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);

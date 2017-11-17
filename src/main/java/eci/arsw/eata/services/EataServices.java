@@ -32,6 +32,10 @@ public class EataServices {
         return eatap.getAllUsers();
     }
     
+    public boolean sonAmigos(int idUser1, int idUser2){
+        return eatap.sonAmigos(idUser1, idUser2);
+    }
+    
     public User getUserByDocument(int idUser) throws EataNotFoundException{
         return eatap.getUserByDocument(idUser);
     }

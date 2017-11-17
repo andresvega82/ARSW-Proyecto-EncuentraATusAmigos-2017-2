@@ -30,6 +30,8 @@ public interface EataPersistence {
      */
     public Set<User> getAllUsers() throws EataNotFoundException;
     
+    public boolean sonAmigos(int idUser1, int idUser2);
+    
     /**
      *
      * @param 

@@ -202,6 +202,25 @@ var module = (function () {
                         });
         },
         
+        mostrarPerfilAmigo: function(carnet){
+          module.limpiarTodoMenosPerfil();
+          $.get("/eata/users/"+ carnet, function (data) {
+                //$("#tituloContenido").append("");
+                $("#contenido").append("<p style='text-align-last: center'>Nombre: "+data.name+"</p>\n\
+                                        <p style='text-align-last: center'>\n\
+                                        <img src='usuario.png'  style='height:106px;width:106px;' alt='Avatar'>\n\
+                                        </p>\n\
+                                        <p style='text-align-last: center'>Escuela Colombiana de Ingenieria</p>\n\
+                                        <p style='text-align-last: center'>Email: "+data.mail+"</p><p style='text-align-last: center'>Carnet: "+data.idUser+"</p>\n\
+                                        "
+                    );
+                
+            });
+            
+          
+          
+        },
+        
         funcionBotonInicio: function(){
           estaEnInicio = true;
           module.limpiarTodoMenosPerfil();
@@ -309,7 +328,7 @@ var module = (function () {
         },
         
         traerPerfil: function () {
-            $("#perfil").append("<Button type='Button' height='80' onclick='module.funcionBotonInicio()'>Ir a Inicio</Button>\n\
+            $("#perfil").append("<Button class='botonVolverInicio' type='button' onclick='module.funcionBotonInicio()'>Ir a Inicio</Button>\n\
                                         <h4 id='nameUser' style='text-align-last: center'  >" + name + "</h4>\n\
                                         <p >\n\
                                         <img src='usuario.png' style='height:106px;width:106px;' alt='Avatar'>\n\
@@ -317,11 +336,11 @@ var module = (function () {
                                         <p style='text-align-last: center'>Escuela Colombiana de Ingenieria</p>\n\
                                         <p style='text-align-last: center'>Email: "+mail+"</p><p style='text-align-last: center'>Carnet: "+idUser+"</p>\n\
                                         <hr>\n\
-                                        <table id='tablaAmigos' class='miclase'>\n\
+                                        <table id='tablaAmigos' >\n\
                                         <tr><th id='friends'>Mis Amigos</th></tr>\n\
                                         </table>\n\
                                         <hr>\n\
-                                        <table id='tablaGrupos' class='miclase'>\n\
+                                        <table id='tablaGrupos'  >\n\
                                         </table>"
                     );
         },
@@ -378,9 +397,49 @@ var module = (function () {
             });
         },
         
+        mostrarTodosUsuarios: function(){
+            module.limpiarTodoMenosPerfil();
+            $("#tituloContenido").append("<h1>Todos los Usuarios</h1>");
+            $("#contenido").append("<table id='tablaTodosUsuarios' >\n\
+                                        <tr><th id='todosUsuarios'>Todos los Usuarios</th></tr>\n\
+                                        </table>");
+//            var misAmigos = [];
+//            $.get("/eata/users/myfriends/"+idUser, function (data) {
+//                for (i = 0; i < data.length; i++) {
+//                    misAmigos.push(data[i]);
+//                }     
+//            });
+//            
+//            $.get("/eata/users/sonamigos/"+idUser+"/"+data[i].idUser, function (dataInterna) {
+//                        console.log("data Interna: "+dataInterna+" "+usuario.name);
+//                        if(dataInterna){
+//                            console.log("Entro al IF mas importante");
+//                            $("#tablaTodosUsuarios").append("<tr><td>" + usuario.name+ "</td></tr>");
+//                         
+//                        }
+//                        else{
+//                            $("#tablaTodosUsuarios").append("<tr><td>" + usuario.name + "</td>\n\
+//                                                <td><button class='botonAgregar' onclick=\"module.mostrarPerfilAmigo()\">Agregar</button>\n\
+//                                                  </td>\n\
+//                                                </tr>");
+//                        }
+//                    });
+//                    
+            $.get("/eata/users", function (data) {
+                for (i = 0; i < data.length; i++) {
+                    
+                    $("#tablaTodosUsuarios").append("<tr><td>" + data[i].name+ "</td></tr>");
+                    
+            
+                }
+            });
+            
+        },
+        
         botonesDiv: function () {
             $("#botones").empty();
             $("#botones").append("<button type='button' onclick=\"module.crearFormularioGrupo()\">Crear Grupo</button>");
+            $("#botones").append("<button type='button' onclick=\"module.mostrarTodosUsuarios()\">Agregar Amigos</button>");
             $("#botones").append("<button class='cancelbtn' type='button' onclick=\"module.cerrarSesion()\">Cerrar Sesion</button>");
         },
         
@@ -391,7 +450,10 @@ var module = (function () {
         traerMisAmigos: function () {
             $.get("/eata/users/myfriends/" + idUser, function (data) {
                 for (i = 0; i < data.length; i++) {
-                    $("#tablaAmigos").append("<tr><td>" + data[i].name + "</td></tr>");
+                    $("#tablaAmigos").append("<tr><td>" + data[i].name + "</td>\n\
+                                                <td><button class='botonAmigos' onclick=\"module.mostrarPerfilAmigo("+data[i].idUser+")\">Ver</button>\n\
+                                                  </td>\n\
+                                                </tr>");
 
                 }
 
