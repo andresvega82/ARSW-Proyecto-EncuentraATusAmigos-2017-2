@@ -397,18 +397,39 @@ var module = (function () {
             });
         },
         
+        funcionBuscar:  function(){
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tablaTodosUsuarios");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }       
+  }
+        },
+        
         mostrarTodosUsuarios: function(){
             module.limpiarTodoMenosPerfil();
             $("#tituloContenido").append("<h1>Todos los Usuarios</h1>");
-            $("#contenido").append("<table id='tablaTodosUsuarios' >\n\
+            
+            $("#contenido").append("<input type='text' id='myInput' onkeyup='module.funcionBuscar()' placeholder='Search for names..' title='Type in a name'>\n\
+                                        <table id='tablaTodosUsuarios' >\n\
                                         <tr><th id='todosUsuarios'>Todos los Usuarios</th></tr>\n\
                                         </table>");
-//            var misAmigos = [];
-//            $.get("/eata/users/myfriends/"+idUser, function (data) {
-//                for (i = 0; i < data.length; i++) {
-//                    misAmigos.push(data[i]);
-//                }     
-//            });
+            var misAmigos = [idUser];
+            $.get("/eata/users/myfriends/"+idUser, function (data) {
+                for (i = 0; i < data.length; i++) {
+                    misAmigos.push(data[i].idUser);
+                    console.log("Entro al primer GET");
+                }     
+            });
 //            
 //            $.get("/eata/users/sonamigos/"+idUser+"/"+data[i].idUser, function (dataInterna) {
 //                        console.log("data Interna: "+dataInterna+" "+usuario.name);
@@ -425,14 +446,32 @@ var module = (function () {
 //                        }
 //                    });
 //                    
-            $.get("/eata/users", function (data) {
-                for (i = 0; i < data.length; i++) {
-                    
-                    $("#tablaTodosUsuarios").append("<tr><td>" + data[i].name+ "</td></tr>");
-                    
             
+            $.get("/eata/users", function (data) {
+                console.log("Arreglo amigos: "+misAmigos);
+                for (i = 0; i < data.length; i++) {
+                    var algo = misAmigos.includes(data[i].idUser);
+                    
+                    if(misAmigos.includes(data[i].idUser)){
+                        if (data[i].idUser != idUser) {
+                            $("#tablaTodosUsuarios").append("<tr><td>" + data[i].name + "</td><td><button class='botonAmigos' onclick=\"module.mostrarPerfilAmigo("+data[i].idUser+")\">Ver</button></td></tr>");
+                        }
+                    }
+                    else{
+                        $("#tablaTodosUsuarios").append("<tr><td>" + data[i].name + "</td><td><button class='botonAgregar' onclick=\"module.agregarAmigo("+data[i].idUser+")\">Agregar</button></td></tr>");
+                    }
+                    
+                    
                 }
             });
+
+                    
+           
+            
+            
+        },
+        
+        agregarAmigo: function(){
             
         },
         
