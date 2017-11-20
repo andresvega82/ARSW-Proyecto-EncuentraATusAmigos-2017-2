@@ -17,7 +17,7 @@ var module = (function () {
     var lat;
     var long;
     var marcadores = [];
-    var misAmigos;
+    var misAmigos = [];
     var estaLogueado = false;
     var estaEnInicio = false;
     
