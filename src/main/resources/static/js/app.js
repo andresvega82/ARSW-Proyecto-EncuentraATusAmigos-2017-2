@@ -17,6 +17,7 @@ var module = (function () {
     var lat;
     var long;
     var marcadores = [];
+    var misAmigos;
     var estaLogueado = false;
     var estaEnInicio = false;
     
@@ -416,6 +417,17 @@ var module = (function () {
         },
         
         mostrarTodosUsuarios: function(){
+            misAmigos.push(idUser);
+            $.get("/eata/users/myfriends/"+idUser, function (data) {
+                for (i = 0; i < data.length; i++) {
+                    misAmigos.push(data[i].idUser);
+                    console.log("Entro al primer GET");
+                }     
+            });
+            module.mostrarTodosUsuariosContinuacion();
+        },
+        
+        mostrarTodosUsuariosContinuacion: function(){
             module.limpiarTodoMenosPerfil();
             $("#tituloContenido").append("<h1>Todos los Usuarios</h1>");
             
@@ -423,30 +435,8 @@ var module = (function () {
                                         <table id='tablaTodosUsuarios' >\n\
                                         <tr><th id='todosUsuarios'>Todos los Usuarios</th></tr>\n\
                                         </table>");
-            var misAmigos = [idUser];
-            $.get("/eata/users/myfriends/"+idUser, function (data) {
-                for (i = 0; i < data.length; i++) {
-                    misAmigos.push(data[i].idUser);
-                    console.log("Entro al primer GET");
-                }     
-            });
-//            
-//            $.get("/eata/users/sonamigos/"+idUser+"/"+data[i].idUser, function (dataInterna) {
-//                        console.log("data Interna: "+dataInterna+" "+usuario.name);
-//                        if(dataInterna){
-//                            console.log("Entro al IF mas importante");
-//                            $("#tablaTodosUsuarios").append("<tr><td>" + usuario.name+ "</td></tr>");
-//                         
-//                        }
-//                        else{
-//                            $("#tablaTodosUsuarios").append("<tr><td>" + usuario.name + "</td>\n\
-//                                                <td><button class='botonAgregar' onclick=\"module.mostrarPerfilAmigo()\">Agregar</button>\n\
-//                                                  </td>\n\
-//                                                </tr>");
-//                        }
-//                    });
-//                    
             
+
             $.get("/eata/users", function (data) {
                 console.log("Arreglo amigos: "+misAmigos);
                 for (i = 0; i < data.length; i++) {
