@@ -204,6 +204,7 @@ var module = (function () {
         },
         
         mostrarPerfilAmigo: function(carnet){
+          estaEnInicio = false;
           module.limpiarTodoMenosPerfil();
           $.get("/eata/users/"+ carnet, function (data) {
                 //$("#tituloContenido").append("");
@@ -417,6 +418,7 @@ var module = (function () {
         },
         
         mostrarTodosUsuarios: function(){
+            estaEnInicio = false;
             misAmigos = [];
             misAmigos.push(idUser);
             $.get("/eata/users/myfriends/"+idUser, function (data) {
