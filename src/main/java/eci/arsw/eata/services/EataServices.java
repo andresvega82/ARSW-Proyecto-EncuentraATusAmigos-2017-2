@@ -97,6 +97,10 @@ public class EataServices {
         return eatap.porcentajeDePersonasConectadasPorGrupo();
     }
     
+    public Group getGroupById(int idGroup){
+      return eatap.getGroupById(idGroup);
+    };
+    
 //    
 //    public boolean isUserConected(String nombreUser) throws EataNotFoundException{
 //        return eatap.userConected(nombreUser);

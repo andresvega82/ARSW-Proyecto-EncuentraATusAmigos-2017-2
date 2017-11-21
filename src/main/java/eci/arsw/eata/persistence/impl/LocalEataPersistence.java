@@ -426,6 +426,11 @@ public class LocalEataPersistence implements EataPersistence{
         return sonAmigoslosDos;
     }
 
+    @Override
+    public Group getGroupById(int idGroup) {
+        return groups.get(idGroup);
+    }
+
 
     
     

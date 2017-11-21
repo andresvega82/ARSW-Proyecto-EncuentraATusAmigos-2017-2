@@ -43,6 +43,12 @@ public class STOMPMessagesHandler {
             
 	}
         
+        @MessageMapping("/newusernear")    
+	public void nuevoUsuarioCercano(int idUser) throws Exception {
+            
+	}
+        
+        
         
         @MessageMapping("/newuserposition")    
 	public void agregarPosicionAUsuario(ArrayList<Object> vector) throws Exception {         

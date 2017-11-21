@@ -76,6 +76,17 @@ public class EataAPIController {
         }
     }
     
+    @RequestMapping(path = "/groups/detail/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getGroupById(@PathVariable("id") int idGroup) {
+        try {
+            //obtener datos que se enviarán a través del API
+            return new ResponseEntity<>(eataservice.getGroupById(idGroup), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
+        }
+    }
+    
     @RequestMapping(path = "/users/{idUser}", method = RequestMethod.GET)
     public ResponseEntity<?> getUserByDocument(@PathVariable("idUser") int idUser) {
         try {

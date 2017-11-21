@@ -84,6 +84,8 @@ public interface EataPersistence {
      */
     public void saveUser(User user) throws EataPersistenceException;
     
+    public Group getGroupById(int idGroup);
+    
 
     /**
      *

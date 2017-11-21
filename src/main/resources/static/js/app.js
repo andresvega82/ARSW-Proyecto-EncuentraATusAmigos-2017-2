@@ -95,7 +95,14 @@ var module = (function () {
             console.log("Estoy agregando marcadores");
             marcadores.push([markerName, lat, long]);
             var marker, i;
+            
             for (i = 0; i < marcadores.length; i++) {
+                //--------------------------
+                var x1 = new google.maps.LatLng(lat, long);
+                var x2 = new google.maps.LatLng(marcadores[i][1], marcadores[i][2]);
+                var distancia2 = google.maps.geometry.spherical.computeDistanceBetween(x1, x2);
+                console.log("Distancia entre yo y el nuevo conectado: "+distancia2);
+                //---------------------------
                 new google.maps.Marker({
                     position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
                     title: marcadores[i][0],
@@ -115,10 +122,8 @@ var module = (function () {
                 ///topic/showMyFriendsConected
                 stompClient.subscribe('/topic/showMyFriendsConected', function (eventbody) {
                     //conectados.push(eventbody);
-                    console.log("Esta logeado y en inicio:"+estaLogueado);
-                    console.log(estaEnInicio);
+              
                     if(estaLogueado){
-                        console.log("Agregar los amigos conectados de: " + eventbody);
                         module.crearTablaMisAmigosConectados(eventbody);
                         
                     }
@@ -128,7 +133,7 @@ var module = (function () {
                     //conectados.push(eventbody);
                     //module.newMarcador(JSON.parse(eventbody.body)[0],JSON.parse(eventbody.body)[1],JSON.parse(eventbody.body)[2]);
                     if(estaLogueado){
-                        console.log(eventbody);
+  
                         module.pintarPosiciones();
                     }
                 });
@@ -138,9 +143,7 @@ var module = (function () {
                     if(estaLogueado){
                         
                         $.get("/eata/groups", function (data) {
-                            
                             nombregr = data[JSON.parse(eventbody.body)].name;
-                            console.log("nombre GR: "+ nombregr+" con id: "+JSON.parse(eventbody.body));
                             alert("Mas del 60% del grupo: "+nombregr+" esta en linea, puede crear una reunion");
                         });
                         
@@ -148,8 +151,6 @@ var module = (function () {
                 });
                 
                 stompClient.subscribe('/topic/newgroup', function (eventbody) {
-                    //conectados.push(eventbody);
-                    //module.newMarcador(JSON.parse(eventbody.body)[0],JSON.parse(eventbody.body)[1],JSON.parse(eventbody.body)[2]);
                     if(estaLogueado){
                         module.traerMisGrupos();
                     }
@@ -497,12 +498,28 @@ var module = (function () {
             $.get("/eata/users/mygroups/" + idUser, function (data) {
                 $("#tablaGrupos").append("<tr><th id='grupos'>Mis Grupos</th></tr>");
                 for (i = 0; i < data.length; i++) {
-                    $("#tablaGrupos").append("<tr><td>" + data[i].name + "</td></tr>");
+                    $("#tablaGrupos").append("<tr><td>" + data[i].name + "</td>\n\
+                                                <td><button class='botonAmigos' onclick=\"module.mostrarInfoGrupo("+data[i].id+")\">Ver</button>\n\
+                                                  </td>\n\
+                                                </tr>");
 
                 }
 
             });
         },
+        
+        mostrarInfoGrupo: function(idGroup){
+            estaEnInicio=false;
+            module.limpiarTodoMenosPerfil();
+            $.get("/eata/groups/detail/" + idGroup, function (data) {
+                $("#tituloContenido").append("<h1>"+data.name+"</h1>");
+                $("#contenido").append(data.description);
+            });
+            
+            
+            
+        },
+        
         getLocation: function () {
             
             if (navigator.geolocation) {
@@ -528,6 +545,10 @@ var module = (function () {
             lat = position.coords.latitude;
             long = position.coords.longitude;
             console.log(JSON.stringify([name,position.coords.latitude,position.coords.longitude ]));
+            
+            
+            
+            
             stompClient.send('/app/newuserposition',{},JSON.stringify([idUser,position.coords.latitude,position.coords.longitude]));
             module.newMarcador(name,position.coords.latitude,position.coords.longitude );
         }
