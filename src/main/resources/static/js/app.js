@@ -100,8 +100,8 @@ var module = (function () {
                 //--------------------------
                 var x1 = new google.maps.LatLng(lat, long);
                 var x2 = new google.maps.LatLng(marcadores[i][1], marcadores[i][2]);
-                var distancia2 = google.maps.geometry.spherical.computeDistanceBetween(x1, x2);
-                console.log("Distancia entre yo y el nuevo conectado: "+distancia2);
+                var distancia = google.maps.geometry.spherical.computeDistanceBetween(x1, x2);
+                console.log("Distancia entre yo y el nuevo conectado: "+distancia);
                 //---------------------------
                 new google.maps.Marker({
                     position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
