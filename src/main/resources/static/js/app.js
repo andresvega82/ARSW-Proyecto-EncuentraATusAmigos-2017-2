@@ -417,10 +417,12 @@ var module = (function () {
         },
         
         mostrarTodosUsuarios: function(){
+            misAmigos = [];
             misAmigos.push(idUser);
             $.get("/eata/users/myfriends/"+idUser, function (data) {
                 for (i = 0; i < data.length; i++) {
                     misAmigos.push(data[i].idUser);
+                    console.log("Nuevo amigo agregado: "+data[i].idUser);
                     console.log("Entro al primer GET");
                 }     
             });
