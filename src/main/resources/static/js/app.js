@@ -523,7 +523,7 @@ var module = (function () {
                     
                     function () {
                         stompClient.send('/app/addmeetingbygroup',{},JSON.stringify([newId,idGroup]));
-                            
+                        module.pagInicio();
                     }
 
                 );
@@ -568,7 +568,14 @@ var module = (function () {
             module.limpiarTodoMenosPerfil();
             $.get("/eata/groups/detail/" + idGroup, function (data) {
                 $("#tituloContenido").append("<h1>"+data.name+"</h1>");
-                $("#contenido").append(data.description);
+                
+                $.get("/eata/groups/meeting/"+idGroup,function(data){
+                    
+                    $("#contenido").append("<table id='Reuniones'>\n\
+                                 <tr><th id='idReunion'>Meetings</th><th id='checkgrupo'></th></tr>\n\
+                                </table>");
+                })
+                
                 
             });
             $("#botones").append("<button class='button' type='button' onclick=\"module.crearFormularioReuniones("+idGroup+")\">Crear Reunion</button>");
