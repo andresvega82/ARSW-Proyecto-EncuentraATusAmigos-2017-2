@@ -139,13 +139,12 @@ var module = (function () {
                 });
                
                 stompClient.subscribe('/topic/posibilidadDeReunion', function (eventbody) {
-                    var nombregr;
+                    
                     if(estaLogueado){
-                        $.get("/eata/groups", function (data) {
-                            nombregr = data[JSON.parse(eventbody.body)].name;
+                        $.get("/eata/groups/detail/"+JSON.parse(eventbody.body), function (data) {
+                            
                             $("#textoModalCrearReunion").empty();
-                            $("#textoModalCrearReunion").append("Mas del 60% del grupo: <h1>" + nombregr + "</h1> esta en linea.");
-
+                            $("#textoModalCrearReunion").append("Mas del 60% del grupo: <h1>" + data.name + "</h1> esta en linea.");
                             var modal = document.getElementById('myModal');
                             var btnCrearReunion = document.getElementById("botonCrearReunion");
                             var span = document.getElementsByClassName("close")[0];
@@ -154,7 +153,7 @@ var module = (function () {
                             }
                             btnCrearReunion.onclick = function () {
                                 modal.style.display = "none";
-                                module.crearFormularioReuniones();
+                                module.crearFormularioReuniones(data.id);
                             }
                         });
                         
@@ -419,7 +418,7 @@ var module = (function () {
                         tr[i].style.display = "none";
                     }
                 }       
-  }
+            }
         },
         
         
@@ -523,6 +522,7 @@ var module = (function () {
                     
                     function () {
                         stompClient.send('/app/addmeetingbygroup',{},JSON.stringify([newId,idGroup]));
+                        module.mostrarInfoGrupo(idGroup);
                             
                     }
 

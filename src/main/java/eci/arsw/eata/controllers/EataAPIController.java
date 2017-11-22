@@ -44,7 +44,7 @@ public class EataAPIController {
     
     
     
-    @RequestMapping(path = "/onlinebygroup", method = RequestMethod.GET)
+        @RequestMapping(path = "/onlinebygroup", method = RequestMethod.GET)
     public ResponseEntity<?> getPorcentajeConectadosPorGrupo() {
         try {
             //obtener datos que se enviarán a través del API
