@@ -49,6 +49,12 @@ public class STOMPMessagesHandler {
 	}
         
         
+        @MessageMapping("/addmeetingbygroup")    
+	public void agregarReunionAGrupo(ArrayList<Object> vector) throws Exception {      
+          
+           eataservice.addMeetingByGroup((int)vector.get(0),(int)vector.get(1));
+            
+	}
         
         @MessageMapping("/newuserposition")    
 	public void agregarPosicionAUsuario(ArrayList<Object> vector) throws Exception {         

@@ -479,7 +479,7 @@ var module = (function () {
             $("#botones").append("<button class='cancelbtn' type='button' onclick=\"module.cerrarSesion()\">Cerrar Sesion</button>");
         },
         
-        crearFormularioReuniones: function(){
+        crearFormularioReuniones: function(idGroup){
             estaEnInicio = false;
             module.limpiarTodoMenosPerfil();
             //$("#contenido").append("<h1>Hacer el formulario y metodo para crear reuniones aqui (buscar metodo: crearFormularioReuniones)</h1>");
@@ -488,65 +488,48 @@ var module = (function () {
                                         <div class='container'>\n\
                                           <label><b>Name</b></label>\n\
                                           <input id='meetingName' type='text' placeholder='Enter name of the meeting'  required>\n\
+                                          <label><b>Date</b></label>\n\
+                                          <input type='date' id='fecha' placeholder = 'aaaa/mm/dd' required>\n\
                                           <label><b>Description</b></label>\n\
                                           <input id='meetingDescription' type='text' placeholder='Enter description of the meeting'  required>\n\
                                         </div>\n\
                                  </form>");
-            $("#botones").append("<button type='button' onclick=\"module.crearReunion()\">Crear Reunion</button>\n\
+            $("#botones").append("<button type='button' onclick=\"module.crearReunion("+idGroup+")\">Crear Reunion</button>\n\
                                   <button type='button' class='cancelbtn' onclick=\"module.pagInicio()\">Cancelar</button>");
 
             $("#tablas").append("<table id='checkAmigosReunion' class='miclase'>\n\
                                  <tr><th id='amigosParaReunion'>Amigos</th><th id='checkgrupo'></th></tr>\n\
-                                </table>");
-
-            $.get("/eata/users/myfriends/" + idUser, function (data) {
-                for (i = 0; i < data.length; i++) {
-                    $("#checkAmigosReunion").append("<tr>\n\
-                                                    <td>" + data[i].name + "</td>\n\
-                                                    <td><input aling='center' id=" + data[i].idUser + " type='checkbox' name='idFriend' value=" + data[i].idUser + "><br></td>\n\
-                                                   </tr>");
-
-
-
-                }
-
-            });
-        },
-        crearReunion: function(idGroup){
-            var members = [idUser];
-            var newId;            
-            idGroup.then(function(){
-            var grupo=$.get("/eata/users/myfriends/" + idUser, function (data) {
-                for (i = 0; i < data.length; i++) {                    
-                    if (document.getElementById(data[i].idUser).checked) {                        
-                        members.push(data[i].idUser);                        
-                    }
-                }                
-            })          
+                                </table>");            
             
-            grupo.then(function(){// "{"members":[2101751,2099444],"meetings":[1],"id":1,"name":"arsw trabajo","description":"Este grupo es para hacer lab de arsw"}";
-                var newGroup = "{\"members\":" + JSON.stringify(members) + ",\"" + "\meetings\":[],\"" + "id\":" + newId + ",\"" + "name\":" + "\"" + document.getElementById("groupName").value + "\",\"" + "description\":" + "\"" + document.getElementById("groupDescription").value + "\"}";
+        },
+        crearReunion: function(idGroup){            
+            var newId;
+            var idMeeting=$.get("/eata/meetings/", function (data) {
+                newId = (data.length) + 1;
                
+            });
+                 
+            
+            idMeeting.then(function(){// "{"members":[2101751,2099444],"meetings":[1],"id":1,"name":"arsw trabajo","description":"Este grupo es para hacer lab de arsw"}";
+                var newMeeting = "{\"id\":" + newId + ",\"" + "\date\":\""+document.getElementById("fecha").value+"\",\""+"subject\":\"" + document.getElementById("meetingName").value + "\",\"" + "description\":" + "\"" + document.getElementById("meetingDescription").value + "\"}";
+                console.log(newMeeting);
                 var crear = $.ajax({
-                    url: "/eata/addgroup",
+                    url: "/eata/addmeeting",
                     type: 'POST',
-                    data: newGroup,
+                    data: newMeeting,
                     contentType: "application/json"
                 });
                 crear.then(
+                    
                     function () {
-                        stompClient.send('/topic/newgroup', {}, idUser);
-                        module.pagInicio();
-
+                        stompClient.send('/app/addmeetingbygroup',{},JSON.stringify([newId,idGroup]));
+                            
                     }
 
                 );
-                }
-                        
-                );
-                
+                });            
             
-            });            
+                      
             
         },
         traerMapa: function () {
@@ -588,7 +571,7 @@ var module = (function () {
                 $("#contenido").append(data.description);
                 
             });
-            $("#botones").append("<button class='button' type='button' onclick=\"module.crearFormularioReuniones(idGroup)\">Crear Reunion</button>");
+            $("#botones").append("<button class='button' type='button' onclick=\"module.crearFormularioReuniones("+idGroup+")\">Crear Reunion</button>");
             
             
         },

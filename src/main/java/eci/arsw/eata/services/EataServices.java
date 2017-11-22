@@ -67,6 +67,9 @@ public class EataServices {
     public void addNewGroup(Group group) throws EataNotFoundException, EataPersistenceException{
         eatap.saveGroup(group);
     }
+    public void addNewMeeting(Meeting meeting) throws EataPersistenceException {
+       eatap.saveMeeting(meeting);
+    }
     
     public ArrayList<FreeTime> getFreeTimeByUser(int idUser) throws EataNotFoundException, EataPersistenceException{
         return eatap.getFreeTimebyUser(idUser);
@@ -101,6 +104,14 @@ public class EataServices {
       return eatap.getGroupById(idGroup);
     };
     
+    public void addMeetingByGroup(int idMeeting, int idGroup){
+        eatap.addMeetingByGroup(idMeeting, idGroup);
+    }
+    
+    public ArrayList<Meeting> getAllMeetings() throws EataNotFoundException{
+        return eatap.getAllMeetings();
+    }
+    
 //    
 //    public boolean isUserConected(String nombreUser) throws EataNotFoundException{
 //        return eatap.userConected(nombreUser);
@@ -109,6 +120,8 @@ public class EataServices {
 //    public void userDisconected(String nombreUser) throws EataNotFoundException{
 //        eatap.userDisconected(nombreUser);
 //    }
+
+    
     
 
     

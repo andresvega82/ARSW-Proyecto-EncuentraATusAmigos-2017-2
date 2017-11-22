@@ -93,6 +93,12 @@ public interface EataPersistence {
      * @throws EataPersistenceException
      */
     public void saveGroup(Group group) throws EataPersistenceException;
+    /**
+     *
+     * @param meeting
+     * @throws EataPersistenceException
+     */
+    public void saveMeeting(Meeting meeting) throws EataPersistenceException;
     
     /**
      *
@@ -152,5 +158,9 @@ public interface EataPersistence {
     public void disconectUser(int idUser);
     
     public Map<Integer,Integer> porcentajeDePersonasConectadasPorGrupo();
+    
+    public void addMeetingByGroup(int idMeeting, int idGroup);
+    
+    public ArrayList<Meeting> getAllMeetings();
   
 }

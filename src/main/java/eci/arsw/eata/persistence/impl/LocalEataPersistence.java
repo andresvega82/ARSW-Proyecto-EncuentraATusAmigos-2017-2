@@ -131,18 +131,18 @@ public class LocalEataPersistence implements EataPersistence{
         Date fecha = new Date(2017,10,22);
         
         java.sql.Date fechaSQL = new java.sql.Date(fecha.getTime());
-        Meeting m1 = new Meeting(1, fechaSQL, "estudio", "estudiaremos para examenes");
-        Meeting m2 = new Meeting(2, fechaSQL, "reunion pgr", "adelanto de pgr");
-        Meeting m3 = new Meeting(3, fechaSQL, "almuerzo", "reunamonos para almorzar");
+        Meeting m1 = new Meeting(0, fechaSQL, "estudio", "estudiaremos para examenes");
+        Meeting m2 = new Meeting(1, fechaSQL, "reunion pgr", "adelanto de pgr");
+        Meeting m3 = new Meeting(2, fechaSQL, "almuerzo", "reunamonos para almorzar");
         
-        meetings.put(1, m1);
-        meetings.put(2, m2);
-        meetings.put(3, m3);
+        meetings.put(0, m1);
+        meetings.put(1, m2);
+        meetings.put(2, m3);
         
         //Se agregan las reuniones a los grupos
-        g1.addMeeting(1);
+        g1.addMeeting(0);
+        g2.addMeeting(1);
         g2.addMeeting(2);
-        g2.addMeeting(3);
         
     }
 
@@ -207,6 +207,17 @@ public class LocalEataPersistence implements EataPersistence{
             groups.put(groups.size()+1, group);
         }
     }
+    @Override
+    public void saveMeeting(Meeting meeting) throws EataPersistenceException {
+        System.out.println("esta en el save");
+        if (meetings.containsKey(meeting.getId())){
+            throw new EataPersistenceException("La reunion ya existe: "+meeting);
+        }
+        else{
+            meetings.put(meetings.size()+1, meeting);
+        }
+    }
+    
     
     @Override
     public Set<User> getMyFriends(int idUser) throws EataNotFoundException {
@@ -429,6 +440,25 @@ public class LocalEataPersistence implements EataPersistence{
     @Override
     public Group getGroupById(int idGroup) {
         return groups.get(idGroup);
+    }
+
+    @Override
+    public void addMeetingByGroup(int idMeeting, int idGroup) {
+        groups.get(idGroup).addMeeting(idMeeting);
+    }
+
+    @Override
+    public ArrayList<Meeting> getAllMeetings() {
+        
+        ArrayList<Meeting> reuniones = new ArrayList<Meeting>();
+        for (Map.Entry<Integer, Meeting> entry : meetings.entrySet()) {
+            int cantOnline = 0;
+            Integer key = entry.getKey();
+            Meeting gr = entry.getValue();
+            reuniones.add(gr);
+            
+        }
+        return reuniones;
     }
 
 

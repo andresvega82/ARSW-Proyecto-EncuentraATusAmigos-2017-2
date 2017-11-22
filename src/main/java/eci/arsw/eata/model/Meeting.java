@@ -25,6 +25,9 @@ public class Meeting {
         this.subject = subject;
         this.description = description;
     }
+    public Meeting() {
+        
+    }
 
     public int getId() {
         return id;

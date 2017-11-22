@@ -6,6 +6,7 @@
 package eci.arsw.eata.controllers;
 
 import eci.arsw.eata.model.Group;
+import eci.arsw.eata.model.Meeting;
 import eci.arsw.eata.model.User;
 import eci.arsw.eata.services.EataServices;
 import java.util.logging.Level;
@@ -108,6 +109,16 @@ public class EataAPIController {
             return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
         }
     }
+    @RequestMapping(path = "/meetings",method = RequestMethod.GET)
+    public ResponseEntity<?> getAllMeetings() {
+        try {
+            //obtener datos que se enviarán a través del API
+            return new ResponseEntity<>(eataservice.getAllMeetings(), HttpStatus.ACCEPTED);
+        } catch (Exception ex) {
+            Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.NOT_FOUND);
+        }
+    }
     
     @RequestMapping(path = "/groups/{idGroup}",method = RequestMethod.GET)
     public ResponseEntity<?> getMembersByGroup(@PathVariable("idGroup") int idGroup) {
@@ -192,6 +203,17 @@ public class EataAPIController {
         try {
             System.out.println("llego al add");
             eataservice.addNewGroup(group);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception ex) {
+            Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>("Error bla bla bla", HttpStatus.FORBIDDEN);
+        }
+    }
+    @RequestMapping(path = "/addmeeting", method = RequestMethod.POST)
+    public ResponseEntity<?> addNewMeeting(@RequestBody Meeting meeting) {
+        try {
+            System.out.println("llego al add");
+            eataservice.addNewMeeting(meeting);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception ex) {
             Logger.getLogger(EataAPIController.class.getName()).log(Level.SEVERE, null, ex);

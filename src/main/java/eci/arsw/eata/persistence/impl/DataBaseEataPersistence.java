@@ -31,6 +31,10 @@ public class DataBaseEataPersistence implements EataPersistence{
     public void saveGroup(Group group) throws EataPersistenceException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    @Override
+    public void saveMeeting(Meeting meeting) throws EataPersistenceException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public void addMeeting(int idMetting, int idGroup) throws EataPersistenceException {
@@ -124,6 +128,16 @@ public class DataBaseEataPersistence implements EataPersistence{
 
     @Override
     public Group getGroupById(int idGroup) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void addMeetingByGroup(int idMeeting, int idGroup) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Meeting> getAllMeetings() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
