@@ -139,13 +139,12 @@ var module = (function () {
                 });
                
                 stompClient.subscribe('/topic/posibilidadDeReunion', function (eventbody) {
-                    var nombregr;
+                    
                     if(estaLogueado){
-                        $.get("/eata/groups", function (data) {
-                            nombregr = data[JSON.parse(eventbody.body)].name;
+                        $.get("/eata/groups/detail/"+JSON.parse(eventbody.body), function (data) {
+                            
                             $("#textoModalCrearReunion").empty();
-                            $("#textoModalCrearReunion").append("Mas del 60% del grupo: <h1>" + nombregr + "</h1> esta en linea.");
-
+                            $("#textoModalCrearReunion").append("Mas del 60% del grupo: <h1>" + data.name + "</h1> esta en linea.");
                             var modal = document.getElementById('myModal');
                             var btnCrearReunion = document.getElementById("botonCrearReunion");
                             var span = document.getElementsByClassName("close")[0];
@@ -154,7 +153,7 @@ var module = (function () {
                             }
                             btnCrearReunion.onclick = function () {
                                 modal.style.display = "none";
-                                module.crearFormularioReuniones();
+                                module.crearFormularioReuniones(data.id);
                             }
                         });
                         
@@ -419,7 +418,7 @@ var module = (function () {
                         tr[i].style.display = "none";
                     }
                 }       
-  }
+            }
         },
         
         
@@ -497,9 +496,7 @@ var module = (function () {
             $("#botones").append("<button type='button' onclick=\"module.crearReunion("+idGroup+")\">Crear Reunion</button>\n\
                                   <button type='button' class='cancelbtn' onclick=\"module.pagInicio()\">Cancelar</button>");
 
-            $("#tablas").append("<table id='checkAmigosReunion' class='miclase'>\n\
-                                 <tr><th id='amigosParaReunion'>Amigos</th><th id='checkgrupo'></th></tr>\n\
-                                </table>");            
+                      
             
         },
         crearReunion: function(idGroup){            
@@ -523,7 +520,9 @@ var module = (function () {
                     
                     function () {
                         stompClient.send('/app/addmeetingbygroup',{},JSON.stringify([newId,idGroup]));
-                        module.pagInicio();
+
+                        module.mostrarInfoGrupo(idGroup);
+
                     }
 
                 );
@@ -572,8 +571,13 @@ var module = (function () {
                 $.get("/eata/groups/meeting/"+idGroup,function(data){
                     
                     $("#contenido").append("<table id='Reuniones'>\n\
-                                 <tr><th id='idReunion'>Meetings</th><th id='checkgrupo'></th></tr>\n\
+                                 <tr><th id='idReunion'>Meetings</th></tr>\n\
                                 </table>");
+                    for (i = 0; i < data.length; i++) {
+                        $("#Reuniones").append("<tr>\n\
+                                                    <td>" + data[i].name + "</td>\n\</tr>");
+                    }
+                    
                 })
                 
                 
