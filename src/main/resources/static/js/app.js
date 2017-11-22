@@ -92,7 +92,7 @@ var module = (function () {
         },
         
         newMarcador: function (markerName, lat, long) {
-            console.log("Estoy agregando marcadores");
+            
             marcadores.push([markerName, lat, long]);
             var marker, i;
             
@@ -144,7 +144,25 @@ var module = (function () {
                         
                         $.get("/eata/groups", function (data) {
                             nombregr = data[JSON.parse(eventbody.body)].name;
-                            alert("Mas del 60% del grupo: "+nombregr+" esta en linea, puede crear una reunion");
+                            $("#textoModalCrearReunion").append("Mas del 60% del grupo: <h1>" + nombregr + "</h1> esta en linea, puede crear una reunion");
+                            
+                            // Get the modal
+                            var modal = document.getElementById('myModal');
+
+                            // Get the button that opens the modal
+                            var btnCrearReunion = document.getElementById("botonCrearReunion");
+
+                            // Get the <span> element that closes the modal
+                            var span = document.getElementsByClassName("close")[0];
+                            modal.style.display = "block";
+                            // When the user clicks on <span> (x), close the modal
+                            span.onclick = function () {
+                                modal.style.display = "none";
+                            }
+                            btnCrearReunion.onclick = function () {
+                                modal.style.display = "none";
+                                module.crearFormularioReuniones();
+                            }
                         });
                         
                     }
@@ -183,11 +201,11 @@ var module = (function () {
         login: function (carnet, pass) {
             //var conectar = module.connectAndSubscribe();
             $.get("/eata/users/" + carnet, function (data) {
-                            console.log(data.idUser);
+                            
                             if (data.idUser == carnet && data.password == pass) {    
                                 estaLogueado=true;
                                 name = data.name;
-                                console.log(name + " :name en login");
+                                
                                 idUser = data.idUser;
                                 password = data.password;
                                 mail = data.mail;
@@ -271,29 +289,28 @@ var module = (function () {
             var newId;
             var idGroup=$.get("/eata/groups", function (data) {
                 newId = (data.length) + 1;
-                console.log((data.length + 1) + " :data.lengyh");
+               
             });
 
-            console.log(document.getElementById("groupName").value);
-            console.log(document.getElementById("groupDescription").value);
+            
             idGroup.then(function(){
                 var grupo=$.get("/eata/users/myfriends/" + idUser, function (data) {
                 for (i = 0; i < data.length; i++) {
-                    console.log(document.getElementById(data[i].idUser).checked + " : " + data[i].name);
+                    
                     if (document.getElementById(data[i].idUser).checked) {
-                        console.log("Entro a agregar un miembro" + data[i].idUser);
+                        
                         members.push(data[i].idUser);
-                        console.log(members);
+                        
                     }
 
                 }
                 
             })
-            console.log(members);
+          
             
             grupo.then(function(){// "{"members":[2101751,2099444],"meetings":[1],"id":1,"name":"arsw trabajo","description":"Este grupo es para hacer lab de arsw"}";
                 var newGroup = "{\"members\":" + JSON.stringify(members) + ",\"" + "\meetings\":[],\"" + "id\":" + newId + ",\"" + "name\":" + "\"" + document.getElementById("groupName").value + "\",\"" + "description\":" + "\"" + document.getElementById("groupDescription").value + "\"}";
-                console.log(newGroup);
+               
                 var crear = $.ajax({
                     url: "/eata/addgroup",
                     type: 'POST',
@@ -394,7 +411,7 @@ var module = (function () {
             
             $.get("/eata/usersconected/"+idUser, function (data) {
                 for (i = 0; i < data.length; i++) {
-                    console.log("GET lalalala: "+data);
+                    
                     module.newMarcador(data[i].name,data[i].location.latitude,data[i].location.longitude);
                 }
             });
@@ -418,47 +435,52 @@ var module = (function () {
   }
         },
         
+        
+        
         mostrarTodosUsuarios: function(){
             estaEnInicio = false;
             misAmigos = [];
             misAmigos.push(idUser);
-            $.get("/eata/users/myfriends/"+idUser, function (data) {
+            module.limpiarTodoMenosPerfil();
+            
+            var promise1 = $.get("/eata/users/myfriends/"+idUser, function (data) {
                 for (i = 0; i < data.length; i++) {
                     misAmigos.push(data[i].idUser);
-                    console.log("Nuevo amigo agregado: "+data[i].idUser);
-                    console.log("Entro al primer GET");
                 }     
             });
-            module.mostrarTodosUsuariosContinuacion();
-        },
-        
-        mostrarTodosUsuariosContinuacion: function(){
-            module.limpiarTodoMenosPerfil();
+            
             $("#tituloContenido").append("<h1>Todos los Usuarios</h1>");
             
             $("#contenido").append("<input type='text' id='myInput' onkeyup='module.funcionBuscar()' placeholder='Search for names..' title='Type in a name'>\n\
                                         <table id='tablaTodosUsuarios' >\n\
                                         <tr><th id='todosUsuarios'>Todos los Usuarios</th></tr>\n\
                                         </table>");
-            
 
-            $.get("/eata/users", function (data) {
-                console.log("Arreglo amigos: "+misAmigos);
-                for (i = 0; i < data.length; i++) {
-                    var algo = misAmigos.includes(data[i].idUser);
-                    
-                    if(misAmigos.includes(data[i].idUser)){
-                        if (data[i].idUser != idUser) {
-                            $("#tablaTodosUsuarios").append("<tr><td>" + data[i].name + "</td><td><button class='botonAmigos' onclick=\"module.mostrarPerfilAmigo("+data[i].idUser+")\">Ver</button></td></tr>");
-                        }
+            promise1.then(
+                    function () {
+
+                        $.get("/eata/users", function (data) {
+                            for (i = 0; i < data.length; i++) {
+                                var algo = misAmigos.includes(data[i].idUser);
+
+                                if (misAmigos.includes(data[i].idUser)) {
+                                    if (data[i].idUser != idUser) {
+                                        $("#tablaTodosUsuarios").append("<tr><td>" + data[i].name + "</td><td><button class='botonAmigos' onclick=\"module.mostrarPerfilAmigo(" + data[i].idUser + ")\">Ver</button></td></tr>");
+                                    }
+                                } else {
+                                    $("#tablaTodosUsuarios").append("<tr><td>" + data[i].name + "</td><td><button class='botonAgregar' onclick=\"module.agregarAmigo(" + data[i].idUser + ")\">Agregar</button></td></tr>");
+                                }
+                            }
+                        });
+
+                    },
+                    function(){
+                        
                     }
-                    else{
-                        $("#tablaTodosUsuarios").append("<tr><td>" + data[i].name + "</td><td><button class='botonAgregar' onclick=\"module.agregarAmigo("+data[i].idUser+")\">Agregar</button></td></tr>");
-                    }
-                    
-                    
-                }
-            });
+
+            );
+    
+            
 
                     
            
@@ -474,7 +496,14 @@ var module = (function () {
             $("#botones").empty();
             $("#botones").append("<button type='button' onclick=\"module.crearFormularioGrupo()\">Crear Grupo</button>");
             $("#botones").append("<button type='button' onclick=\"module.mostrarTodosUsuarios()\">Agregar Amigos</button>");
+            $("#botones").append("<button class='button' type='button' onclick=\"module.crearFormularioReuniones()\">Crear Reunion</button>");
             $("#botones").append("<button class='cancelbtn' type='button' onclick=\"module.cerrarSesion()\">Cerrar Sesion</button>");
+        },
+        
+        crearFormularioReuniones: function(){
+            estaEnInicio = false;
+            module.limpiarTodoMenosPerfil();
+            $("#contenido").append("<h1>Hacer el formulario y metodo para crear reuniones aqui (buscar metodo: crearFormularioReuniones)</h1>");
         },
         
         traerMapa: function () {
@@ -538,13 +567,12 @@ var module = (function () {
                 zoom: 12,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             }
-            console.log("Latitude: " + position.coords.latitude +
-                    " Longitude: " + position.coords.longitude);
+            
             map = new google.maps.Map(document.getElementById("contenido"), mapOptions);
             var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
             lat = position.coords.latitude;
             long = position.coords.longitude;
-            console.log(JSON.stringify([name,position.coords.latitude,position.coords.longitude ]));
+            
             
             
             
