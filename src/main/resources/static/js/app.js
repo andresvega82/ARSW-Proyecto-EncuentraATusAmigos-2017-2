@@ -141,22 +141,15 @@ var module = (function () {
                 stompClient.subscribe('/topic/posibilidadDeReunion', function (eventbody) {
                     var nombregr;
                     if(estaLogueado){
-                        
                         $.get("/eata/groups", function (data) {
                             nombregr = data[JSON.parse(eventbody.body)].name;
-                            $("#textoModalCrearReunion").append("Mas del 60% del grupo: <h1>" + nombregr + "</h1> esta en linea, puede crear una reunion");
-                            
-                            // Get the modal
+                            $("#textoModalCrearReunion").empty();
+                            $("#textoModalCrearReunion").append("Mas del 60% del grupo: <h1>" + nombregr + "</h1> esta en linea.");
+
                             var modal = document.getElementById('myModal');
-
-                            // Get the button that opens the modal
                             var btnCrearReunion = document.getElementById("botonCrearReunion");
-
-                            // Get the <span> element that closes the modal
                             var span = document.getElementsByClassName("close")[0];
-                            modal.style.display = "block";
-                            // When the user clicks on <span> (x), close the modal
-                            span.onclick = function () {
+                            modal.style.display = "block";span.onclick = function () {
                                 modal.style.display = "none";
                             }
                             btnCrearReunion.onclick = function () {
