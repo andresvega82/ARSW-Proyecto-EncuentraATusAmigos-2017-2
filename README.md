@@ -5,8 +5,8 @@
 - [![Heroku](https://wmpics.pics/di-D9YP.png)](https://arsw-proyecto-2017-2.herokuapp.com)
 - [![trello](https://1.bp.blogspot.com/-VnIVUyud-2I/WfMm-l9K5fI/AAAAAAAAD0E/lo0xB4GQLt0Q9W3uwFZ3GW7bacj6CXQXQCLcBGAs/s1600/iconotrello.png)](https://trello.com/b/2KWuQi7A/arsw-2017-2-encuentra-a-tus-amigos)
 - [![drive](https://4.bp.blogspot.com/-iMaOlu-aY1s/WfMnnYkodrI/AAAAAAAAD0Q/ne9eiKFk_LoS6rSPa0_ijv5R_1-a89sRgCLcBGAs/s1600/iconodrive.png)](https://drive.google.com/open?id=0B7LApJOHv8_YekpycXc3bzhHVms)
--[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c653d1358b154962946629e8dec4c483)](https://www.codacy.com/app/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2/dashboard)
--[![CircleCI](https://circleci.com/gh/Chuzz1996/ARSW-CamposDeGuerra.svg?style=svg)](https://circleci.com/gh/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2)
+- [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c653d1358b154962946629e8dec4c483)](https://www.codacy.com/app/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2/dashboard)
+- [![CircleCI](https://circleci.com/gh/Chuzz1996/ARSW-CamposDeGuerra.svg?style=svg)](https://circleci.com/gh/Proyectoarsw2017/ARSW-Proyecto-EncuentraATusAmigos-2017-2)
 
 
 ### Nombre del Proyecto: Encuentra a tus Amigos - Arquitectura de Software (ARSW)
