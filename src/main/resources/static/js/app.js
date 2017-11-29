@@ -419,6 +419,10 @@ var module = (function () {
             $("#botones").empty();
         },
         
+        irAInicioDesdeReunion: function(){
+            module.traerMisGrupos();
+            module.pagInicio();
+        },
         
         pagInicio: function () {
             estaEnInicio = true;
@@ -550,7 +554,7 @@ var module = (function () {
                                  </form>");
             $("#botones").append("<button class='button' type='button' onclick=\"module.enviarNotificacionUrgente("+idGroup+")\">Crear con Notificacion</button>");
             $("#botones").append("<button type='button' onclick=\"module.crearReunion("+idGroup+")\">Crear Reunion</button>\n\
-                                  <button type='button' class='cancelbtn' onclick=\"module.pagInicio()\">Cancelar</button>");
+                                  <button type='button' class='cancelbtn' onclick=\"module.irAInicioDesdeReunion()\">Cancelar</button>");
             
 
                       
