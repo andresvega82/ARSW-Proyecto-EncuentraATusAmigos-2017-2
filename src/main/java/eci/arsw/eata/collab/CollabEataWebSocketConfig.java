@@ -27,6 +27,7 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import sun.awt.AWTAccessor;
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -34,13 +35,20 @@ public class CollabEataWebSocketConfig extends AbstractWebSocketMessageBrokerCon
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/topic");
-        config.setApplicationDestinationPrefixes("/app");        
+        config.enableStompBrokerRelay("/topic/").setRelayHost("donkey.rmq.cloudamqp.com").setRelayPort(61613).
+        setClientLogin("bmhyynue").
+        setClientPasscode("mrptQNo6G7d__QEmeWzE9thbQ4OvvY3e").
+        setSystemLogin("bmhyynue").
+        setSystemPasscode("mrptQNo6G7d__QEmeWzE9thbQ4OvvY3e").
+        setVirtualHost("bmhyynue");
+        
+        config.setApplicationDestinationPrefixes("/app");
+        
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/stompendpoint").withSockJS();
+        registry.addEndpoint("/stompendpoint").setAllowedOrigins("*").withSockJS();    
         
     }
     
