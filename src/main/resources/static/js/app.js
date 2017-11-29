@@ -20,6 +20,7 @@ var module = (function () {
     var misAmigos = [];
     var estaLogueado = false;
     var estaEnInicio = false;
+    var estaEnInfoGrupo= [false,null];
     
      
     
@@ -139,23 +140,33 @@ var module = (function () {
                 });
                
                 stompClient.subscribe('/topic/posibilidadDeReunion', function (eventbody) {
-                    
+                    var valido = false;
                     if(estaLogueado){
-                        $.get("/eata/groups/detail/"+JSON.parse(eventbody.body), function (data) {
-                            
-                            $("#textoModalCrearReunion").empty();
-                            $("#textoModalCrearReunion").append("Mas del 60% del grupo: <h1>" + data.name + "</h1> esta en linea.");
-                            var modal = document.getElementById('myModal');
-                            var btnCrearReunion = document.getElementById("botonCrearReunion");
-                            var span = document.getElementsByClassName("close")[0];
-                            modal.style.display = "block";span.onclick = function () {
-                                modal.style.display = "none";
-                            }
-                            btnCrearReunion.onclick = function () {
-                                modal.style.display = "none";
-                                module.crearFormularioReuniones(data.id);
-                            }
+                        var promise = $.get("/eata/perteceneAlGrupo/"+idUser+"/"+JSON.parse(eventbody.body), function (data) {
+                           valido = data;
                         });
+                        promise.then(function(){
+                            if(valido){
+                                $.get("/eata/groups/detail/" + JSON.parse(eventbody.body), function (data) {
+
+                                    $("#textoModalCrearReunion").empty();
+                                    $("#textoModalCrearReunion").append("Mas del 60% del grupo: <h1>" + data.name + "</h1> esta en linea.");
+                                    var modal = document.getElementById('myModal');
+                                    var btnCrearReunion = document.getElementById("botonCrearReunion");
+                                    var span = document.getElementsByClassName("close")[0];
+                                    modal.style.display = "block";
+                                    span.onclick = function () {
+                                        modal.style.display = "none";
+                                    }
+                                    btnCrearReunion.onclick = function () {
+                                        modal.style.display = "none";
+                                        module.crearFormularioReuniones(data.id);
+                                    }
+                                });
+                            }
+                            
+                        });
+                        
                         
                     }
                 });
@@ -164,6 +175,50 @@ var module = (function () {
                     if(estaLogueado){
                         module.traerMisGrupos();
                     }
+                });
+                
+                stompClient.subscribe('/topic/newmetting', function (eventbody) {
+                    
+                    if(estaEnInfoGrupo[0] && estaEnInfoGrupo[1]==JSON.parse(eventbody.body)){
+                        module.mostrarInfoGrupo(JSON.parse(eventbody.body));
+                    }
+                });
+                
+                
+                stompClient.subscribe('/topic/notificacionUrgente', function (eventbody) {
+                    var valido = false;
+                    if(estaLogueado){
+                        var promise = $.get("/eata/perteceneAlGrupo/"+idUser+"/"+JSON.parse(eventbody.body), function (data) {
+                           valido = data;
+                        });
+                        
+                        promise.then(function(){
+                            if(valido) {
+                                $.get("/eata/groups/detail/" + JSON.parse(eventbody.body), function (data) {
+
+                                    $("#textoModalCrearReunion").empty();
+                                    $("#textoModalCrearReunion").append("NOTIFICACION URGENTE !!! de: <h1>" + data.name + "</h1>");
+                                    var modal = document.getElementById('myModal');
+                                    document.getElementById("botonCrearReunion").innerHTML = "Ver reuniones del Grupo";
+                                    var btnCrearReunion = document.getElementById("botonCrearReunion");
+                                    var span = document.getElementsByClassName("close")[0];
+
+                                    modal.style.display = "block";
+                                    span.onclick = function () {
+                                        modal.style.display = "none";
+                                    }
+                                    btnCrearReunion.onclick = function () {
+                                        modal.style.display = "none";
+                                        module.mostrarInfoGrupo(JSON.parse(eventbody.body));
+                                    }
+                                });
+                            }
+                            
+                        });
+                        
+                        
+                    }
+                    
                 });
                 
                 stompClient.subscribe('/topic/cerrarsesion', function (eventbody) {
@@ -493,8 +548,10 @@ var module = (function () {
                                           <input id='meetingDescription' type='text' placeholder='Enter description of the meeting'  required>\n\
                                         </div>\n\
                                  </form>");
+            $("#botones").append("<button class='button' type='button' onclick=\"module.enviarNotificacionUrgente("+idGroup+")\">Crear con Notificacion</button>");
             $("#botones").append("<button type='button' onclick=\"module.crearReunion("+idGroup+")\">Crear Reunion</button>\n\
                                   <button type='button' class='cancelbtn' onclick=\"module.pagInicio()\">Cancelar</button>");
+            
 
                       
             
@@ -521,16 +578,13 @@ var module = (function () {
                     function () {
                         stompClient.send('/app/addmeetingbygroup',{},JSON.stringify([newId,idGroup]));
 
-                        module.mostrarInfoGrupo(idGroup);
-
+                        estaEnInfoGrupo=[true,idGroup];
+                        stompClient.send('/topic/newmetting',{},idGroup);
                     }
-
                 );
-                });            
-            
-                      
-            
+                }); 
         },
+        
         traerMapa: function () {
             $("#tituloContenido").append("<h1>Amigos cercanos:</h1>");
             module.getLocation();
@@ -564,26 +618,63 @@ var module = (function () {
         
         mostrarInfoGrupo: function(idGroup){
             estaEnInicio=false;
+            estaEnInfoGrupo=[true,idGroup];
+            
             module.limpiarTodoMenosPerfil();
-            $.get("/eata/groups/detail/" + idGroup, function (data) {
+            var promise1 = $.get("/eata/groups/detail/" + idGroup, function (data) {
                 $("#tituloContenido").append("<h1>"+data.name+"</h1>");
-                
-                $.get("/eata/groups/meeting/"+idGroup,function(data){
-                    
-                    $("#contenido").append("<table id='Reuniones'>\n\
-                                 <tr><th id='idReunion'>Meetings</th></tr>\n\
-                                </table>");
-                    for (i = 0; i < data.length; i++) {
-                        $("#Reuniones").append("<tr>\n\
-                                                    <td>" + data[i].name + "</td>\n\</tr>");
-                    }
-                    
-                })
-                
+                $("#contenido").append(data.description+"<hr>");
                 
             });
-            $("#botones").append("<button class='button' type='button' onclick=\"module.crearFormularioReuniones("+idGroup+")\">Crear Reunion</button>");
             
+            promise1.then(function(){
+                $.get("/eata/groups/meeting/" + idGroup, function (data) {
+
+                    $("#contenido").append("<table id='Reuniones'>\n\
+                                 <tr><th id='idReunion'>Meetings</th><th id='descripcion'>Description</th><th id='date'>Date</th></tr>\n\
+                                </table>");
+                    for (i = 0; i < data.length; i++) {
+                        console.log(data[i].subject+" Nombre de reunion");
+                        $("#Reuniones").append("<tr><td>" + data[i].subject+ "</td><td>" + data[i].description + "</td><td>" + data[i].date + "</td></tr>");
+                    }
+
+                })
+                
+            }); 
+            
+            
+            
+            $("#botones").append("<button class='button' type='button' onclick=\"module.crearFormularioReuniones("+idGroup+")\">Crear Reunion</button>");
+
+        },
+        
+        enviarNotificacionUrgente: function(idGroup){
+            var newId;
+            var idMeeting = $.get("/eata/meetings/", function (data) {
+                newId = (data.length) + 1;
+
+            });
+
+
+            idMeeting.then(function () {// "{"members":[2101751,2099444],"meetings":[1],"id":1,"name":"arsw trabajo","description":"Este grupo es para hacer lab de arsw"}";
+                var newMeeting = "{\"id\":" + newId + ",\"" + "\date\":\"" + document.getElementById("fecha").value + "\",\"" + "subject\":\"" + document.getElementById("meetingName").value + "\",\"" + "description\":" + "\"" + document.getElementById("meetingDescription").value + "\"}";
+                console.log(newMeeting);
+                var crear = $.ajax({
+                    url: "/eata/addmeeting",
+                    type: 'POST',
+                    data: newMeeting,
+                    contentType: "application/json"
+                });
+                crear.then(
+                        function () {
+                            stompClient.send('/app/addmeetingbygroup', {}, JSON.stringify([newId, idGroup]));
+
+                            estaEnInfoGrupo = [true, idGroup];
+                            stompClient.send('/topic/newmetting', {}, idGroup);
+                        }
+                );
+            }); 
+            stompClient.send('/topic/notificacionUrgente',{},idGroup);
             
         },
         

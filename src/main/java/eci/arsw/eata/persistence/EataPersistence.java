@@ -162,5 +162,7 @@ public interface EataPersistence {
     public void addMeetingByGroup(int idMeeting, int idGroup);
     
     public ArrayList<Meeting> getAllMeetings();
+
+    public boolean perteneceAlGrupo(int idUser, int idGroup);
   
 }

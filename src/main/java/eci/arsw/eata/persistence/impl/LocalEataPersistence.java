@@ -43,6 +43,11 @@ public class LocalEataPersistence implements EataPersistence{
         User u3 = new User("Miguel Rojas", 2099444, "1234" , "bbbbbb@mail.com", "macho");
         User u4 = new User("Juan Carlos", 2098165, "1234" , "pollo@mail.com", "macho");
         User u5 = new User("User Prueba",1 , "1234" , "prueba@mail.com", "macho");
+        User u6 = new User("Camila Martinez",4341324 , "1234" , "prfdsdueba@mail.com", "mujer");
+        User u7 = new User("Andrea Rojas",134342 , "1234" , "prufasddeba@mail.com", "mujer");
+        User u8 = new User("Carlos Torres",3243 , "1234" , "pruasdfsdeba@mail.com", "macho");
+        User u9 = new User("Santiago Diaz",543435, "1234" , "prsdfufseba@mail.com", "macho");
+        User u10 = new User("Sara Corrles",543534, "1234" , "pruasdeba@mail.com", "mujer");
         
         //Se agregan amigos a todos
         u1.addFriend(2090540);u1.addFriend(2099444);u1.addFriend(1);
@@ -98,6 +103,13 @@ public class LocalEataPersistence implements EataPersistence{
         users.put(2099444, u3);
         users.put(2098165, u4);
         users.put(1, u5);
+        users.put(4341324, u6);
+        users.put(134342, u7);
+        users.put(3243, u8);
+        users.put(543435, u9);
+        users.put(543534, u10);
+        
+        
         
         // Creacion de grupos QUEMADOS 
         ArrayList<Integer> members1 = new ArrayList<Integer>();
@@ -459,6 +471,20 @@ public class LocalEataPersistence implements EataPersistence{
             
         }
         return reuniones;
+    }
+
+    @Override
+    public boolean perteneceAlGrupo(int idUser, int idGroup) {
+        Boolean resp = false;
+        
+        ArrayList<Integer> miembros = groups.get(idGroup).getMembers();
+            for(int i=0; i<miembros.size(); i++){
+                if(miembros.get(i)==idUser){
+                    resp=true;
+                }
+            }
+           
+        return resp;
     }
 
 

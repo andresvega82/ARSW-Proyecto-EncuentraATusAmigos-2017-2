@@ -36,6 +36,10 @@ public class EataServices {
         return eatap.sonAmigos(idUser1, idUser2);
     }
     
+    public boolean perteneceAlGrupo(int idUser, int idGroup){
+        return eatap.perteneceAlGrupo(idUser, idGroup);
+    }
+    
     public User getUserByDocument(int idUser) throws EataNotFoundException{
         return eatap.getUserByDocument(idUser);
     }
