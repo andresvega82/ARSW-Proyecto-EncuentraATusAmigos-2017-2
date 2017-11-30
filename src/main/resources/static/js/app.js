@@ -311,7 +311,7 @@ var module = (function () {
                                         </div>\n\
                                  </form>");
             $("#botones").append("<button type='button' onclick=\"module.crearGrupo()\">Crear Grupo</button>\n\
-                                  <button type='button' class='cancelbtn' onclick=\"module.pagInicio()\">Cancelar</button>");
+                                  <button type='button' class='cancelbtn' onclick=\"module.irAInicioDesdeReunion()\">Cancelar</button>");
 
             $("#tablas").append("<table id='checkAmigosGrupos' class='miclase'>\n\
                                  <tr><th id='amigosParaGrupo'>Amigos</th><th id='checkgrupo'></th></tr>\n\
